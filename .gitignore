@@ -30,6 +30,7 @@ Love Test - Compatibility Test_3.0.5_apkcombo.com.xapk_Decompiler.com/
 core/domain/bin/
 
 # Kotlin
+.kotlin/
 *.class
 *.log
 

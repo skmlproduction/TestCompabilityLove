@@ -64,6 +64,12 @@
 #
 ##############################################################################
 
+# === Cursor global build serialization lock (не даёт собирать несколько проектов разом) ===
+if [ -z "${CURSOR_BUILD_LOCK_DISABLE:-}" ] && [ -r "$HOME/.cursor/cursor_build_lock.sh" ]; then
+  . "$HOME/.cursor/cursor_build_lock.sh"
+fi
+# === end Cursor build lock ===
+
 # Attempt to set APP_HOME
 
 # Resolve links: $0 may be a link
