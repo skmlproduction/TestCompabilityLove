@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="500" viewBox="0 0 1024 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1024" y2="500" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF0F5"/>
+      <stop offset="0.45" stop-color="#FFFBFE"/>
+      <stop offset="1" stop-color="#FCE4EC"/>
+    </linearGradient>
+    <linearGradient id="hero" x1="120" y1="80" x2="520" y2="420" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C2185B"/>
+      <stop offset="0.55" stop-color="#E91E63"/>
+      <stop offset="1" stop-color="#F48FB1"/>
+    </linearGradient>
+    <linearGradient id="protocol" x1="680" y1="120" x2="960" y2="380" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#004D40"/>
+      <stop offset="0.5" stop-color="#00796B"/>
+      <stop offset="1" stop-color="#26A69A"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#1C1B1F" flood-opacity="0.12"/>
+    </filter>
+    <style type="text/css"><![CDATA[
+      .kicker { font-family: Inter, Roboto, Arial, sans-serif; font-size: 14px; font-weight: 760; letter-spacing: 4px; fill: #C2185B; }
+      .title { font-family: Inter, Roboto, Arial, sans-serif; font-size: 56px; font-weight: 830; letter-spacing: -1px; fill: #1C1B1F; }
+      .subtitle { font-family: Inter, Roboto, Arial, sans-serif; font-size: 26px; font-weight: 450; fill: #625B71; }
+      .heroWhite { font-family: Inter, Roboto, Arial, sans-serif; font-size: 22px; font-weight: 760; fill: #FFFFFF; }
+      .heroSmall { font-family: Inter, Roboto, Arial, sans-serif; font-size: 16px; font-weight: 500; fill: #FFFFFF; opacity: 0.92; }
+      .badge { font-family: Inter, Roboto, Arial, sans-serif; font-size: 13px; font-weight: 800; fill: #FFFFFF; }
+      .disclaimer { font-family: Inter, Roboto, Arial, sans-serif; font-size: 13px; font-weight: 500; fill: #625B71; }
+    ]]></style>
+  </defs>
+
+  <rect width="1024" height="500" fill="url(#bg)"/>
+  <circle cx="920" cy="80" r="120" fill="#F8BBD0" opacity="0.45"/>
+  <circle cx="60" cy="420" r="100" fill="#E0F2F1" opacity="0.35"/>
+  <circle cx="980" cy="440" r="80" fill="#FCE4EC" opacity="0.5"/>
+
+  <path d="M88 180 C88 150 118 132 142 158 C166 132 196 150 196 180 C196 218 142 252 142 252 C142 252 88 218 88 180 Z" fill="#E91E63" opacity="0.2"/>
+  <path d="M108 180 C108 162 126 150 142 166 C158 150 176 162 176 180 C176 204 142 228 142 228 C142 228 108 204 108 180 Z" fill="#C2185B"/>
+
+  <text x="220" y="168" class="kicker">LOVE TESTER</text>
+  <text x="220" y="238" class="title">Love Tester</text>
+  <text x="220" y="282" class="subtitle">Fun name-based compatibility tests</text>
+  <text x="220" y="318" class="subtitle">&#1056;&#1072;&#1079;&#1074;&#1083;&#1077;&#1082;&#1072;&#1090;&#1077;&#1083;&#1100;&#1085;&#1099;&#1077; &#1090;&#1077;&#1089;&#1090;&#1099; &#1087;&#1086; &#1080;&#1084;&#1077;&#1085;&#1072;&#1084;</text>
+
+  <rect x="220" y="348" width="280" height="56" rx="28" fill="url(#hero)" filter="url(#shadow)"/>
+  <text x="360" y="384" text-anchor="middle" class="heroWhite">8 playful modes</text>
+
+  <rect x="560" y="100" width="380" height="300" rx="36" fill="url(#protocol)" filter="url(#shadow)"/>
+  <rect x="600" y="140" width="72" height="32" rx="16" fill="#FFFFFF" opacity="0.22"/>
+  <text x="636" y="162" text-anchor="middle" class="badge">NEW</text>
+  <text x="600" y="210" class="heroWhite" style="font-size: 28px; font-weight: 830;">Love protocol</text>
+  <text x="600" y="248" class="heroSmall">3 steps &#8594; signals &#8594; verdict</text>
+  <text x="600" y="278" class="heroSmall">&#1064;&#1072;&#1075;&#1080; &#8594; &#1089;&#1080;&#1075;&#1085;&#1072;&#1083;&#1099; &#8594; &#1074;&#1077;&#1088;&#1076;&#1080;&#1082;&#1090;</text>
+  <rect x="600" y="310" width="300" height="56" rx="28" fill="#FFFFFF" opacity="0.18"/>
+  <circle cx="628" cy="326" r="10" fill="#E8F5E9"/>
+  <path d="M622 326 L626 330 L636 320" stroke="#2E7D32" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <text x="652" y="332" class="heroSmall" style="opacity: 1;">Test #8 - on device only</text>
+  <rect x="600" y="340" width="120" height="36" rx="18" fill="#FFFFFF"/>
+  <text x="660" y="364" text-anchor="middle" style="font-family: Inter, Roboto, Arial, sans-serif; font-size: 15px; font-weight: 800; fill: #00796B;">GO</text>
+
+  <circle cx="500" cy="400" r="36" fill="none" stroke="#C2185B" stroke-width="6" opacity="0.25"/>
+  <path d="M500 364 A36 36 0 1 1 470 410" stroke="#C2185B" stroke-width="6" stroke-linecap="round" fill="none"/>
+  <text x="500" y="408" text-anchor="middle" style="font-family: Inter, Roboto, Arial, sans-serif; font-size: 18px; font-weight: 800; fill: #C2185B;">82%</text>
+
+  <text x="512" y="478" text-anchor="middle" class="disclaimer">For entertainment only - &#1058;&#1086;&#1083;&#1100;&#1082;&#1086; &#1076;&#1083;&#1103; &#1088;&#1072;&#1079;&#1074;&#1083;&#1077;&#1095;&#1077;&#1085;&#1080;&#1103;</text>
+</svg>

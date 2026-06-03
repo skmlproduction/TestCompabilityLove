@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1080" height="2400" viewBox="0 0 1080 2400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="150%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="24" stdDeviation="40" flood-color="#1C1B1F" flood-opacity="0.2"/>
+    </filter>
+    <linearGradient id="shareCardBg" x1="80" y1="80" x2="920" y2="1200" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C2185B"/>
+      <stop offset="0.45" stop-color="#E91E63"/>
+      <stop offset="1" stop-color="#F8BBD0"/>
+    </linearGradient>
+    <style type="text/css"><![CDATA[
+      .section { font-family: Inter, Roboto, Arial, sans-serif; font-size: 21px; font-weight: 760; letter-spacing: 3px; fill: #FFFFFF; opacity: 0.7; }
+      .sheetTitle { font-family: Inter, Roboto, Arial, sans-serif; font-size: 34px; font-weight: 800; fill: #FFFFFF; text-anchor: middle; }
+      .targetLabel { font-family: Inter, Roboto, Arial, sans-serif; font-size: 20px; font-weight: 600; fill: #FFFFFF; text-anchor: middle; opacity: 0.9; }
+      .cancelText { font-family: Inter, Roboto, Arial, sans-serif; font-size: 28px; font-weight: 680; fill: #FFFFFF; text-anchor: middle; }
+      .brandSmall { font-family: Inter, Roboto, Arial, sans-serif; font-size: 28px; font-weight: 800; fill: #FFFFFF; }
+      .percentHuge { font-family: Inter, Roboto, Arial, sans-serif; font-size: 140px; font-weight: 800; fill: #FFFFFF; text-anchor: middle; }
+      .namesCard { font-family: Inter, Roboto, Arial, sans-serif; font-size: 40px; font-weight: 740; fill: #FFFFFF; text-anchor: middle; }
+      .tagline { font-family: Inter, Roboto, Arial, sans-serif; font-size: 26px; font-weight: 500; fill: #FFFFFF; text-anchor: middle; opacity: 0.92; }
+      .disclaimerCard { font-family: Inter, Roboto, Arial, sans-serif; font-size: 18px; font-weight: 450; fill: #FFFFFF; text-anchor: middle; opacity: 0.75; }
+    ]]></style>
+  </defs>
+
+  <!-- Scrim (share sheet) -->
+  <rect width="1080" height="2400" fill="#1C1B1F" opacity="0.55"/>
+
+  <rect x="0" y="0" width="1080" height="96" fill="#1C1B1F" opacity="0.3"/>
+  <text x="78" y="62" style="font-family: Inter, Roboto, Arial, sans-serif; font-size: 21px; fill: #FFFFFF; opacity: 0.8;">9:41</text>
+
+  <text x="72" y="180" class="section">EKRAN 27 / SHARE CARD</text>
+  <text x="540" y="240" class="sheetTitle">&#1055;&#1086;&#1076;&#1077;&#1083;&#1080;&#1090;&#1100;&#1089;&#1103; &#1088;&#1077;&#1079;&#1091;&#1083;&#1100;&#1090;&#1072;&#1090;&#1086;&#1084;</text>
+
+  <!-- Share card asset (bitmap preview) -->
+  <rect x="80" y="300" width="920" height="1160" rx="40" fill="url(#shareCardBg)" filter="url(#cardShadow)"/>
+  <circle cx="860" cy="420" r="120" fill="#FFFFFF" opacity="0.1"/>
+  <circle cx="200" cy="1300" r="100" fill="#FFFFFF" opacity="0.08"/>
+  <path d="M160 500 C160 470 188 450 210 470 C232 450 260 470 260 500 C260 536 210 570 210 570 C210 570 160 536 160 500 Z" fill="#FFFFFF" opacity="0.25" transform="scale(1.2) translate(600 200)"/>
+
+  <text x="120" y="380" class="brandSmall">Love Tester</text>
+  <text x="120" y="420" class="tagline" style="text-anchor: start; font-size: 22px;">&#1058;&#1077;&#1089;&#1090; &#1085;&#1072; &#1083;&#1102;&#1073;&#1086;&#1074;&#1100;</text>
+
+  <text x="540" y="720" class="percentHuge">87%</text>
+  <text x="540" y="800" class="namesCard">&#1040;&#1085;&#1085;&#1072; + &#1052;&#1072;&#1082;&#1089;</text>
+  <text x="540" y="880" class="tagline">&#1089;&#1086;&#1074;&#1084;&#1077;&#1089;&#1090;&#1080;&#1084;&#1086;&#1089;&#1090;&#1100;</text>
+
+  <rect x="200" y="960" width="680" height="72" rx="32" fill="#FFFFFF" opacity="0.2"/>
+  <text x="540" y="1010" class="tagline" style="font-size: 30px; font-weight: 760;">&#1054;&#1090;&#1083;&#1080;&#1095;&#1085;&#1072;&#1103; &#1087;&#1072;&#1088;&#1072;!</text>
+
+  <text x="540" y="1380" class="disclaimerCard">&#1058;&#1086;&#1083;&#1100;&#1082;&#1086; &#1076;&#1083;&#1103; &#1088;&#1072;&#1079;&#1074;&#1083;&#1077;&#1095;&#1077;&#1085;&#1080;&#1103;</text>
+  <text x="540" y="1420" class="disclaimerCard">dev.lovetest.app</text>
+
+  <!-- Share targets row -->
+  <rect x="0" y="1520" width="1080" height="520" rx="48" fill="#2B2930"/>
+  <rect x="0" y="1520" width="1080" height="2" fill="#FFFFFF" opacity="0.1"/>
+
+  <circle cx="180" cy="1640" r="48" fill="#29B6F6"/>
+  <text x="180" y="1720" class="targetLabel">Telegram</text>
+
+  <circle cx="400" cy="1640" r="48" fill="#25D366"/>
+  <text x="400" y="1720" class="targetLabel">WhatsApp</text>
+
+  <circle cx="620" cy="1640" r="48" fill="#F3EDF7"/>
+  <rect x="598" y="1624" width="44" height="32" rx="6" fill="none" stroke="#C2185B" stroke-width="3"/>
+  <text x="620" y="1720" class="targetLabel" fill="#E7E0EC">&#1050;&#1086;&#1087;&#1080;&#1103;</text>
+
+  <circle cx="840" cy="1640" r="48" fill="#49454F"/>
+  <circle cx="828" cy="1632" r="4" fill="#FFFFFF"/>
+  <circle cx="840" cy="1632" r="4" fill="#FFFFFF"/>
+  <circle cx="852" cy="1632" r="4" fill="#FFFFFF"/>
+  <text x="840" y="1720" class="targetLabel">&#1045;&#1097;&#1105;</text>
+
+  <rect x="72" y="1780" width="936" height="88" rx="44" fill="#49454F"/>
+  <text x="540" y="1838" class="cancelText">&#1054;&#1090;&#1084;&#1077;&#1085;&#1072;</text>
+
+</svg>

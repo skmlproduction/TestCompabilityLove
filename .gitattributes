@@ -1,0 +1,6 @@
+# Git LFS not required; mark binaries for sensible diffs
+*.png binary
+*.jpg binary
+*.webp binary
+*.jks binary
+*.keystore binary

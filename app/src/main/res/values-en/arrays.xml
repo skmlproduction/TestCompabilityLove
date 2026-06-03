@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="zodiac_signs">
+        <item>Aries</item>
+        <item>Taurus</item>
+        <item>Gemini</item>
+        <item>Cancer</item>
+        <item>Leo</item>
+        <item>Virgo</item>
+        <item>Libra</item>
+        <item>Scorpio</item>
+        <item>Sagittarius</item>
+        <item>Capricorn</item>
+        <item>Aquarius</item>
+        <item>Pisces</item>
+    </string-array>
+    <string-array name="wheel_segments">
+        <item>Kiss</item>
+        <item>Compliment</item>
+        <item>Date</item>
+        <item>Hug</item>
+        <item>Surprise</item>
+        <item>Letter</item>
+        <item>Dance</item>
+        <item>Secret</item>
+    </string-array>
+    <string-array name="wheel_advice">
+        <item>A cheek or forehead kiss — a gentle gesture without words. Pick a calm moment when you are together.</item>
+        <item>Give a sincere compliment about character or looks. Be specific and warm in your tone.</item>
+        <item>Plan an unhurried date: a walk, coffee, or sunset picnic. Focus on attention and warmth together. Snap a keepsake photo.</item>
+        <item>Hug for a minute without words. Physical contact eases tension and brings you closer.</item>
+        <item>Prepare a small surprise: a note, a favorite treat, or a playlist. It does not have to be expensive — care matters.</item>
+        <item>Write a short letter or message about what you value in your partner. Send it at an unexpected moment.</item>
+        <item>Play a favorite song and dance together at home. Laughter and lightness are great ways to bond.</item>
+        <item>Share a small secret or dream — it strengthens trust and emotional connection.</item>
+    </string-array>
+</resources>

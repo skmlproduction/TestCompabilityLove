@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1080" height="2400" viewBox="0 0 1080 2400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="150%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#1C1B1F" flood-opacity="0.08"/>
+      <feDropShadow dx="0" dy="2" stdDeviation="7" flood-color="#C2185B" flood-opacity="0.12"/>
+    </filter>
+    <linearGradient id="bgGlow" x1="132" y1="0" x2="988" y2="850" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF0F5"/>
+      <stop offset="0.4" stop-color="#E0F2F1" stop-opacity="0.25"/>
+      <stop offset="0.55" stop-color="#FFFBFE"/>
+      <stop offset="1" stop-color="#FCE4EC"/>
+    </linearGradient>
+    <linearGradient id="heroGradient" x1="72" y1="360" x2="1008" y2="1000" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C2185B"/>
+      <stop offset="0.52" stop-color="#E91E63"/>
+      <stop offset="1" stop-color="#F8BBD0"/>
+    </linearGradient>
+    <style type="text/css"><![CDATA[
+      .appTitle { font-family: Inter, Roboto, Arial, sans-serif; font-size: 34px; font-weight: 760; fill: #1C1B1F; }
+      .skip { font-family: Inter, Roboto, Arial, sans-serif; font-size: 27px; font-weight: 680; fill: #C2185B; }
+      .section { font-family: Inter, Roboto, Arial, sans-serif; font-size: 21px; font-weight: 760; letter-spacing: 3px; fill: #C2185B; }
+      .heroKicker { font-family: Inter, Roboto, Arial, sans-serif; font-size: 23px; font-weight: 780; letter-spacing: 3px; fill: #FFFFFF; opacity: 0.88; }
+      .heroTitle { font-family: Inter, Roboto, Arial, sans-serif; font-size: 44px; font-weight: 830; letter-spacing: -1px; fill: #FFFFFF; }
+      .headline { font-family: Inter, Roboto, Arial, sans-serif; font-size: 44px; font-weight: 800; letter-spacing: -0.8px; fill: #1C1B1F; }
+      .title { font-family: Inter, Roboto, Arial, sans-serif; font-size: 28px; font-weight: 740; fill: #1C1B1F; }
+      .caption { font-family: Inter, Roboto, Arial, sans-serif; font-size: 21px; font-weight: 470; fill: #625B71; }
+      .buttonText { font-family: Inter, Roboto, Arial, sans-serif; font-size: 29px; font-weight: 760; fill: #FFFFFF; }
+      .warnTitle { font-family: Inter, Roboto, Arial, sans-serif; font-size: 28px; font-weight: 760; fill: #410E0B; }
+      .warnBody { font-family: Inter, Roboto, Arial, sans-serif; font-size: 25px; font-weight: 450; fill: #410E0B; opacity: 0.88; }
+      .protoTitle { font-family: Inter, Roboto, Arial, sans-serif; font-size: 26px; font-weight: 760; fill: #004D40; }
+      .protoBody { font-family: Inter, Roboto, Arial, sans-serif; font-size: 23px; font-weight: 450; fill: #00796B; }
+    ]]></style>
+  </defs>
+
+  <rect width="1080" height="2400" fill="url(#bgGlow)"/>
+  <circle cx="888" cy="168" r="246" fill="#FCE4EC" opacity="0.5"/>
+  <circle cx="126" cy="826" r="204" fill="#B2DFDB" opacity="0.2"/>
+  <circle cx="978" cy="2050" r="314" fill="#FCE4EC" opacity="0.32"/>
+
+  <rect x="0" y="0" width="1080" height="96" fill="#FFFBFE" opacity="0.68"/>
+  <text x="78" y="62" class="caption" fill="#1C1B1F">9:41</text>
+  <rect x="892" y="43" width="58" height="22" rx="8" stroke="#1C1B1F" stroke-width="3" opacity="0.72"/>
+  <rect x="955" y="49" width="6" height="10" rx="3" fill="#1C1B1F" opacity="0.72"/>
+  <rect x="900" y="49" width="40" height="10" rx="5" fill="#1C1B1F" opacity="0.72"/>
+
+  <text x="72" y="176" class="appTitle">Love Tester</text>
+  <text x="906" y="176" class="skip">&#1055;&#1088;&#1086;&#1087;&#1091;&#1089;&#1090;&#1080;&#1090;&#1100;</text>
+
+  <rect x="72" y="238" width="936" height="12" rx="6" fill="#E7E0EC"/>
+  <rect x="72" y="238" width="936" height="12" rx="6" fill="#C2185B"/>
+  <text x="72" y="302" class="section">EKRAN 36 / ONBOARDING 4 OF 4</text>
+
+  <rect x="72" y="340" width="936" height="400" rx="54" fill="url(#heroGradient)" filter="url(#cardShadow)"/>
+  <g transform="translate(540 500)">
+    <rect x="-48" y="-48" width="96" height="96" rx="28" fill="#FFFFFF" opacity="0.22"/>
+    <text x="0" y="10" text-anchor="middle" style="font-family: Inter, Roboto, Arial, sans-serif; font-size: 48px; font-weight: 800; fill: #FFFFFF;">!</text>
+  </g>
+  <text x="120" y="620" class="heroKicker">&#1042;&#1040;&#1046;&#1053;&#1054;</text>
+  <text x="120" y="680" class="heroTitle">&#1058;&#1086;&#1083;&#1100;&#1082;&#1086; &#1076;&#1083;&#1103; &#1088;&#1072;&#1079;&#1074;&#1083;&#1077;&#1095;&#1077;&#1085;&#1080;&#1103;</text>
+  <rect x="120" y="700" width="280" height="52" rx="26" fill="#FFFFFF" opacity="0.2"/>
+  <text x="144" y="736" style="font-family: Inter, Roboto, Arial, sans-serif; font-size: 23px; font-weight: 760; fill: #FFFFFF;">&#1057;&#1090;&#1088;&#1072;&#1085;&#1080;&#1094;&#1072; 4 &#1080;&#1079; 4</text>
+
+  <text x="72" y="820" class="headline">&#1055;&#1086;&#1084;&#1085;&#1080;&#1090;&#1077; &#1087;&#1077;&#1088;&#1077;&#1076; &#1089;&#1090;&#1072;&#1088;&#1090;&#1086;&#1084;</text>
+
+  <rect x="72" y="880" width="936" height="360" rx="38" fill="#F9DEDC" filter="url(#cardShadow)"/>
+  <rect x="120" y="936" width="64" height="64" rx="20" fill="#FFFFFF"/>
+  <text x="152" y="980" text-anchor="middle" style="font-family: Inter, Roboto, Arial, sans-serif; font-size: 36px; font-weight: 800; fill: #C2185B;">!</text>
+  <text x="208" y="968" class="warnTitle">&#1056;&#1077;&#1079;&#1091;&#1083;&#1100;&#1090;&#1072;&#1090;&#1099; &#1085;&#1086;&#1089;&#1103;&#1090;</text>
+  <text x="208" y="1004" class="warnTitle" style="font-size: 22px;">&#1088;&#1072;&#1079;&#1074;&#1083;&#1077;&#1082;&#1072;&#1090;&#1077;&#1083;&#1100;&#1085;&#1099;&#1081; &#1093;&#1072;&#1088;&#1072;&#1082;&#1090;&#1077;&#1088;</text>
+  <text x="120" y="1068" class="warnBody">&#1055;&#1088;&#1086;&#1094;&#1077;&#1085;&#1090;&#1099; &#1080; &#1090;&#1077;&#1082;&#1089;&#1090;&#1099; &#1085;&#1077; &#1103;&#1074;&#1083;&#1103;&#1102;&#1090;&#1089;&#1103;</text>
+  <text x="120" y="1108" class="warnBody">&#1085;&#1072;&#1091;&#1095;&#1085;&#1099;&#1084; &#1080;&#1083;&#1080; &#1087;&#1088;&#1086;&#1092;&#1077;&#1089;&#1089;&#1080;&#1086;&#1085;&#1072;&#1083;&#1100;&#1085;&#1099;&#1084; &#1089;&#1086;&#1074;&#1077;&#1090;&#1086;&#1084;.</text>
+  <text x="120" y="1148" class="warnBody">&#1069;&#1090;&#1086; &#1080;&#1075;&#1088;&#1072;, &#1072; &#1085;&#1077; &#1087;&#1088;&#1086;&#1075;&#1085;&#1086;&#1079; &#1086;&#1090;&#1085;&#1086;&#1096;&#1077;&#1085;&#1080;&#1081;.</text>
+
+  <!-- Protocol disclaimer strip -->
+  <rect x="72" y="1272" width="936" height="148" rx="32" fill="#E0F2F1" filter="url(#cardShadow)"/>
+  <rect x="120" y="1316" width="48" height="48" rx="14" fill="#FFFFFF"/>
+  <rect x="132" y="1328" width="24" height="6" rx="2" fill="#00796B" opacity="0.5"/>
+  <rect x="132" y="1340" width="18" height="6" rx="2" fill="#00796B" opacity="0.35"/>
+  <circle cx="128" cy="1334" r="6" fill="#E8F5E9"/>
+  <path d="M125 1334 L128 1337 L133 1332" stroke="#2E7D32" stroke-width="2" stroke-linecap="round" fill="none"/>
+  <text x="192" y="1348" class="protoTitle">&#1055;&#1088;&#1086;&#1090;&#1086;&#1082;&#1086;&#1083; &#1083;&#1102;&#1073;&#1074;&#1080; &#8212; &#1090;&#1086;&#1090; &#1078;&#1077; &#1092;&#1086;&#1088;&#1084;&#1072;&#1090;</text>
+  <text x="192" y="1388" class="protoBody">&#1042;&#1077;&#1088;&#1076;&#1080;&#1082;&#1090; &#1080; % &#1085;&#1077; &#1079;&#1072;&#1084;&#1077;&#1085;&#1103;&#1102;&#1090; &#1088;&#1072;&#1079;&#1075;&#1086;&#1074;&#1086;&#1088; &#1089; &#1073;&#1083;&#1080;&#1079;&#1082;&#1080;&#1084;.</text>
+
+  <rect x="72" y="1452" width="450" height="248" rx="38" fill="#FFFBFE" filter="url(#cardShadow)"/>
+  <circle cx="120" cy="1508" r="14" fill="#C2185B"/>
+  <path d="M114 1508 L118 1514 L128 1502" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <text x="152" y="1516" class="title">&#1052;&#1086;&#1078;&#1085;&#1086;</text>
+  <text x="108" y="1564" class="caption">&#1057;&#1084;&#1077;&#1103;&#1090;&#1100;&#1089;&#1103; &#1080; &#1080;&#1075;&#1088;&#1072;&#1090;&#1100;</text>
+  <text x="108" y="1600" class="caption">&#1055;&#1088;&#1086;&#1073;&#1086;&#1074;&#1072;&#1090;&#1100; &#1087;&#1088;&#1086;&#1090;&#1086;&#1082;&#1086;&#1083;</text>
+  <text x="108" y="1636" class="caption">&#1055;&#1088;&#1086;&#1074;&#1077;&#1088;&#1103;&#1090;&#1100; &#1074;&#1089;&#1077; &#1090;&#1077;&#1089;&#1090;&#1099;</text>
+
+  <rect x="558" y="1452" width="450" height="248" rx="38" fill="#FFFBFE" filter="url(#cardShadow)"/>
+  <circle cx="606" cy="1508" r="14" fill="#CAC4D0"/>
+  <path d="M600 1502 L612 1514 M612 1502 L600 1514" stroke="#625B71" stroke-width="3" stroke-linecap="round"/>
+  <text x="638" y="1516" class="title">&#1053;&#1077;&#1083;&#1100;&#1079;&#1103;</text>
+  <text x="594" y="1564" class="caption">&#1057;&#1095;&#1080;&#1090;&#1072;&#1090;&#1100; &#171;&#1087;&#1088;&#1072;&#1074;&#1076;&#1086;&#1081;&#187;</text>
+  <text x="594" y="1600" class="caption">&#1054;&#1073;&#1080;&#1076;&#1072;&#1090;&#1100; &#1074; &#1074;&#1077;&#1088;&#1076;&#1080;&#1082;&#1090;</text>
+  <text x="594" y="1636" class="caption">&#1055;&#1088;&#1080;&#1085;&#1080;&#1084;&#1072;&#1090;&#1100; &#1079;&#1072; &#1092;&#1072;&#1082;&#1090;</text>
+
+  <rect x="72" y="1732" width="936" height="176" rx="38" fill="#FCE4EC" filter="url(#cardShadow)"/>
+  <text x="120" y="1796" class="section" fill="#880E4F">&#1055;&#1054;&#1044;&#1045;&#1051;&#1048;&#1058;&#1045;&#1051;&#1068;&#1057;&#1058;&#1042;&#1054;</text>
+  <text x="120" y="1848" class="title" fill="#880E4F">&#1053;&#1072;&#1078;&#1080;&#1084;&#1072;&#1103; &#171;&#1053;&#1072;&#1095;&#1072;&#1090;&#1100;&#187;, &#1074;&#1099; &#1089;&#1086;&#1075;&#1083;&#1072;&#1096;&#1072;&#1077;&#1090;&#1077;&#1089;&#1100;</text>
+  <text x="120" y="1884" style="font-family: Inter, Roboto, Arial, sans-serif; font-size: 24px; font-weight: 450; fill: #880E4F; opacity: 0.9;">&#1089; &#1088;&#1072;&#1079;&#1074;&#1083;&#1077;&#1082;&#1072;&#1090;&#1077;&#1083;&#1100;&#1085;&#1099;&#1084; &#1093;&#1072;&#1088;&#1072;&#1082;&#1090;&#1077;&#1088;&#1086;&#1084; &#1074;&#1089;&#1077;&#1093; &#1090;&#1077;&#1089;&#1090;&#1086;&#1074;, &#1074;&#1082;&#1083;&#1102;&#1095;&#1072;&#1103; &#1087;&#1088;&#1086;&#1090;&#1086;&#1082;&#1086;&#1083;.</text>
+
+  <rect x="72" y="2172" width="936" height="88" rx="44" fill="#C2185B"/>
+  <text x="540" y="2228" text-anchor="middle" class="buttonText">&#1053;&#1072;&#1095;&#1072;&#1090;&#1100;</text>
+  <circle cx="432" cy="2330" r="9" fill="#CAC4D0"/>
+  <circle cx="486" cy="2330" r="9" fill="#CAC4D0"/>
+  <circle cx="540" cy="2330" r="9" fill="#CAC4D0"/>
+  <circle cx="594" cy="2330" r="9" fill="#C2185B"/>
+</svg>

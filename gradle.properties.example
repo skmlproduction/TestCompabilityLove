@@ -1,0 +1,31 @@
+# Скопируйте в gradle.properties для release-сборки:
+#   cp gradle.properties.example gradle.properties
+
+org.gradle.jvmargs=-Xmx2048m -Dfile.encoding=UTF-8
+org.gradle.parallel=true
+android.useAndroidX=true
+kotlin.code.style=official
+android.nonTransitiveRClass=true
+
+# Политика конфиденциальности (обязательно перед Play)
+# Публичный HTTPS URL — откроется в браузере из Настроек.
+# Fallback без URL: bundled assets/legal/privacy_policy.html (WebView).
+#
+# Варианты хостинга:
+#   1) Свой домен: https://example.com/privacy
+#   2) GitHub Pages (рекомендуется):
+#      ./scripts/setup_github_remote.sh USER REPO
+#      ./scripts/export_privacy_for_hosting.sh
+#      ./scripts/post_privacy_setup.sh https://USER.github.io/REPO/
+#   3) Любой static host (Netlify, Cloudflare Pages)
+lovetest.privacy.policy.url=https://example.com/privacy
+
+# Google Play Billing — product id через запятую
+lovetest.billing.product.ids=remove_ads
+
+# Межстраничная реклама между сессиями (AdMob + UMP consent при enabled=true)
+lovetest.ads.enabled=false
+# Google test IDs по умолчанию; замените на production перед релизом с ads
+# lovetest.admob.app.id=ca-app-pub-xxxxxxxxxxxxxxxx~yyyyyyyyyy
+# lovetest.admob.interstitial.unit.id=ca-app-pub-xxxxxxxxxxxxxxxx/zzzzzzzzzz
+# UMP: настройте GDPR message в AdMob Console → Privacy & messaging

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1080" height="2400" viewBox="0 0 1080 2400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="150%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#1C1B1F" flood-opacity="0.08"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="12" flood-color="#C2185B" flood-opacity="0.14"/>
+    </filter>
+    <linearGradient id="bgGlow" x1="100" y1="0" x2="980" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF0F5"/>
+      <stop offset="0.45" stop-color="#FFFBFE"/>
+      <stop offset="1" stop-color="#FCE4EC"/>
+    </linearGradient>
+    <linearGradient id="heroGradient" x1="72" y1="200" x2="1008" y2="700" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C2185B"/>
+      <stop offset="0.5" stop-color="#E91E63"/>
+      <stop offset="1" stop-color="#F8BBD0"/>
+    </linearGradient>
+    <linearGradient id="ringGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#C2185B"/>
+      <stop offset="1" stop-color="#E91E63"/>
+    </linearGradient>
+    <style type="text/css"><![CDATA[
+      .section { font-family: Inter, Roboto, Arial, sans-serif; font-size: 21px; font-weight: 760; letter-spacing: 3px; fill: #C2185B; }
+      .headline { font-family: Inter, Roboto, Arial, sans-serif; font-size: 40px; font-weight: 800; fill: #1C1B1F; text-anchor: middle; }
+      .percent { font-family: Inter, Roboto, Arial, sans-serif; font-size: 108px; font-weight: 800; fill: #C2185B; text-anchor: middle; }
+      .percentLabel { font-family: Inter, Roboto, Arial, sans-serif; font-size: 32px; font-weight: 700; fill: #E91E63; text-anchor: middle; }
+      .names { font-family: Inter, Roboto, Arial, sans-serif; font-size: 34px; font-weight: 740; fill: #FFFFFF; text-anchor: middle; }
+      .resultTitle { font-family: Inter, Roboto, Arial, sans-serif; font-size: 36px; font-weight: 800; fill: #1C1B1F; }
+      .resultBody { font-family: Inter, Roboto, Arial, sans-serif; font-size: 28px; font-weight: 450; fill: #625B71; }
+      .buttonText { font-family: Inter, Roboto, Arial, sans-serif; font-size: 29px; font-weight: 760; fill: #FFFFFF; }
+      .outlinedText { font-family: Inter, Roboto, Arial, sans-serif; font-size: 27px; font-weight: 680; fill: #C2185B; }
+      .disclaimer { font-family: Inter, Roboto, Arial, sans-serif; font-size: 20px; font-weight: 450; fill: #625B71; text-anchor: middle; }
+      .caption { font-family: Inter, Roboto, Arial, sans-serif; font-size: 21px; font-weight: 470; fill: #625B71; }
+    ]]></style>
+  </defs>
+
+  <rect width="1080" height="2400" fill="url(#bgGlow)"/>
+  <path d="M180 300 C180 260 220 240 250 270 C280 240 320 260 320 300 C320 350 250 400 250 400 C250 400 180 350 180 300 Z" fill="#E91E63" opacity="0.1"/>
+  <path d="M860 240 C860 210 888 196 908 212 C928 196 956 210 956 240 C956 272 908 300 908 300 C908 300 860 272 860 240 Z" fill="#C2185B" opacity="0.12"/>
+  <path d="M100 1500 C100 1480 118 1468 132 1480 C146 1468 164 1480 164 1500 C164 1524 132 1544 132 1544 C132 1544 100 1524 100 1500 Z" fill="#E91E63" opacity="0.08"/>
+
+  <rect x="0" y="0" width="1080" height="96" fill="#FFFBFE" opacity="0.72"/>
+  <text x="78" y="62" class="caption" fill="#1C1B1F">9:41</text>
+  <rect x="892" y="43" width="58" height="22" rx="8" stroke="#1C1B1F" stroke-width="3" opacity="0.72"/>
+  <rect x="955" y="49" width="6" height="10" rx="3" fill="#1C1B1F" opacity="0.72"/>
+  <rect x="900" y="49" width="40" height="10" rx="5" fill="#1C1B1F" opacity="0.72"/>
+
+  <text x="540" y="168" class="headline">&#1056;&#1077;&#1079;&#1091;&#1083;&#1100;&#1090;&#1072;&#1090;</text>
+  <text x="72" y="218" class="section">EKRAN 10 / RESULT HIGH</text>
+
+  <!-- Hero result card -->
+  <rect x="72" y="260" width="936" height="640" rx="48" fill="url(#heroGradient)" filter="url(#cardShadow)"/>
+  <circle cx="820" cy="400" r="100" fill="#FFFFFF" opacity="0.1"/>
+  <circle cx="200" cy="780" r="80" fill="#FFFFFF" opacity="0.08"/>
+
+  <text x="540" y="360" class="names">&#1040;&#1085;&#1085;&#1072; &#10084; &#1052;&#1072;&#1082;&#1089;</text>
+
+  <!-- Percent ring -->
+  <circle cx="540" cy="580" r="150" fill="none" stroke="#FFFFFF" stroke-width="20" opacity="0.35"/>
+  <circle cx="540" cy="580" r="150" fill="none" stroke="#FFFFFF" stroke-width="20" stroke-dasharray="880 940" stroke-linecap="round" transform="rotate(-90 540 580)"/>
+  <circle cx="540" cy="580" r="120" fill="#FFFFFF" opacity="0.2"/>
+
+  <text x="540" y="620" class="percent" fill="#FFFFFF">87%</text>
+  <text x="540" y="680" class="percentLabel" fill="#FFFFFF" opacity="0.95">&#1083;&#1102;&#1073;&#1074;&#1080;</text>
+
+  <rect x="200" y="760" width="680" height="80" rx="32" fill="#FFFFFF" opacity="0.22"/>
+  <text x="540" y="812" text-anchor="middle" style="font-family: Inter, Roboto, Arial, sans-serif; font-size: 28px; font-weight: 760; fill: #FFFFFF;">&#1054;&#1090;&#1083;&#1080;&#1095;&#1085;&#1072;&#1103; &#1087;&#1072;&#1088;&#1072;!</text>
+
+  <!-- Message card -->
+  <rect x="72" y="940" width="936" height="380" rx="38" fill="#FFFBFE" filter="url(#cardShadow)"/>
+  <text x="120" y="1020" class="resultTitle">&#1057;&#1080;&#1083;&#1100;&#1085;&#1072;&#1103; &#1089;&#1074;&#1103;&#1079;&#1100;!</text>
+  <text x="120" y="1080" class="resultBody">&#1042;&#1072;&#1096;&#1080; &#1080;&#1084;&#1077;&#1085;&#1072; &#1089;&#1086;&#1079;&#1074;&#1091;&#1095;&#1072;&#1102;&#1090; &#1075;&#1072;&#1088;&#1084;&#1086;&#1085;&#1080;&#1095;&#1085;&#1086;.</text>
+  <text x="120" y="1124" class="resultBody">&#1045;&#1089;&#1090;&#1100; &#1087;&#1086;&#1090;&#1077;&#1085;&#1094;&#1080;&#1072;&#1083; &#1076;&#1083;&#1103; &#1076;&#1083;&#1080;&#1090;&#1077;&#1083;&#1100;&#1085;&#1099;&#1093;</text>
+  <text x="120" y="1168" class="resultBody">&#1086;&#1090;&#1085;&#1086;&#1096;&#1077;&#1085;&#1080;&#1081; &#8212; &#1085;&#1072;&#1089;&#1083;&#1072;&#1078;&#1076;&#1072;&#1081;&#1090;&#1077;&#1089;&#1100; &#1087;&#1088;&#1086;&#1094;&#1077;&#1089;&#1089;&#1086;&#1084;!</text>
+
+  <rect x="120" y="1220" width="200" height="48" rx="24" fill="#FCE4EC"/>
+  <text x="220" y="1252" text-anchor="middle" style="font-family: Inter, Roboto, Arial, sans-serif; font-size: 22px; font-weight: 700; fill: #880E4F;">&#1042;&#1099;&#1089;&#1086;&#1082;&#1080;&#1081; %</text>
+
+  <!-- Actions -->
+  <rect x="72" y="1360" width="936" height="88" rx="44" fill="#C2185B" filter="url(#cardShadow)"/>
+  <path d="M400 1398 L420 1418 L440 1398" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" fill="none" transform="translate(60 12)"/>
+  <text x="540" y="1418" text-anchor="middle" class="buttonText">&#1055;&#1086;&#1076;&#1077;&#1083;&#1080;&#1090;&#1100;&#1089;&#1103;</text>
+
+  <rect x="72" y="1472" width="936" height="88" rx="44" fill="none" stroke="#C2185B" stroke-width="3"/>
+  <text x="540" y="1530" text-anchor="middle" class="outlinedText">&#1045;&#1097;&#1105; &#1088;&#1072;&#1079; &#1087;&#1088;&#1086;&#1074;&#1077;&#1088;&#1080;&#1090;&#1100;</text>
+
+  <rect x="72" y="1580" width="936" height="88" rx="44" fill="#FCE4EC"/>
+  <text x="540" y="1638" text-anchor="middle" style="font-family: Inter, Roboto, Arial, sans-serif; font-size: 27px; font-weight: 680; fill: #880E4F;">&#1053;&#1072; &#1075;&#1083;&#1072;&#1074;&#1085;&#1091;&#1102;</text>
+
+  <text x="540" y="1720" class="disclaimer">&#1056;&#1077;&#1079;&#1091;&#1083;&#1100;&#1090;&#1072;&#1090; &#1090;&#1086;&#1083;&#1100;&#1082;&#1086; &#1076;&#1083;&#1103; &#1088;&#1072;&#1079;&#1074;&#1083;&#1077;&#1095;&#1077;&#1085;&#1080;&#1103;, &#1085;&#1077; &#1103;&#1074;&#1083;&#1103;&#1077;&#1090;&#1089;&#1103; &#1087;&#1088;&#1086;&#1075;&#1085;&#1086;&#1079;&#1086;&#1084;.</text>
+
+  <!-- Mini share preview -->
+  <rect x="72" y="1780" width="936" height="200" rx="32" fill="#FFFBFE" filter="url(#cardShadow)" stroke="#FCE4EC" stroke-width="2"/>
+  <rect x="120" y="1830" width="120" height="120" rx="24" fill="url(#heroGradient)"/>
+  <text x="180" y="1905" text-anchor="middle" style="font-family: Inter, Roboto, Arial, sans-serif; font-size: 36px; font-weight: 800; fill: #FFFFFF;">87%</text>
+  <text x="280" y="1860" class="resultTitle" style="font-size: 28px;">&#1040;&#1085;&#1085;&#1072; + &#1052;&#1072;&#1082;&#1089;</text>
+  <text x="280" y="1900" class="resultBody" style="font-size: 24px;">Love Tester &#8212; &#1090;&#1077;&#1089;&#1090; &#1085;&#1072; &#1083;&#1102;&#1073;&#1086;&#1074;&#1100;</text>
+  <text x="280" y="1940" class="caption">&#1055;&#1088;&#1077;&#1074;&#1100;&#1102; &#1082;&#1072;&#1088;&#1090;&#1086;&#1095;&#1082;&#1080; &#1076;&#1083;&#1103; Share</text>
+</svg>

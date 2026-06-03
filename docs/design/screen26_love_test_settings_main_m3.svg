@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1080" height="2400" viewBox="0 0 1080 2400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="150%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#1C1B1F" flood-opacity="0.06"/>
+    </filter>
+    <linearGradient id="bgGlow" x1="100" y1="0" x2="980" y2="600" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF0F5"/>
+      <stop offset="0.5" stop-color="#FFFBFE"/>
+      <stop offset="1" stop-color="#FFFBFE"/>
+    </linearGradient>
+    <style type="text/css"><![CDATA[
+      .section { font-family: Inter, Roboto, Arial, sans-serif; font-size: 21px; font-weight: 760; letter-spacing: 3px; fill: #C2185B; }
+      .headline { font-family: Inter, Roboto, Arial, sans-serif; font-size: 48px; font-weight: 800; fill: #1C1B1F; }
+      .groupLabel { font-family: Inter, Roboto, Arial, sans-serif; font-size: 22px; font-weight: 700; fill: #C2185B; letter-spacing: 1px; }
+      .itemTitle { font-family: Inter, Roboto, Arial, sans-serif; font-size: 30px; font-weight: 650; fill: #1C1B1F; }
+      .itemSub { font-family: Inter, Roboto, Arial, sans-serif; font-size: 24px; font-weight: 450; fill: #625B71; }
+      .itemValue { font-family: Inter, Roboto, Arial, sans-serif; font-size: 26px; font-weight: 600; fill: #625B71; }
+      .caption { font-family: Inter, Roboto, Arial, sans-serif; font-size: 21px; font-weight: 470; fill: #625B71; }
+      .backText { font-family: Inter, Roboto, Arial, sans-serif; font-size: 28px; font-weight: 680; fill: #C2185B; }
+      .versionText { font-family: Inter, Roboto, Arial, sans-serif; font-size: 22px; font-weight: 450; fill: #79747E; text-anchor: middle; }
+    ]]></style>
+  </defs>
+
+  <rect width="1080" height="2400" fill="url(#bgGlow)"/>
+
+  <rect x="0" y="0" width="1080" height="96" fill="#FFFBFE" opacity="0.72"/>
+  <text x="78" y="62" class="caption" fill="#1C1B1F">9:41</text>
+  <rect x="892" y="43" width="58" height="22" rx="8" stroke="#1C1B1F" stroke-width="3" opacity="0.72"/>
+  <rect x="955" y="49" width="6" height="10" rx="3" fill="#1C1B1F" opacity="0.72"/>
+  <rect x="900" y="49" width="40" height="10" rx="5" fill="#1C1B1F" opacity="0.72"/>
+
+  <g transform="translate(72 140)">
+    <path d="M48 24 L12 24 L30 6 Z" fill="#C2185B" transform="rotate(-90 30 15)"/>
+    <text x="72" y="36" class="backText">&#1053;&#1072;&#1079;&#1072;&#1076;</text>
+  </g>
+  <text x="72" y="220" class="headline">&#1053;&#1072;&#1089;&#1090;&#1088;&#1086;&#1081;&#1082;&#1080;</text>
+  <text x="72" y="268" class="section">EKRAN 26 / SETTINGS</text>
+
+  <!-- Premium group -->
+  <text x="72" y="340" class="groupLabel">&#1055;&#1056;&#1045;&#1052;&#1048;&#1059;&#1052;</text>
+  <rect x="72" y="360" width="936" height="280" rx="32" fill="#FFFBFE" filter="url(#cardShadow)"/>
+
+  <rect x="120" y="400" width="56" height="56" rx="16" fill="#FFF8E1"/>
+  <path d="M140 420 L148 412 L156 420 L152 436 L144 436 Z" fill="#FF8F00"/>
+  <text x="200" y="428" class="itemTitle">Love Tester Premium</text>
+  <text x="200" y="464" class="itemSub">&#1041;&#1077;&#1079; &#1088;&#1077;&#1082;&#1083;&#1072;&#1084;&#1099;</text>
+  <path d="M920 432 L940 432 L930 452 Z" fill="#C2185B" transform="rotate(90 930 442)"/>
+
+  <line x1="120" y1="520" x2="960" y2="520" stroke="#E7E0EC" stroke-width="2"/>
+
+  <rect x="120" y="540" width="56" height="56" rx="16" fill="#F3EDF7"/>
+  <path d="M148 552 A20 20 0 1 0 160 576" stroke="#6750A4" stroke-width="4" stroke-linecap="round" fill="none"/>
+  <path d="M152 548 L160 556 L152 564" stroke="#6750A4" stroke-width="4" stroke-linecap="round" fill="none"/>
+  <text x="200" y="568" class="itemTitle">&#1042;&#1086;&#1089;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1080;&#1090;&#1100; &#1087;&#1086;&#1082;&#1091;&#1087;&#1082;&#1080;</text>
+  <path d="M920 572 L940 572 L930 592 Z" fill="#625B71" opacity="0.5" transform="rotate(90 930 582)"/>
+
+  <!-- App group -->
+  <text x="72" y="700" class="groupLabel">&#1055;&#1056;&#1048;&#1051;&#1054;&#1046;&#1045;&#1053;&#1048;&#1045;</text>
+  <rect x="72" y="720" width="936" height="400" rx="32" fill="#FFFBFE" filter="url(#cardShadow)"/>
+
+  <rect x="120" y="760" width="56" height="56" rx="16" fill="#FCE4EC"/>
+  <path d="M136 780 L152 796 L168 780" stroke="#C2185B" stroke-width="4" stroke-linecap="round" fill="none"/>
+  <text x="200" y="788" class="itemTitle">&#1055;&#1086;&#1074;&#1090;&#1086;&#1088;&#1080;&#1090;&#1100; &#1086;&#1085;&#1073;&#1086;&#1088;&#1076;&#1080;&#1085;&#1075;</text>
+  <text x="200" y="824" class="itemSub">3 &#1089;&#1083;&#1072;&#1081;&#1076;&#1072; &#1087;&#1088;&#1080;&#1074;&#1077;&#1090;&#1089;&#1090;&#1074;&#1080;&#1103;</text>
+  <path d="M920 792 L940 792 L930 812 Z" fill="#625B71" opacity="0.5" transform="rotate(90 930 802)"/>
+
+  <line x1="120" y1="880" x2="960" y2="880" stroke="#E7E0EC" stroke-width="2"/>
+
+  <rect x="120" y="900" width="56" height="56" rx="16" fill="#FCE4EC"/>
+  <text x="148" y="938" text-anchor="middle" style="font-family: Inter, Roboto, Arial, sans-serif; font-size: 24px; font-weight: 800; fill: #C2185B;">RU</text>
+  <text x="200" y="928" class="itemTitle">&#1071;&#1079;&#1099;&#1082;</text>
+  <text x="820" y="932" class="itemValue">&#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081;</text>
+  <path d="M920 932 L940 932 L930 952 Z" fill="#625B71" opacity="0.5" transform="rotate(90 930 942)"/>
+
+  <line x1="120" y1="1000" x2="960" y2="1000" stroke="#E7E0EC" stroke-width="2"/>
+
+  <rect x="120" y="1020" width="56" height="56" rx="16" fill="#F3EDF7"/>
+  <circle cx="148" cy="1048" r="18" fill="none" stroke="#625B71" stroke-width="3"/>
+  <text x="148" y="1054" text-anchor="middle" style="font-family: Inter, Roboto, Arial, sans-serif; font-size: 18px; font-weight: 700; fill: #625B71;">i</text>
+  <text x="200" y="1048" class="itemTitle">&#1054; &#1087;&#1088;&#1080;&#1083;&#1086;&#1078;&#1077;&#1085;&#1080;&#1080;</text>
+  <text x="200" y="1084" class="itemSub">Love Tester &#183; v1.0.0 (MVP)</text>
+
+  <!-- Legal group -->
+  <text x="72" y="1180" class="groupLabel">&#1070;&#1056;&#1048;&#1044;&#1048;&#1063;&#1045;&#1057;&#1050;&#1054;&#1045;</text>
+  <rect x="72" y="1200" width="936" height="280" rx="32" fill="#FFFBFE" filter="url(#cardShadow)"/>
+
+  <rect x="120" y="1240" width="56" height="56" rx="16" fill="#E8EAF6"/>
+  <path d="M136 1260 L148 1248 L160 1260 L148 1288 Z" fill="#512DA8"/>
+  <text x="200" y="1268" class="itemTitle">&#1055;&#1086;&#1083;&#1080;&#1090;&#1080;&#1082;&#1072; &#1082;&#1086;&#1085;&#1092;&#1080;&#1076;&#1077;&#1085;&#1094;&#1080;&#1072;&#1083;&#1100;&#1085;&#1086;&#1089;&#1090;&#1080;</text>
+  <text x="200" y="1304" class="itemSub">&#1054;&#1090;&#1082;&#1088;&#1086;&#1077;&#1090;&#1089;&#1103; &#1074; &#1073;&#1088;&#1072;&#1091;&#1079;&#1077;&#1088;&#1077;</text>
+  <path d="M920 1272 L940 1272 L930 1292 Z" fill="#625B71" opacity="0.5" transform="rotate(90 930 1282)"/>
+
+  <line x1="120" y1="1360" x2="960" y2="1360" stroke="#E7E0EC" stroke-width="2"/>
+
+  <rect x="120" y="1380" width="56" height="56" rx="16" fill="#E8EAF6"/>
+  <rect x="136" y="1396" width="24" height="28" rx="4" fill="none" stroke="#512DA8" stroke-width="3"/>
+  <line x1="142" y1="1402" x2="154" y2="1402" stroke="#512DA8" stroke-width="3"/>
+  <text x="200" y="1408" class="itemTitle">&#1057;&#1073;&#1086;&#1088; &#1076;&#1072;&#1085;&#1085;&#1099;&#1093;</text>
+  <text x="200" y="1444" class="itemSub">&#1050;&#1088;&#1072;&#1090;&#1082;&#1086; &#1086; &#1076;&#1072;&#1085;&#1085;&#1099;&#1093; (Play Console)</text>
+  <path d="M920 1412 L940 1412 L930 1432 Z" fill="#625B71" opacity="0.5" transform="rotate(90 930 1422)"/>
+
+  <!-- Disclaimer card -->
+  <rect x="72" y="1540" width="936" height="160" rx="28" fill="#FCE4EC"/>
+  <text x="120" y="1600" class="itemSub" fill="#880E4F" style="font-size: 26px;">&#1056;&#1077;&#1079;&#1091;&#1083;&#1100;&#1090;&#1072;&#1090;&#1099; &#1090;&#1077;&#1089;&#1090;&#1086;&#1074; &#8212; &#1090;&#1086;&#1083;&#1100;&#1082;&#1086; &#1076;&#1083;&#1103; &#1088;&#1072;&#1079;&#1074;&#1083;&#1077;&#1095;&#1077;&#1085;&#1080;&#1103;.</text>
+  <text x="120" y="1644" class="caption" fill="#880E4F">&#1053;&#1077; &#1103;&#1074;&#1083;&#1103;&#1102;&#1090;&#1089;&#1103; &#1085;&#1072;&#1091;&#1095;&#1085;&#1099;&#1084; &#1087;&#1088;&#1086;&#1075;&#1085;&#1086;&#1079;&#1086;&#1084;.</text>
+
+  <text x="540" y="1780" class="versionText">dev.lovetest.app &#183; build MVP</text>
+  <text x="540" y="1820" class="versionText">&#1055;&#1086;&#1076;&#1076;&#1077;&#1088;&#1078;&#1082;&#1072;: support@lovetest.app</text>
+</svg>

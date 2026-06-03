@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1080" height="2400" viewBox="0 0 1080 2400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="150%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#1C1B1F" flood-opacity="0.08"/>
+      <feDropShadow dx="0" dy="2" stdDeviation="7" flood-color="#6750A4" flood-opacity="0.12"/>
+    </filter>
+    <linearGradient id="bgGlow" x1="100" y1="0" x2="980" y2="700" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8F5FF"/>
+      <stop offset="0.5" stop-color="#FFFBFE"/>
+      <stop offset="1" stop-color="#F3EDF7"/>
+    </linearGradient>
+    <linearGradient id="heroGradient" x1="72" y1="200" x2="1008" y2="520" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4A148C"/>
+      <stop offset="0.45" stop-color="#6750A4"/>
+      <stop offset="1" stop-color="#E8DEF8"/>
+    </linearGradient>
+    <style type="text/css"><![CDATA[
+      .section { font-family: Inter, Roboto, Arial, sans-serif; font-size: 21px; font-weight: 760; letter-spacing: 3px; fill: #6750A4; }
+      .headline { font-family: Inter, Roboto, Arial, sans-serif; font-size: 48px; font-weight: 800; letter-spacing: -1px; fill: #1C1B1F; }
+      .body { font-family: Inter, Roboto, Arial, sans-serif; font-size: 28px; font-weight: 450; fill: #625B71; }
+      .heroTitle { font-family: Inter, Roboto, Arial, sans-serif; font-size: 36px; font-weight: 830; fill: #FFFFFF; }
+      .heroBody { font-family: Inter, Roboto, Arial, sans-serif; font-size: 24px; font-weight: 450; fill: #FFFFFF; opacity: 0.92; }
+      .fieldLabel { font-family: Inter, Roboto, Arial, sans-serif; font-size: 24px; font-weight: 650; fill: #6750A4; }
+      .fieldText { font-family: Inter, Roboto, Arial, sans-serif; font-size: 32px; font-weight: 520; fill: #1C1B1F; }
+      .fieldHint { font-family: Inter, Roboto, Arial, sans-serif; font-size: 22px; font-weight: 450; fill: #625B71; }
+      .buttonText { font-family: Inter, Roboto, Arial, sans-serif; font-size: 29px; font-weight: 760; fill: #FFFFFF; }
+      .caption { font-family: Inter, Roboto, Arial, sans-serif; font-size: 21px; font-weight: 470; fill: #625B71; }
+      .backText { font-family: Inter, Roboto, Arial, sans-serif; font-size: 28px; font-weight: 680; fill: #6750A4; }
+      .letterTile { font-family: Inter, Roboto, Arial, sans-serif; font-size: 28px; font-weight: 800; fill: #6750A4; text-anchor: middle; }
+    ]]></style>
+  </defs>
+
+  <rect width="1080" height="2400" fill="url(#bgGlow)"/>
+  <circle cx="880" cy="200" r="170" fill="#E8DEF8" opacity="0.6"/>
+  <circle cx="120" cy="1850" r="200" fill="#FCE4EC" opacity="0.3"/>
+
+  <rect x="0" y="0" width="1080" height="96" fill="#FFFBFE" opacity="0.72"/>
+  <text x="78" y="62" class="caption" fill="#1C1B1F">9:41</text>
+  <rect x="892" y="43" width="58" height="22" rx="8" stroke="#1C1B1F" stroke-width="3" opacity="0.72"/>
+  <rect x="955" y="49" width="6" height="10" rx="3" fill="#1C1B1F" opacity="0.72"/>
+  <rect x="900" y="49" width="40" height="10" rx="5" fill="#1C1B1F" opacity="0.72"/>
+
+  <g transform="translate(72 140)">
+    <path d="M48 24 L12 24 L30 6 Z" fill="#6750A4" transform="rotate(-90 30 15)"/>
+    <text x="72" y="36" class="backText">&#1053;&#1072;&#1079;&#1072;&#1076;</text>
+  </g>
+  <text x="540" y="176" text-anchor="middle" class="headline" style="font-size: 34px;">&#1058;&#1077;&#1089;&#1090; &#1087;&#1086; &#1073;&#1091;&#1082;&#1074;&#1072;&#1084;</text>
+  <text x="72" y="228" class="section">EKRAN 18 / LETTERS INPUT</text>
+
+  <!-- Hero: Aa tiles -->
+  <rect x="72" y="260" width="936" height="240" rx="46" fill="url(#heroGradient)" filter="url(#cardShadow)"/>
+  <rect x="720" y="300" width="56" height="56" rx="14" fill="#FFFFFF" opacity="0.25"/>
+  <text x="748" y="340" class="letterTile" fill="#FFFFFF">A</text>
+  <rect x="788" y="340" width="56" height="56" rx="14" fill="#FFFFFF" opacity="0.2"/>
+  <text x="816" y="380" class="letterTile" fill="#FFFFFF">Z</text>
+  <rect x="848" y="380" width="48" height="48" rx="12" fill="#FFFFFF" opacity="0.15"/>
+  <text x="872" y="414" style="font-family: Inter, Roboto, Arial, sans-serif; font-size: 22px; font-weight: 800; fill: #FFFFFF; text-anchor: middle;">a</text>
+  <text x="120" y="340" class="heroTitle">&#1057;&#1080;&#1084;&#1074;&#1086;&#1083;&#1099; &#1080; &#1073;&#1091;&#1082;&#1074;&#1099;</text>
+  <text x="120" y="388" class="heroBody">&#1042;&#1074;&#1077;&#1076;&#1080;&#1090;&#1077; &#1076;&#1074;&#1072; &#1089;&#1083;&#1086;&#1074;&#1072; &#1080;&#1083;&#1080; &#1080;&#1084;&#1077;&#1085;&#1080; &#8212;</text>
+  <text x="120" y="420" class="heroBody">&#1087;&#1086;&#1083;&#1091;&#1095;&#1080;&#1090;&#1077; &#1089;&#1082;&#1088;&#1099;&#1090;&#1086;&#1077; &#1087;&#1086;&#1089;&#1083;&#1072;&#1085;&#1080;&#1077;.</text>
+  <rect x="760" y="440" width="180" height="44" rx="22" fill="#FFFFFF" opacity="0.22"/>
+  <text x="850" y="472" text-anchor="middle" style="font-family: Inter, Roboto, Arial, sans-serif; font-size: 22px; font-weight: 760; fill: #FFFFFF;">&#1058;&#1077;&#1089;&#1090; &#8470;5</text>
+
+  <!-- Letter stream preview -->
+  <rect x="72" y="540" width="936" height="140" rx="32" fill="#FFFBFE" filter="url(#cardShadow)"/>
+  <rect x="120" y="590" width="48" height="48" rx="12" fill="#E8DEF8"/>
+  <text x="144" y="624" class="letterTile">L</text>
+  <rect x="180" y="590" width="48" height="48" rx="12" fill="#E8DEF8"/>
+  <text x="204" y="624" class="letterTile">O</text>
+  <rect x="240" y="590" width="48" height="48" rx="12" fill="#FCE4EC"/>
+  <text x="264" y="624" class="letterTile" fill="#C2185B">V</text>
+  <rect x="300" y="590" width="48" height="48" rx="12" fill="#E8DEF8"/>
+  <text x="324" y="624" class="letterTile">E</text>
+  <text x="400" y="624" class="fieldHint">+</text>
+  <rect x="440" y="590" width="48" height="48" rx="12" fill="#F3EDF7"/>
+  <text x="464" y="624" class="letterTile" fill="#49454F">?</text>
+  <text x="520" y="624" class="fieldHint">&#8594; &#1088;&#1072;&#1089;&#1096;&#1080;&#1092;&#1088;&#1086;&#1074;&#1082;&#1072; &#1085;&#1072; &#1101;&#1082;&#1088;&#1072;&#1085;&#1077; &#1088;&#1077;&#1079;&#1091;&#1083;&#1100;&#1090;&#1072;&#1090;&#1072;</text>
+
+  <!-- Form -->
+  <rect x="72" y="720" width="936" height="600" rx="38" fill="#FFFBFE" filter="url(#cardShadow)"/>
+
+  <text x="120" y="800" class="fieldLabel">&#1055;&#1077;&#1088;&#1074;&#1086;&#1077; &#1089;&#1083;&#1086;&#1074;&#1086;</text>
+  <rect x="120" y="820" width="840" height="96" rx="28" fill="#FFFFFF" stroke="#6750A4" stroke-width="3"/>
+  <text x="152" y="882" class="fieldText">&#1051;&#1070;&#1041;&#1054;&#1042;&#1068;</text>
+
+  <text x="120" y="980" class="fieldLabel">&#1042;&#1090;&#1086;&#1088;&#1086;&#1077; &#1089;&#1083;&#1086;&#1074;&#1086;</text>
+  <rect x="120" y="1000" width="840" height="96" rx="28" fill="#FFFFFF" stroke="#CAC4D0" stroke-width="2"/>
+  <text x="152" y="1062" class="fieldHint">&#1053;&#1072;&#1087;&#1088;&#1080;&#1084;&#1077;&#1088;, &#1057;&#1063;&#1040;&#1057;&#1058;&#1068;&#8230;</text>
+
+  <rect x="120" y="1140" width="840" height="100" rx="24" fill="#F3EDF7"/>
+  <text x="152" y="1188" class="body" style="font-size: 26px;">&#1052;&#1086;&#1078;&#1085;&#1086; &#1080;&#1084;&#1103;, &#1085;&#1080;&#1082; &#1080;&#1083;&#1080; &#1082;&#1086;&#1088;&#1086;&#1090;&#1082;&#1086;&#1077; &#1089;&#1083;&#1086;&#1074;&#1086;.</text>
+  <text x="152" y="1224" class="caption">&#1050;&#1080;&#1088;&#1080;&#1083;&#1083;&#1080;&#1094;&#1072; &#1080; &#1083;&#1072;&#1090;&#1080;&#1085;&#1080;&#1094;&#1072;.</text>
+
+  <text x="120" y="1280" class="fieldHint">&#1043;&#1086;&#1090;&#1086;&#1074;&#1099;&#1077; &#1087;&#1088;&#1080;&#1084;&#1077;&#1088;&#1099;:</text>
+  <rect x="120" y="1300" width="360" height="48" rx="24" fill="#E8DEF8"/>
+  <text x="300" y="1332" text-anchor="middle" class="fieldHint" fill="#4A148C">&#1051;&#1070;&#1041;&#1054;&#1042;&#1068; + &#1057;&#1063;&#1040;&#1057;&#1058;&#1068;</text>
+
+  <!-- CTA -->
+  <rect x="72" y="1380" width="936" height="96" rx="48" fill="#C2185B" filter="url(#cardShadow)"/>
+  <text x="540" y="1438" text-anchor="middle" class="buttonText">&#1056;&#1072;&#1089;&#1096;&#1080;&#1092;&#1088;&#1086;&#1074;&#1072;&#1090;&#1100; &#1073;&#1091;&#1082;&#1074;&#1099;</text>
+
+  <!-- Keyboard -->
+  <rect x="0" y="1520" width="1080" height="520" rx="0" fill="#F3EDF7" opacity="0.95"/>
+  <line x1="0" y1="1520" x2="1080" y2="1520" stroke="#E7E0EC" stroke-width="2"/>
+  <text x="540" y="1580" text-anchor="middle" class="caption">&#1057;&#1080;&#1089;&#1090;&#1077;&#1084;&#1085;&#1072;&#1103; &#1082;&#1083;&#1072;&#1074;&#1080;&#1072;&#1090;&#1091;&#1088;&#1072; (IME)</text>
+  <rect x="48" y="1620" width="96" height="72" rx="12" fill="#FFFFFF"/>
+  <rect x="160" y="1620" width="96" height="72" rx="12" fill="#FFFFFF"/>
+  <rect x="272" y="1620" width="96" height="72" rx="12" fill="#FFFFFF"/>
+  <rect x="384" y="1620" width="96" height="72" rx="12" fill="#FFFFFF"/>
+  <rect x="496" y="1620" width="96" height="72" rx="12" fill="#FFFFFF"/>
+  <rect x="608" y="1620" width="96" height="72" rx="12" fill="#FFFFFF"/>
+  <rect x="720" y="1620" width="96" height="72" rx="12" fill="#FFFFFF"/>
+  <rect x="832" y="1620" width="96" height="72" rx="12" fill="#FFFFFF"/>
+  <rect x="780" y="1880" width="252" height="72" rx="16" fill="#6750A4" opacity="0.5"/>
+  <text x="906" y="1928" text-anchor="middle" style="font-family: Inter, Roboto, Arial, sans-serif; font-size: 22px; font-weight: 700; fill: #FFFFFF;">&#1043;&#1086;&#1090;&#1086;&#1074;&#1086;</text>
+</svg>

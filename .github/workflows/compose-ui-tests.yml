@@ -1,0 +1,64 @@
+# Compose UI tests на эмуляторе (workflow_dispatch, self-hosted runner с adb).
+name: Compose UI tests
+
+on:
+  workflow_dispatch:
+    inputs:
+      require_device:
+        description: "Fail if adb/device unavailable"
+        required: true
+        default: true
+        type: boolean
+
+jobs:
+  compose-ui:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - name: Gradle cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - name: Check adb
+        id: adb
+        run: |
+          if command -v adb >/dev/null 2>&1 && adb devices | grep -E '\tdevice$' >/dev/null; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+            adb devices -l
+          else
+            echo "available=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::adb недоступен — локально: ./scripts/run_compose_ui_tests.sh"
+          fi
+      - name: Fail without device
+        if: inputs.require_device && steps.adb.outputs.available != 'true'
+        run: |
+          echo "adb device required. Use self-hosted runner or run ./scripts/run_compose_ui_tests.sh locally." >&2
+          exit 1
+      - name: Test inventory gate
+        run: ./gradlew verifyTestInventoryLoveTest --no-daemon -q
+      - name: Compile androidTest
+        run: ./gradlew :app:compileDebugAndroidTestKotlin --no-daemon -q
+      - name: Route smoke (optional, if adb)
+        if: steps.adb.outputs.available == 'true'
+        run: ./gradlew :app:connectedDebugAndroidTest --tests "dev.lovetest.app.DebugStartRouteInstrumentedTest" --no-daemon -q
+      - name: Connected Compose UI tests
+        if: steps.adb.outputs.available == 'true'
+        run: ./gradlew :app:connectedDebugAndroidTest --no-daemon
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: compose-ui-reports
+          path: |
+            app/build/reports/androidTests/
+            app/build/outputs/androidTest-results/
+          if-no-files-found: ignore

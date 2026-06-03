@@ -1,0 +1,36 @@
+from_screen,from_route_or_id,user_action_or_event,to_screen,to_route_or_id,condition_notes
+launcher,START,icon tap,splash_brand,splash,cold start
+splash,splash,timeout / ready,onboarding_welcome,onboarding,first launch; onboarding not completed
+splash,splash,timeout / ready,consent_ads_gdpr,consent,first launch after onboarding; ADS_ENABLED + need UMP
+splash,splash,timeout / ready,hub_main,hub,returning user; consent ok or ads off
+onboarding_welcome,onboarding,tap Далее,onboarding_tests,onboarding,pager page 1
+onboarding_tests,onboarding,tap Далее,onboarding_disclaimer,onboarding,pager page 2
+onboarding_disclaimer,onboarding,tap Начать / Пропустить,hub_main,hub,mark onboarding completed
+consent_ads_gdpr,consent,tap Принять,hub_main,hub,consent stored
+hub_main,hub,tap карточка «Тест на любовь»,love_test_input,love_test/input,
+hub_main,hub,tap «Калькулятор»,calculator_input,calculator/input,
+hub_main,hub,tap «Пара»,pair_input,pair/input,
+hub_main,hub,tap «Победа в любви»,victory_input,victory/input,
+hub_main,hub,tap «По буквам»,letters_input,letters/input,
+hub_main,hub,tap «Зодиак»,zodiac_pick,zodiac/pick,
+hub_main,hub,tap «Колесо»,wheel_spin,wheel/spin,
+hub_main,hub,tap Настройки,settings_main,settings,
+hub_main,hub,tap Premium / баннер,premium_paywall,premium/paywall,
+love_test_input,love_test/input,tap Рассчитать,love_test_calculating,love_test/calculating,names valid
+love_test_calculating,love_test/calculating,animation done,love_test_result,love_test/result,percent >= threshold
+love_test_calculating,love_test/calculating,animation done,love_test_result_low,love_test/result,percent < threshold
+love_test_result,love_test/result,tap Поделиться,share_result_card,N/A,ACTION_SEND
+love_test_result,love_test/result,system back,hub_main,hub,
+calculator_input,calculator/input,tap CTA,calculator_result,calculator/result,
+pair_input,pair/input,tap CTA,pair_result,pair/result,
+victory_input,victory/input,tap CTA,victory_result,victory/result,
+letters_input,letters/input,tap CTA,letters_result,letters/result,
+zodiac_pick,zodiac/pick,tap CTA,zodiac_result,zodiac/result,
+wheel_spin,wheel/spin,tap Крутить,wheel_result,wheel/result,
+premium_paywall,premium/paywall,purchase success,premium_thank_you,premium/thank_you,
+premium_paywall,premium/paywall,restore success,hub_main,hub,isPremium
+settings_main,settings,tap Политика,external browser,N/A,ACTION_VIEW privacy URL
+settings_main,settings,tap Повтор онбординга,onboarding_welcome,onboarding,clear onboarding flag
+settings_main,settings,system back,hub_main,hub,
+hub_main,hub,network error banner,error_network,hub,optional; ADS_ENABLED remote config fail
+hub_main,hub,after test (ads),ad_interstitial_placeholder,N/A,interstitial between sessions; v2

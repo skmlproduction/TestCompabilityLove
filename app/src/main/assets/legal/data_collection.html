@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Love Tester — Data collection</title>
+  <style>
+    body { font-family: system-ui, sans-serif; line-height: 1.5; padding: 16px; max-width: 720px; margin: 0 auto; color: #1c1b1f; }
+    h1 { font-size: 1.35rem; color: #c2185b; }
+    h2 { font-size: 1.1rem; margin-top: 1.25rem; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-top: 8px; }
+    th, td { border: 1px solid #cac4d0; padding: 8px; text-align: left; vertical-align: top; }
+    th { background: #fce4ec; }
+  </style>
+</head>
+<body>
+  <h1>Сводка данных / Data summary</h1>
+  <p>Краткая справка для раздела Data safety в Google Play Console (Love Tester MVP).</p>
+
+  <h2>Русский</h2>
+  <table>
+    <tr><th>Категория</th><th>Собирается?</th><th>Куда</th></tr>
+    <tr><td>Имена в тестах (включая протокол любви)</td><td>Локально на устройстве (опциональный кэш)</td><td>Не передаётся на наш сервер; можно удалить в Настройках</td></tr>
+    <tr><td>Настройки (онбординг, consent, premium)</td><td>DataStore на устройстве</td><td>Локально</td></tr>
+    <tr><td>Покупки Premium</td><td>Google Play</td><td>Обработка Google</td></tr>
+    <tr><td>Реклама / Advertising ID</td><td><strong>Нет в v1.0</strong> (ads выключены). Позже — только при consent (UMP)</td><td>Google AdMob и партнёры (если включат в обновлении)</td></tr>
+    <tr><td>Crash / analytics</td><td>Нет в MVP</td><td>—</td></tr>
+  </table>
+
+  <h2>English</h2>
+  <table>
+    <tr><th>Category</th><th>Collected?</th><th>Where</th></tr>
+    <tr><td>Test names (incl. love protocol)</td><td>On device only (optional cache)</td><td>Not sent to our servers; clear in Settings</td></tr>
+    <tr><td>Settings (onboarding, consent, premium)</td><td>Device DataStore</td><td>Local</td></tr>
+    <tr><td>Premium purchases</td><td>Google Play</td><td>Processed by Google</td></tr>
+    <tr><td>Ads / Advertising ID</td><td><strong>Not in v1.0</strong> (ads off). Later — only with UMP consent</td><td>Google AdMob and partners (if enabled in an update)</td></tr>
+    <tr><td>Crash / analytics</td><td>Not in MVP</td><td>—</td></tr>
+  </table>
+</body>
+</html>

@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - name: Gradle cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - name: F6 audit (fail on P0)
+        run: |
+          python3 -m py_compile scripts/audit_screens_matrix.py scripts/verify_ui_inventory.py scripts/apply_emulator_screenshot_artifact.py
+          python3 scripts/audit_screens_matrix.py --write docs/product/AUDIT_REPORT.md
+      - name: Validate git staging (.gitignore)
+        run: bash scripts/validate_git_staging_cached.sh
+      - name: Verify Love Tester
+        run: ./gradlew verifyLoveTest --no-daemon
+      - name: Ads-enabled compile smoke
+        run: ./gradlew verifyAdsBuildLoveTest --no-daemon
+      - name: Test inventory summary
+        run: ./gradlew countTestsLoveTest --no-daemon -q
+      - name: Store PNG gate
+        run: python3 scripts/verify_ui_inventory.py --require-screenshots --fail-on-placeholders
+      - name: Upload audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-report
+          path: docs/product/AUDIT_REPORT.md
+          if-no-files-found: ignore

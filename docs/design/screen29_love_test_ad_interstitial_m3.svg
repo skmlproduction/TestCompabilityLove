@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1080" height="2400" viewBox="0 0 1080 2400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#000000" flood-opacity="0.15"/>
+    </filter>
+    <style type="text/css"><![CDATA[
+      .section { font-family: Inter, Roboto, Arial, sans-serif; font-size: 21px; font-weight: 760; letter-spacing: 3px; fill: #FFFFFF; opacity: 0.5; }
+      .adLabel { font-family: Inter, Roboto, Arial, sans-serif; font-size: 22px; font-weight: 700; fill: #FFFFFF; letter-spacing: 2px; }
+      .placeholderTitle { font-family: Inter, Roboto, Arial, sans-serif; font-size: 36px; font-weight: 700; fill: #49454F; text-anchor: middle; }
+      .placeholderSub { font-family: Inter, Roboto, Arial, sans-serif; font-size: 26px; font-weight: 450; fill: #79747E; text-anchor: middle; }
+      .closeText { font-family: Inter, Roboto, Arial, sans-serif; font-size: 24px; font-weight: 700; fill: #FFFFFF; }
+      .countdown { font-family: Inter, Roboto, Arial, sans-serif; font-size: 22px; font-weight: 600; fill: #FFFFFF; opacity: 0.85; }
+      .premiumHint { font-family: Inter, Roboto, Arial, sans-serif; font-size: 26px; font-weight: 680; fill: #F8BBD0; text-anchor: middle; }
+      .caption { font-family: Inter, Roboto, Arial, sans-serif; font-size: 20px; font-weight: 450; fill: #FFFFFF; text-anchor: middle; opacity: 0.45; }
+    ]]></style>
+  </defs>
+
+  <!-- Fullscreen interstitial backdrop -->
+  <rect width="1080" height="2400" fill="#1C1B1F"/>
+
+  <rect x="0" y="0" width="1080" height="96" fill="#000000" opacity="0.25"/>
+  <text x="78" y="62" style="font-family: Inter, Roboto, Arial, sans-serif; font-size: 21px; fill: #FFFFFF; opacity: 0.6;">9:41</text>
+
+  <text x="72" y="160" class="section">EKRAN 29 / AD INTERSTITIAL</text>
+
+  <!-- Top bar: Ad badge + close -->
+  <rect x="48" y="120" width="120" height="44" rx="8" fill="#49454F"/>
+  <text x="108" y="152" text-anchor="middle" class="adLabel">&#1056;&#1045;&#1050;&#1051;&#1040;&#1052;&#1040;</text>
+
+  <rect x="780" y="112" width="252" height="56" rx="28" fill="#49454F" opacity="0.9"/>
+  <text x="906" y="148" text-anchor="middle" class="closeText">&#1047;&#1072;&#1082;&#1088;&#1099;&#1090;&#1100; 5</text>
+
+  <!-- Main ad creative area (placeholder) -->
+  <rect x="48" y="200" width="984" height="1680" rx="16" fill="#E7E0EC" filter="url(#cardShadow)"/>
+
+  <rect x="48" y="200" width="984" height="1680" rx="16" fill="none" stroke="#CAC4D0" stroke-width="4" stroke-dasharray="16 12"/>
+
+  <g transform="translate(540 900)">
+    <rect x="-200" y="-120" width="400" height="240" rx="24" fill="#CAC4D0"/>
+    <rect x="-160" y="-80" width="120" height="120" rx="16" fill="#E7E0EC"/>
+    <rect x="-20" y="-40" width="200" height="24" rx="8" fill="#E7E0EC"/>
+    <rect x="-20" y="0" width="160" height="24" rx="8" fill="#E7E0EC"/>
+    <rect x="-20" y="40" width="120" height="24" rx="8" fill="#E7E0EC"/>
+  </g>
+
+  <text x="540" y="1100" class="placeholderTitle">&#1052;&#1077;&#1078;&#1089;&#1090;&#1088;&#1072;&#1085;&#1080;&#1095;&#1085;&#1072;&#1103; &#1088;&#1077;&#1082;&#1083;&#1072;&#1084;&#1072;</text>
+  <text x="540" y="1160" class="placeholderSub">984 x 1680 &#183; AdMob mediation</text>
+  <text x="540" y="1220" class="placeholderSub">&#1052;&#1072;&#1082;&#1077;&#1090; Store / QA</text>
+
+  <!-- CTA mock in ad -->
+  <rect x="240" y="1280" width="600" height="88" rx="44" fill="#4285F4"/>
+  <text x="540" y="1338" text-anchor="middle" style="font-family: Inter, Roboto, Arial, sans-serif; font-size: 28px; font-weight: 700; fill: #FFFFFF;">&#1059;&#1079;&#1085;&#1072;&#1090;&#1100; &#1073;&#1086;&#1083;&#1100;&#1096;&#1077;</text>
+
+  <!-- Bottom: premium escape -->
+  <rect x="48" y="1920" width="984" height="120" rx="24" fill="#C2185B" opacity="0.85"/>
+  <path d="M120 1960 C120 1942 134 1930 148 1942 C162 1930 176 1942 176 1960 C176 1982 148 1998 148 1998 C148 1998 120 1982 120 1960 Z" fill="#FFFFFF" opacity="0.9"/>
+  <text x="200" y="1990" class="premiumHint" style="text-anchor: start; font-size: 28px; fill: #FFFFFF;">Premium &#8212; &#1091;&#1073;&#1088;&#1072;&#1090;&#1100; &#1088;&#1077;&#1082;&#1082;&#1072;&#1084;&#1091;</text>
+  <path d="M920 1980 L940 1980 L930 2000 Z" fill="#FFFFFF" transform="rotate(90 930 1990)"/>
+
+  <text x="540" y="2120" class="caption">&#1055;&#1086;&#1082;&#1072;&#1079;&#1099;&#1074;&#1072;&#1077;&#1090;&#1089;&#1103; &#1084;&#1077;&#1078;&#1076;&#1091; &#1089;&#1077;&#1089;&#1089;&#1080;&#1103;&#1084;&#1080; (&#1085;&#1077; &#1085;&#1072; splash)</text>
+  <text x="540" y="2160" class="caption">&#1057;&#1082;&#1088;&#1086;&#1083;&#1083; &#1076;&#1086;&#1089;&#1090;&#1091;&#1087;&#1077;&#1085; &#1087;&#1086;&#1089;&#1083;&#1077; &#1090;&#1072;&#1081;&#1084;&#1077;&#1088;&#1072;</text>
+</svg>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- M3 light surface #FFFBFE — см. docs/design/DESIGN_SYSTEM.md -->
+    <style name="Theme.LoveTester.Base" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/love_surface</item>
+        <item name="android:colorBackground">@color/love_surface</item>
+        <item name="android:colorPrimary">@color/love_primary</item>
+        <item name="android:colorPrimaryDark">@color/love_primary</item>
+        <item name="android:colorAccent">@color/love_primary</item>
+        <item name="android:colorSecondary">@color/love_secondary</item>
+        <item name="android:textColorPrimary">@color/love_on_surface</item>
+        <item name="android:textColorSecondary">@color/love_on_surface_variant</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
+
+    <style name="Theme.LoveTester" parent="Theme.LoveTester.Base" />
+
+    <!-- Android 12+ cold start — postSplashScreenTheme → Theme.LoveTester -->
+    <style name="Theme.LoveTester.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/love_surface</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="windowSplashScreenIconBackgroundColor">@color/love_primary_container</item>
+        <item name="postSplashScreenTheme">@style/Theme.LoveTester</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
+</resources>

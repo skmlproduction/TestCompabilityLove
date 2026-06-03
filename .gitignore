@@ -1,0 +1,40 @@
+# Gradle
+.gradle/
+build/
+**/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Android Studio
+.idea/
+*.iml
+.local/
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Local SDK / secrets
+local.properties
+keystore.properties
+*.jks
+*.keystore
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Reference decompile (245MB, not part of build)
+Love Test - Compatibility Test_3.0.5_apkcombo.com.xapk_Decompiler.com/
+
+# IDE / Kotlin build dupes
+.vscode/
+core/domain/bin/
+
+# Kotlin
+*.class
+*.log
+
+# Release mapping (upload to Play separately)
+**/mapping.txt
+
+# Store assets (upload to Play Console locally)
+docs/store/feature_graphic.png

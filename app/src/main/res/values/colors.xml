@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- M3 light — DESIGN_SYSTEM.md · Compose: LoveTestTheme / Color.kt -->
+    <color name="love_surface">#FFFBFE</color>
+    <color name="love_primary">#C2185B</color>
+    <color name="love_primary_container">#FCE4EC</color>
+    <color name="love_secondary">#E91E63</color>
+    <color name="love_on_surface">#1C1B1F</color>
+    <color name="love_on_surface_variant">#625B71</color>
+    <!-- protocolPrimary/protocolContainer — Compose: core/ui/theme/Color.kt -->
+</resources>

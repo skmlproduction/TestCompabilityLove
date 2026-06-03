@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1080" height="2400" viewBox="0 0 1080 2400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="150%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#1C1B1F" flood-opacity="0.08"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="12" flood-color="#FF8F00" flood-opacity="0.15"/>
+    </filter>
+    <linearGradient id="bgGlow" x1="100" y1="0" x2="980" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF8E1"/>
+      <stop offset="0.4" stop-color="#FFFBFE"/>
+      <stop offset="1" stop-color="#FCE4EC"/>
+    </linearGradient>
+    <linearGradient id="heroGradient" x1="72" y1="120" x2="1008" y2="560" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#880E4F"/>
+      <stop offset="0.35" stop-color="#C2185B"/>
+      <stop offset="0.7" stop-color="#E91E63"/>
+      <stop offset="1" stop-color="#FFB74D"/>
+    </linearGradient>
+    <linearGradient id="goldBadge" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#FFD54F"/>
+      <stop offset="1" stop-color="#FF8F00"/>
+    </linearGradient>
+    <style type="text/css"><![CDATA[
+      .section { font-family: Inter, Roboto, Arial, sans-serif; font-size: 21px; font-weight: 760; letter-spacing: 3px; fill: #C2185B; }
+      .localeChip { font-family: Inter, Roboto, Arial, sans-serif; font-size: 18px; font-weight: 800; fill: #FFFFFF; }
+      .headline { font-family: Inter, Roboto, Arial, sans-serif; font-size: 32px; font-weight: 800; fill: #1C1B1F; text-anchor: middle; }
+      .heroTitle { font-family: Inter, Roboto, Arial, sans-serif; font-size: 38px; font-weight: 830; fill: #FFFFFF; text-anchor: middle; }
+      .heroSub { font-family: Inter, Roboto, Arial, sans-serif; font-size: 26px; font-weight: 450; fill: #FFFFFF; text-anchor: middle; opacity: 0.92; }
+      .benefitTitle { font-family: Inter, Roboto, Arial, sans-serif; font-size: 28px; font-weight: 740; fill: #1C1B1F; }
+      .benefitBody { font-family: Inter, Roboto, Arial, sans-serif; font-size: 24px; font-weight: 450; fill: #625B71; }
+      .priceBig { font-family: Inter, Roboto, Arial, sans-serif; font-size: 56px; font-weight: 800; fill: #1C1B1F; text-anchor: middle; }
+      .priceSub { font-family: Inter, Roboto, Arial, sans-serif; font-size: 24px; font-weight: 450; fill: #625B71; text-anchor: middle; }
+      .buttonText { font-family: Inter, Roboto, Arial, sans-serif; font-size: 30px; font-weight: 800; fill: #FFFFFF; }
+      .restoreText { font-family: Inter, Roboto, Arial, sans-serif; font-size: 26px; font-weight: 680; fill: #C2185B; text-anchor: middle; }
+      .legalText { font-family: Inter, Roboto, Arial, sans-serif; font-size: 20px; font-weight: 450; fill: #625B71; text-anchor: middle; }
+      .caption { font-family: Inter, Roboto, Arial, sans-serif; font-size: 21px; font-weight: 470; fill: #625B71; }
+    ]]></style>
+  </defs>
+
+  <rect width="1080" height="2400" fill="url(#bgGlow)"/>
+  <circle cx="900" cy="200" r="200" fill="#FFE082" opacity="0.35"/>
+  <circle cx="120" cy="2200" r="240" fill="#FCE4EC" opacity="0.4"/>
+
+  <rect x="0" y="0" width="1080" height="96" fill="#FFFBFE" opacity="0.72"/>
+  <text x="78" y="62" class="caption" fill="#1C1B1F">9:41</text>
+  <rect x="892" y="43" width="58" height="22" rx="8" stroke="#1C1B1F" stroke-width="3" opacity="0.72"/>
+  <rect x="955" y="49" width="6" height="10" rx="3" fill="#1C1B1F" opacity="0.72"/>
+  <rect x="900" y="49" width="40" height="10" rx="5" fill="#1C1B1F" opacity="0.72"/>
+
+  <g transform="translate(960 160)">
+    <circle cx="0" cy="0" r="36" fill="#F3EDF7"/>
+    <path d="M-12 -12 L12 12 M12 -12 L-12 12" stroke="#625B71" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <rect x="800" y="128" width="72" height="40" rx="20" fill="#C2185B"/>
+  <text x="836" y="156" text-anchor="middle" class="localeChip">EN</text>
+  <text x="72" y="210" class="section">EKRAN 44 / PREMIUM PAYWALL EN</text>
+
+  <rect x="72" y="240" width="936" height="360" rx="48" fill="url(#heroGradient)" filter="url(#cardShadow)"/>
+  <g transform="translate(540 360)">
+    <circle cx="0" cy="0" r="72" fill="url(#goldBadge)"/>
+    <path d="M-28 -8 L0 -40 L28 -8 L20 24 L-20 24 Z" fill="#FFFFFF" opacity="0.95"/>
+    <rect x="-36" y="24" width="72" height="10" rx="5" fill="#FFFFFF" opacity="0.8"/>
+  </g>
+  <text x="540" y="480" class="heroTitle">Love Tester Premium</text>
+  <text x="540" y="528" class="heroSub">No ads and full access</text>
+
+  <rect x="72" y="640" width="936" height="520" rx="38" fill="#FFFBFE" filter="url(#cardShadow)"/>
+  <text x="540" y="720" class="headline">What you get</text>
+
+  <circle cx="140" cy="800" r="28" fill="#E8F5E9"/>
+  <path d="M128 800 L136 808 L152 792" stroke="#2E7D32" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <text x="200" y="792" class="benefitTitle">Ad-free</text>
+  <text x="200" y="832" class="benefitBody">No banners or interstitial breaks</text>
+
+  <circle cx="140" cy="920" r="28" fill="#E8F5E9"/>
+  <path d="M128 920 L136 928 L152 912" stroke="#2E7D32" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <text x="200" y="912" class="benefitTitle">All tests unlocked</text>
+  <text x="200" y="952" class="benefitBody">Calculator, zodiac, wheel and more</text>
+
+  <circle cx="140" cy="1040" r="28" fill="#E8F5E9"/>
+  <path d="M128 1040 L136 1048 L152 1032" stroke="#2E7D32" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <text x="200" y="1032" class="benefitTitle">Support the app</text>
+  <text x="200" y="1072" class="benefitBody">One-time purchase - yours forever</text>
+
+  <rect x="72" y="1200" width="936" height="200" rx="32" fill="#FFF8E1" filter="url(#cardShadow)" stroke="#FFE082" stroke-width="2"/>
+  <text x="540" y="1280" class="priceBig">$2.99</text>
+  <text x="540" y="1330" class="priceSub">one-time purchase</text>
+
+  <rect x="72" y="1440" width="936" height="104" rx="52" fill="#C2185B" filter="url(#cardShadow)"/>
+  <text x="540" y="1504" text-anchor="middle" class="buttonText">Get Premium</text>
+
+  <text x="540" y="1600" class="restoreText">Restore purchases</text>
+
+  <text x="540" y="1680" text-anchor="middle" class="legalText">Subscription terms in Terms of Use</text>
+  <text x="540" y="1720" text-anchor="middle" class="legalText">Privacy Policy</text>
+
+  <rect x="200" y="1780" width="680" height="72" rx="36" fill="#F3EDF7"/>
+  <text x="540" y="1828" text-anchor="middle" class="caption" fill="#49454F">Continue for free</text>
+
+  <text x="540" y="1920" text-anchor="middle" class="caption">Purchases via Google Play Billing</text>
+</svg>

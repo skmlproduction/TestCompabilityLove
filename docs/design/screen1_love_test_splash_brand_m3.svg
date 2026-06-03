@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1080" height="2400" viewBox="0 0 1080 2400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="150%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#1C1B1F" flood-opacity="0.08"/>
+      <feDropShadow dx="0" dy="2" stdDeviation="7" flood-color="#C2185B" flood-opacity="0.12"/>
+    </filter>
+    <linearGradient id="bgGlow" x1="120" y1="0" x2="960" y2="1200" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF0F5"/>
+      <stop offset="0.42" stop-color="#FFFBFE"/>
+      <stop offset="1" stop-color="#FCE4EC"/>
+    </linearGradient>
+    <linearGradient id="heroGradient" x1="180" y1="680" x2="900" y2="1280" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C2185B"/>
+      <stop offset="0.48" stop-color="#E91E63"/>
+      <stop offset="1" stop-color="#F48FB1"/>
+    </linearGradient>
+    <linearGradient id="heartShine" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#FFFFFF" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0.55"/>
+    </linearGradient>
+    <style type="text/css"><![CDATA[
+      .section { font-family: Inter, Roboto, Arial, sans-serif; font-size: 21px; font-weight: 760; letter-spacing: 3px; fill: #C2185B; }
+      .headline { font-family: Inter, Roboto, Arial, sans-serif; font-size: 52px; font-weight: 800; letter-spacing: -1px; fill: #1C1B1F; text-anchor: middle; }
+      .body { font-family: Inter, Roboto, Arial, sans-serif; font-size: 29px; font-weight: 450; fill: #625B71; text-anchor: middle; }
+      .caption { font-family: Inter, Roboto, Arial, sans-serif; font-size: 21px; font-weight: 470; fill: #625B71; text-anchor: middle; }
+      .heroKicker { font-family: Inter, Roboto, Arial, sans-serif; font-size: 23px; font-weight: 780; letter-spacing: 3px; fill: #FFFFFF; opacity: 0.9; text-anchor: middle; }
+      .heroTitle { font-family: Inter, Roboto, Arial, sans-serif; font-size: 42px; font-weight: 830; letter-spacing: -0.5px; fill: #FFFFFF; text-anchor: middle; }
+      .loadingLabel { font-family: Inter, Roboto, Arial, sans-serif; font-size: 25px; font-weight: 600; fill: #880E4F; text-anchor: middle; }
+      .chipText { font-family: Inter, Roboto, Arial, sans-serif; font-size: 22px; font-weight: 680; fill: #880E4F; text-anchor: middle; }
+    ]]></style>
+  </defs>
+
+  <rect width="1080" height="2400" fill="url(#bgGlow)"/>
+  <circle cx="920" cy="200" r="220" fill="#F8BBD0" opacity="0.45"/>
+  <circle cx="140" cy="520" r="180" fill="#FCE4EC" opacity="0.55"/>
+  <circle cx="980" cy="1980" r="280" fill="#F8BBD0" opacity="0.35"/>
+  <circle cx="80" cy="1750" r="160" fill="#FCE4EC" opacity="0.4"/>
+
+  <path d="M180 420 C180 380 220 360 250 390 C280 360 320 380 320 420 C320 470 250 520 250 520 C250 520 180 470 180 420 Z" fill="#E91E63" opacity="0.14"/>
+  <path d="M860 340 C860 310 888 296 908 314 C928 296 956 310 956 340 C956 378 908 408 908 408 C908 408 860 378 860 340 Z" fill="#C2185B" opacity="0.12"/>
+  <path d="M120 1580 C120 1555 142 1542 158 1556 C174 1542 196 1555 196 1580 C196 1610 158 1635 158 1635 C158 1635 120 1610 120 1580 Z" fill="#E91E63" opacity="0.1"/>
+
+  <rect x="0" y="0" width="1080" height="96" fill="#FFFBFE" opacity="0.72"/>
+  <text x="78" y="62" class="caption" fill="#1C1B1F" text-anchor="start">9:41</text>
+  <rect x="892" y="43" width="58" height="22" rx="8" stroke="#1C1B1F" stroke-width="3" opacity="0.72"/>
+  <rect x="955" y="49" width="6" height="10" rx="3" fill="#1C1B1F" opacity="0.72"/>
+  <rect x="900" y="49" width="40" height="10" rx="5" fill="#1C1B1F" opacity="0.72"/>
+
+  <text x="72" y="168" class="section">EKRAN 1 / SPLASH</text>
+
+  <rect x="120" y="520" width="840" height="720" rx="54" fill="url(#heroGradient)" filter="url(#cardShadow)"/>
+  <circle cx="780" cy="640" r="120" fill="#FFFFFF" opacity="0.12"/>
+  <circle cx="280" cy="1080" r="90" fill="#FFFFFF" opacity="0.08"/>
+
+  <g transform="translate(540 820)">
+    <circle cx="0" cy="0" r="118" fill="#FFFFFF" opacity="0.2"/>
+    <path d="M0 48 C0 20 -36 -4 -62 18 C-88 -4 -124 20 -124 48 C-124 88 -62 132 0 178 C62 132 124 88 124 48 C124 20 88 -4 62 18 C36 -4 0 20 0 48 Z" fill="#FFFFFF" opacity="0.95"/>
+  </g>
+
+  <text x="540" y="1040" class="heroKicker">LOVE TESTER</text>
+  <text x="540" y="1100" class="heroTitle">&#1058;&#1077;&#1089;&#1090; &#1085;&#1072; &#1089;&#1086;&#1074;&#1084;&#1077;&#1089;&#1090;&#1080;&#1084;&#1086;&#1089;&#1090;&#1100;</text>
+  <text x="540" y="1152" class="heroTitle" style="font-size: 38px;">&#1080; &#1083;&#1102;&#1073;&#1086;&#1074;&#1100;</text>
+
+  <text x="540" y="1340" class="headline">&#1058;&#1077;&#1089;&#1090; &#1085;&#1072; &#1089;&#1086;&#1074;&#1084;&#1077;&#1089;&#1090;&#1080;&#1084;&#1086;&#1089;&#1090;&#1100;</text>
+  <text x="540" y="1400" class="headline" style="font-size: 48px;">&#1080; &#1083;&#1102;&#1073;&#1086;&#1074;&#1100;</text>
+  <text x="540" y="1470" class="body">&#1056;&#1072;&#1079;&#1074;&#1083;&#1077;&#1082;&#1072;&#1090;&#1077;&#1083;&#1100;&#1085;&#1099;&#1077; &#1090;&#1077;&#1089;&#1090;&#1099; &#1087;&#1086; &#1080;&#1084;&#1077;&#1085;&#1072;&#1084;</text>
+  <text x="540" y="1510" class="body">&#1076;&#1083;&#1103; &#1087;&#1072;&#1088;&#1099; &#1080; &#1076;&#1088;&#1091;&#1079;&#1077;&#1081;</text>
+
+  <text x="540" y="1720" class="loadingLabel">&#1047;&#1072;&#1075;&#1088;&#1091;&#1079;&#1082;&#1072;&#8230;</text>
+  <rect x="240" y="1760" width="600" height="10" rx="5" fill="#E7E0EC"/>
+  <rect x="240" y="1760" width="360" height="10" rx="5" fill="#C2185B"/>
+  <circle cx="540" cy="1860" r="56" fill="none" stroke="#FCE4EC" stroke-width="10"/>
+  <path d="M540 1804 A56 56 0 0 1 596 1860" stroke="#C2185B" stroke-width="10" stroke-linecap="round" fill="none"/>
+
+  <rect x="200" y="1980" width="200" height="52" rx="26" fill="#FCE4EC"/>
+  <path d="M248 2006 C248 1994 256 1988 264 1994 C272 1988 280 1994 280 2006 C280 2018 264 2028 264 2028 C264 2028 248 2018 248 2006 Z" fill="#C2185B" transform="scale(0.9) translate(8 4)"/>
+  <text x="300" y="2016" class="chipText">&#1058;&#1077;&#1089;&#1090;</text>
+  <rect x="440" y="1980" width="200" height="52" rx="26" fill="#FCE4EC"/>
+  <circle cx="468" cy="2006" r="14" fill="none" stroke="#C2185B" stroke-width="4"/>
+  <text x="540" y="2016" class="chipText">&#1047;&#1086;&#1076;&#1080;&#1072;&#1082;</text>
+  <rect x="680" y="1980" width="200" height="52" rx="26" fill="#FCE4EC"/>
+  <circle cx="708" cy="2006" r="16" fill="none" stroke="#C2185B" stroke-width="4"/>
+  <text x="780" y="2016" class="chipText">&#1050;&#1086;&#1083;&#1077;&#1089;&#1086;</text>
+
+  <text x="540" y="2320" class="caption" opacity="0.7">dev.lovetest.app</text>
+</svg>

@@ -1,0 +1,127 @@
+# Ручной запуск съёмки Store PNG (нужен runner с Android SDK + adb + эмулятор/устройство).
+name: Emulator screenshots
+
+on:
+  workflow_dispatch:
+    inputs:
+      locale:
+        description: "ru or en"
+        required: true
+        default: "ru"
+        type: choice
+        options:
+          - ru
+          - en
+      require_device:
+        description: "Fail if adb/device unavailable (off = warn only)"
+        required: true
+        default: true
+        type: boolean
+      verify_after_capture:
+        description: "Run verifyLoveTestBeforeStore after capture"
+        required: true
+        default: false
+        type: boolean
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - name: Gradle cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - name: Check adb
+        id: adb
+        run: |
+          if command -v adb >/dev/null 2>&1 && adb devices | grep -E '\tdevice$' >/dev/null; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+            adb devices -l
+          else
+            echo "available=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::adb/эмулятор недоступны на runner."
+            echo "Локально: ./gradlew captureScreenshotCatalog${{ inputs.locale == 'ru' && 'Ru' || 'En' }}"
+          fi
+      - name: Fail without device
+        if: inputs.require_device && steps.adb.outputs.available != 'true'
+        run: |
+          echo "adb device required (require_device=true). Use self-hosted runner or run capture locally." >&2
+          exit 1
+      - name: Capture catalog
+        if: steps.adb.outputs.available == 'true'
+        run: |
+          if [[ "${{ inputs.locale }}" == "ru" ]]; then
+            ./gradlew captureScreenshotCatalogRu --no-daemon
+          else
+            ./gradlew captureScreenshotCatalogEn --no-daemon
+          fi
+      - name: Screenshot inventory
+        if: steps.adb.outputs.available == 'true'
+        run: |
+          python3 scripts/verify_ui_inventory.py --require-screenshots || true
+          python3 - <<'PY'
+          import struct
+          from pathlib import Path
+          loc = "${{ inputs.locale }}"
+          root = Path("docs/screenshots") / loc
+          real = placeholder = missing = 0
+          for p in sorted(root.glob("*.png")):
+              if not p.is_file():
+                  missing += 1
+                  continue
+              head = p.read_bytes()[:24]
+              if len(head) < 24 or head[:8] != b"\x89PNG\r\n\x1a\n":
+                  missing += 1
+                  continue
+              w, h = struct.unpack(">II", head[16:24])
+              if (w, h) == (1080, 1920) and p.stat().st_size < 32_000:
+                  placeholder += 1
+              else:
+                  real += 1
+          print(f"screenshots/{loc}: real={real}, placeholder={placeholder}, bad/missing={missing}")
+          PY
+      - name: Flat artifact (screen_id.png)
+        if: steps.adb.outputs.available == 'true'
+        run: |
+          mkdir -p ci-screenshots
+          loc="${{ inputs.locale }}"
+          python3 - <<'PY'
+          import csv, shutil
+          from pathlib import Path
+          loc = "${{ inputs.locale }}"
+          root = Path("docs/screenshots") / loc
+          out = Path("ci-screenshots")
+          out.mkdir(exist_ok=True)
+          with Path("docs/product/screens_catalog.csv").open(encoding="utf-8", newline="") as f:
+              for row in csv.DictReader(f):
+                  sid = row["screen_id"].strip()
+                  key = f"screenshot_{loc}_relative"
+                  rel = (row.get(key) or "").strip()
+                  if not rel or "N/A" in rel.upper():
+                      continue
+                  src = Path(rel)
+                  if src.is_file():
+                      shutil.copy2(src, out / f"{sid}.png")
+          print(f"ci-screenshots: {len(list(out.glob('*.png')))} files")
+          PY
+      - name: Verify before Store
+        if: inputs.verify_after_capture && steps.adb.outputs.available == 'true'
+        run: ./gradlew verifyLoveTestBeforeStore --no-daemon
+      - uses: actions/upload-artifact@v4
+        if: steps.adb.outputs.available == 'true'
+        with:
+          name: screenshots-${{ inputs.locale }}
+          path: |
+            docs/screenshots/${{ inputs.locale }}/*.png
+            ci-screenshots/*.png
+          if-no-files-found: warn

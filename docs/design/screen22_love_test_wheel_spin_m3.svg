@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1080" height="2400" viewBox="0 0 1080 2400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="150%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#1C1B1F" flood-opacity="0.08"/>
+      <feDropShadow dx="0" dy="8" stdDeviation="20" flood-color="#C2185B" flood-opacity="0.18"/>
+    </filter>
+    <linearGradient id="bgGlow" x1="100" y1="0" x2="980" y2="800" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF0F5"/>
+      <stop offset="0.5" stop-color="#FFFBFE"/>
+      <stop offset="1" stop-color="#FCE4EC"/>
+    </linearGradient>
+    <style type="text/css"><![CDATA[
+      .section { font-family: Inter, Roboto, Arial, sans-serif; font-size: 21px; font-weight: 760; letter-spacing: 3px; fill: #C2185B; }
+      .headline { font-family: Inter, Roboto, Arial, sans-serif; font-size: 48px; font-weight: 800; letter-spacing: -1px; fill: #1C1B1F; }
+      .heroBody { font-family: Inter, Roboto, Arial, sans-serif; font-size: 28px; font-weight: 450; fill: #625B71; text-anchor: middle; }
+      .segmentText { font-family: Inter, Roboto, Arial, sans-serif; font-size: 20px; font-weight: 800; fill: #FFFFFF; text-anchor: middle; }
+      .segmentTextDark { font-family: Inter, Roboto, Arial, sans-serif; font-size: 20px; font-weight: 800; fill: #880E4F; text-anchor: middle; }
+      .buttonText { font-family: Inter, Roboto, Arial, sans-serif; font-size: 32px; font-weight: 800; fill: #FFFFFF; }
+      .caption { font-family: Inter, Roboto, Arial, sans-serif; font-size: 21px; font-weight: 470; fill: #625B71; }
+      .backText { font-family: Inter, Roboto, Arial, sans-serif; font-size: 28px; font-weight: 680; fill: #C2185B; }
+    ]]></style>
+  </defs>
+
+  <rect width="1080" height="2400" fill="url(#bgGlow)"/>
+  <circle cx="900" cy="200" r="180" fill="#F8BBD0" opacity="0.4"/>
+  <circle cx="120" cy="2100" r="220" fill="#FCE4EC" opacity="0.35"/>
+
+  <rect x="0" y="0" width="1080" height="96" fill="#FFFBFE" opacity="0.72"/>
+  <text x="78" y="62" class="caption" fill="#1C1B1F">9:41</text>
+  <rect x="892" y="43" width="58" height="22" rx="8" stroke="#1C1B1F" stroke-width="3" opacity="0.72"/>
+  <rect x="955" y="49" width="6" height="10" rx="3" fill="#1C1B1F" opacity="0.72"/>
+  <rect x="900" y="49" width="40" height="10" rx="5" fill="#1C1B1F" opacity="0.72"/>
+
+  <g transform="translate(72 140)">
+    <path d="M48 24 L12 24 L30 6 Z" fill="#C2185B" transform="rotate(-90 30 15)"/>
+    <text x="72" y="36" class="backText">&#1053;&#1072;&#1079;&#1072;&#1076;</text>
+  </g>
+  <text x="540" y="176" text-anchor="middle" class="headline" style="font-size: 34px;">&#1050;&#1086;&#1083;&#1077;&#1089;&#1086; &#1092;&#1072;&#1085;&#1090;&#1072;&#1079;&#1080;&#1081;</text>
+  <text x="72" y="228" class="section">EKRAN 22 / WHEEL SPIN</text>
+
+  <text x="540" y="300" class="heroBody">&#1057;&#1083;&#1091;&#1095;&#1072;&#1081;&#1085;&#1072;&#1103; &#1080;&#1076;&#1077;&#1103; &#1076;&#1083;&#1103; &#1087;&#1072;&#1088;&#1099; &#8212; &#1082;&#1088;&#1091;&#1090;&#1080;&#1090;&#1077;!</text>
+  <rect x="760" y="320" width="180" height="44" rx="22" fill="#FCE4EC"/>
+  <text x="850" y="352" text-anchor="middle" style="font-family: Inter, Roboto, Arial, sans-serif; font-size: 22px; font-weight: 760; fill: #880E4F;">&#1058;&#1077;&#1089;&#1090; &#8470;7</text>
+
+  <!-- Pointer -->
+  <path d="M540 520 L500 600 L580 600 Z" fill="#1C1B1F"/>
+  <path d="M540 528 L508 596 L572 596 Z" fill="#C2185B"/>
+
+  <!-- Wheel group -->
+  <g transform="translate(540 1100)" filter="url(#cardShadow)">
+    <circle r="340" fill="#FFFFFF"/>
+    <!-- 8 segments (simplified wedges) -->
+    <path d="M0 0 L0 -340 A340 340 0 0 1 240 -240 Z" fill="#C2185B"/>
+    <path d="M0 0 L240 -240 A340 340 0 0 1 340 0 Z" fill="#E91E63"/>
+    <path d="M0 0 L340 0 A340 340 0 0 1 240 240 Z" fill="#F48FB1"/>
+    <path d="M0 0 L240 240 A340 340 0 0 1 0 340 Z" fill="#FCE4EC"/>
+    <path d="M0 0 L0 340 A340 340 0 0 1 -240 240 Z" fill="#C2185B"/>
+    <path d="M0 0 L-240 240 A340 340 0 0 1 -340 0 Z" fill="#AD1457"/>
+    <path d="M0 0 L-340 0 A340 340 0 0 1 -240 -240 Z" fill="#F8BBD0"/>
+    <path d="M0 0 L-240 -240 A340 340 0 0 1 0 -340 Z" fill="#E91E63"/>
+    <circle r="300" fill="none" stroke="#FFFFFF" stroke-width="6" opacity="0.5"/>
+    <circle r="340" fill="none" stroke="#FFFFFF" stroke-width="8"/>
+    <!-- Center hub -->
+    <circle r="72" fill="#FFFFFF"/>
+    <circle r="72" fill="none" stroke="#C2185B" stroke-width="6"/>
+    <path d="M0 -28 C0 -44 14 -56 0 -56 C-14 -56 0 -44 0 -28 C0 -8 -20 8 0 24 C20 8 0 -8 0 -28 Z" fill="#C2185B" transform="scale(1.1)"/>
+    <!-- Segment labels (approx positions) -->
+    <text x="0" y="-220" class="segmentText">&#1055;&#1086;&#1094;&#1077;&#1083;&#1091;&#1081;</text>
+    <text x="156" y="-156" class="segmentText">&#1050;&#1086;&#1084;&#1087;&#1083;&#1080;&#1084;&#1077;&#1085;&#1090;</text>
+    <text x="220" y="0" class="segmentText">&#1057;&#1074;&#1080;&#1076;&#1072;&#1085;&#1080;&#1077;</text>
+    <text x="156" y="168" class="segmentTextDark">&#1054;&#1073;&#1098;&#1103;&#1090;&#1080;&#1077;</text>
+    <text x="0" y="228" class="segmentTextDark">&#1057;&#1102;&#1088;&#1087;&#1088;&#1080;&#1079;</text>
+    <text x="-156" y="168" class="segmentText">&#1055;&#1080;&#1089;&#1100;&#1084;&#1086;</text>
+    <text x="-220" y="0" class="segmentText">&#1058;&#1072;&#1085;&#1077;&#1094;</text>
+    <text x="-156" y="-156" class="segmentText">&#1057;&#1077;&#1082;&#1088;&#1077;&#1090;</text>
+  </g>
+
+  <!-- Idle state hint -->
+  <rect x="200" y="1500" width="680" height="64" rx="32" fill="#FFFBFE" filter="url(#cardShadow)"/>
+  <text x="540" y="1544" text-anchor="middle" class="caption" fill="#880E4F">&#1043;&#1086;&#1090;&#1086;&#1074;&#1086; &#1082; &#1074;&#1088;&#1072;&#1097;&#1077;&#1085;&#1080;&#1102;</text>
+
+  <!-- Spin CTA -->
+  <rect x="72" y="1620" width="936" height="112" rx="56" fill="#C2185B" filter="url(#cardShadow)"/>
+  <text x="540" y="1688" text-anchor="middle" class="buttonText">&#1050;&#1088;&#1091;&#1090;&#1080;&#1090;&#1100;!</text>
+
+  <text x="540" y="1780" text-anchor="middle" class="caption">&#1055;&#1088;&#1080; &#1074;&#1088;&#1072;&#1097;&#1077;&#1085;&#1080;&#1080;: &#1082;&#1086;&#1083;&#1077;&#1089;&#1086; &#1074;&#1088;&#1072;&#1097;&#1072;&#1077;&#1090;&#1089;&#1103;</text>
+  <text x="540" y="1820" text-anchor="middle" class="caption">&#1056;&#1077;&#1079;&#1091;&#1083;&#1100;&#1090;&#1072;&#1090; &#1087;&#1086;&#1103;&#1074;&#1080;&#1090;&#1089;&#1103; &#1087;&#1086;&#1089;&#1083;&#1077; &#1086;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1082;&#1080;.</text>
+  <text x="540" y="1860" text-anchor="middle" class="caption">&#1058;&#1086;&#1083;&#1100;&#1082;&#1086; &#1076;&#1083;&#1103; &#1088;&#1072;&#1079;&#1074;&#1083;&#1077;&#1095;&#1077;&#1085;&#1080;&#1103;, &#1085;&#1077; &#1103;&#1074;&#1083;&#1103;&#1077;&#1090;&#1089;&#1103; &#1089;&#1090;&#1072;&#1074;&#1082;&#1086;&#1081;.</text>
+
+  <!-- Decorative sparkles -->
+  <path d="M160 900 L170 880 L180 900 L170 920 Z" fill="#FFD54F" opacity="0.6"/>
+  <path d="M920 1300 L930 1280 L940 1300 L930 1320 Z" fill="#FFD54F" opacity="0.5"/>
+</svg>

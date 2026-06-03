@@ -1,0 +1,41 @@
+# Публикация privacy policy на GitHub Pages (build/legal-host/).
+# Включите: Settings → Pages → Source: GitHub Actions
+name: Privacy GitHub Pages
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+    paths:
+      - "app/src/main/assets/legal/**"
+      - "scripts/export_privacy_for_hosting.sh"
+      - ".github/workflows/pages-privacy.yml"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-privacy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Export legal HTML
+        run: bash scripts/export_privacy_for_hosting.sh
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/legal-host
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
