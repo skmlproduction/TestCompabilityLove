@@ -71,7 +71,7 @@ Store: `docs/store/README.md` · `docs/store/STORE_UPLOAD.md`
 
 - P0: 0
 - P1: 0 (Store PNG готовы)
-- P2: privacy URL = `example.com` (placeholder) — заменить перед Play
+- P2: 0 (privacy URL → `https://maksimsokolov.github.io/TestCompabilityLove/`; Pages — после `git push` + workflow)
 
 ## CI
 

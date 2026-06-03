@@ -1,6 +1,6 @@
 # Audit report — Love Tester (F6)
 
-Дата: 2026-05-24
+Дата: 2026-06-03
 
 ## Сводка
 
@@ -8,7 +8,7 @@
 |---------|------------|
 | P0 | 0 |
 | P1 | 0 |
-| P2 | 1 |
+| P2 | 0 |
 
 ## Матрица экранов
 
@@ -59,24 +59,12 @@ _Нет._
 
 ## P2
 
-- —: lovetest.privacy.policy.url — placeholder example.com (замените на публичный HTTPS)
-
-## Качество (автопроверка)
-
-| Метрика | Значение |
-|---------|----------|
-| Unit tests | 36 (`app/src/test`) |
-| Compose UI tests | 49 (24 ComposeTest-класса) |
-| Route smoke (instrumented) | 7 (Hub, Consent, Onboarding, LoveTestInput, ProtocolInput, PremiumPaywall, Settings) |
-| Store PNG | 67/67 |
-| Audit P0/P1 | 0 |
-
-Проверка: `./scripts/count_tests.sh` · `./gradlew verifyLoveTest`
+_Нет._
 
 ## Рекомендуемые действия
 
-1. `./scripts/setup_github_remote.sh USER REPO` → `./scripts/prepare_git_push.sh` → commit → push
-2. GitHub Pages → `./scripts/post_privacy_setup.sh https://USER.github.io/REPO/`
-3. Production keystore → `./gradlew bundleReleaseLoveTest`
-4. `./gradlew finalizeStoreReleaseLoveTest` → upload `build/store-upload/`
+1. `./gradlew captureScreenshotCatalogRu` и `En` на эмуляторе 1080×1920
+2. `./gradlew verifyLoveTestBeforeStore`
+3. Задать `lovetest.privacy.policy.url` в `gradle.properties` (`./scripts/init_store_config.sh`)
+4. `./gradlew releaseGateLoveTest` → `bundleRelease`
 5. Internal track → Closed testing → Production
