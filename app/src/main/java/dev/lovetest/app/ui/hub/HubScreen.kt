@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -22,6 +23,7 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -49,6 +51,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.lovetest.app.BuildConfig
@@ -100,8 +103,9 @@ fun HubScreen(
     val isPremium by preferences.isPremiumFlow.collectAsStateWithLifecycle(initialValue = false)
     val adPending by AdsInterstitialController.pendingOnHub.collectAsStateWithLifecycle()
     var debugAdDismissed by remember { mutableStateOf(false) }
-    val showAdOverlay = !isPremium && adPending ||
-        (DebugUiPreview.matches("ad_interstitial_placeholder") && !debugAdDismissed)
+    val showDebugAdPlaceholder = BuildConfig.DEBUG &&
+        DebugUiPreview.matches("ad_interstitial_placeholder") &&
+        !debugAdDismissed
 
     LaunchedEffect(isPremium) {
         if (isPremium) {
@@ -255,7 +259,7 @@ fun HubScreen(
                     onContinueOffline = viewModel::retryFromError,
                 )
             }
-            if (showAdOverlay) {
+            if (showDebugAdPlaceholder) {
                 AdInterstitialPlaceholder(
                     onClose = {
                         debugAdDismissed = true
@@ -519,7 +523,7 @@ private fun FeaturedLoveTestCard(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(100.dp)
+            .heightIn(min = 100.dp)
             .loveCardShadow(shape, elevation = LoveCardShadowElevation.Card)
             .clip(shape)
             .background(LoveHeroGradientBrush())
@@ -528,7 +532,9 @@ private fun FeaturedLoveTestCard(
             .padding(horizontal = 20.dp, vertical = 16.dp),
     ) {
         Row(
-            modifier = Modifier.align(Alignment.CenterStart),
+            modifier = Modifier
+                .align(Alignment.CenterStart)
+                .padding(end = 96.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             LoveHeartIcon(modifier = Modifier.size(36.dp), color = Color.White)
@@ -747,10 +753,13 @@ private fun HubBottomNav(
                     selected = false,
                     onClick = onPremium,
                 ) {
-                    Text(
-                        "★",
-                        fontSize = 20.sp,
-                        color = if (isPremium) LovePrimary else LoveOnSurfaceVariant,
+                    Icon(
+                        Icons.Default.Star,
+                        contentDescription = null,
+                        tint = if (isPremium) LovePrimary else LoveOnSurfaceVariant,
+                        modifier = Modifier
+                            .size(22.dp)
+                            .decorativeForAccessibility(),
                     )
                 }
                 HubNavItem(
@@ -796,6 +805,7 @@ private fun HubNavItem(
             text = label,
             style = MaterialTheme.typography.labelSmall,
             color = if (selected) LovePrimary else LoveOnSurfaceVariant,
+            textDecoration = TextDecoration.None,
             modifier = Modifier.padding(top = 4.dp),
         )
     }

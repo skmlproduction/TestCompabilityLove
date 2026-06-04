@@ -50,6 +50,7 @@ import dev.lovetest.app.ui.common.LoveHeroPercentRing
 import dev.lovetest.app.ui.share.LoveShareResultOverlay
 import dev.lovetest.app.ui.share.rememberLoveShareSheet
 import dev.lovetest.app.util.buildLoveShareText
+import dev.lovetest.core.domain.LoveScoreCalculator
 import dev.lovetest.core.ui.components.LoveCardShadowElevation
 import dev.lovetest.core.ui.components.LoveShadowCard
 import dev.lovetest.core.ui.components.LoveGradientBackground
@@ -61,6 +62,7 @@ import dev.lovetest.core.ui.theme.LoveOnSurface
 import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
 import dev.lovetest.core.ui.theme.LovePrimary
 import dev.lovetest.core.ui.theme.LovePrimaryContainer
+import dev.lovetest.core.ui.theme.LoveResultMutedHeroBrush
 import dev.lovetest.core.ui.theme.LoveSurface
 
 private val CalculatorResultHeroBrush = Brush.linearGradient(
@@ -80,6 +82,7 @@ fun CalculatorResultScreen(
     onHome: () -> Unit,
 ) {
     val percent = LoveTestSession.percent
+    val high = LoveScoreCalculator.isHighScore(percent)
     val name1 = LoveTestSession.name1.ifBlank { "…" }
     val name2 = LoveTestSession.name2.ifBlank { "…" }
     val namesLine = "$name1 + $name2"
@@ -128,6 +131,7 @@ fun CalculatorResultScreen(
                     namesLine = namesLine,
                     percent = percent,
                     percentCd = percentCd,
+                    high = high,
                     modifier = Modifier.padding(top = 8.dp),
                 )
                 CalculatorBreakdownCard(
@@ -184,6 +188,7 @@ private fun CalculatorResultHeroCard(
     namesLine: String,
     percent: Int,
     percentCd: String,
+    high: Boolean,
     modifier: Modifier = Modifier,
 ) {
     LoveShadowCard(
@@ -195,14 +200,14 @@ private fun CalculatorResultHeroCard(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(CalculatorResultHeroBrush)
+                .background(if (high) CalculatorResultHeroBrush else LoveResultMutedHeroBrush)
                 .padding(horizontal = 20.dp, vertical = 24.dp),
         ) {
             Text(
                 text = "%",
                 style = MaterialTheme.typography.displayLarge.copy(fontSize = 72.sp),
                 fontWeight = FontWeight.ExtraBold,
-                color = Color.White.copy(alpha = 0.2f),
+                color = Color.White.copy(alpha = if (high) 0.2f else 0.12f),
                 modifier = Modifier.align(Alignment.TopEnd),
             )
             Column(
@@ -218,7 +223,7 @@ private fun CalculatorResultHeroCard(
                 LoveHeroPercentRing(
                     percent = percent,
                     label = stringResource(R.string.calculator_result_percent_label),
-                    high = true,
+                    high = high,
                     contentDescription = percentCd,
                     modifier = Modifier.padding(top = 20.dp),
                 )

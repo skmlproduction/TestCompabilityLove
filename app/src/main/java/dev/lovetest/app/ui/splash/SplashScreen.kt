@@ -31,6 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.lovetest.app.BuildConfig
 import dev.lovetest.app.R
 import dev.lovetest.core.ui.components.LoveGradientBackground
 import dev.lovetest.core.ui.components.LoveHeartIcon
@@ -154,12 +155,19 @@ fun SplashScreen(
                 )
             }
 
-            Text(
-                text = stringResource(R.string.splash_footer),
-                style = MaterialTheme.typography.bodySmall,
-                color = LoveOnSurfaceVariant.copy(alpha = 0.7f),
-                modifier = Modifier.padding(bottom = 24.dp),
+            val splashFooter = stringResource(
+                if (BuildConfig.DEBUG) R.string.splash_footer else R.string.splash_footer_release,
             )
+            if (splashFooter.isNotBlank()) {
+                Text(
+                    text = splashFooter,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = LoveOnSurfaceVariant.copy(alpha = 0.7f),
+                    modifier = Modifier.padding(bottom = 24.dp),
+                )
+            } else {
+                Spacer(Modifier.height(24.dp))
+            }
         }
     }
 }

@@ -31,13 +31,13 @@ object DebugUiPreview {
         "love_test_calculating" -> Routes.LoveTestCalculating
         "love_test_result", "love_test_result_low" -> Routes.LoveTestResult
         "calculator_input" -> Routes.CalculatorInput
-        "calculator_result" -> Routes.CalculatorResult
+        "calculator_result", "calculator_result_low" -> Routes.CalculatorResult
         "pair_input" -> Routes.PairInput
-        "pair_result" -> Routes.PairResult
+        "pair_result", "pair_result_low" -> Routes.PairResult
         "victory_input" -> Routes.VictoryInput
-        "victory_result" -> Routes.VictoryResult
+        "victory_result", "victory_result_low" -> Routes.VictoryResult
         "letters_input" -> Routes.LettersInput
-        "letters_result" -> Routes.LettersResult
+        "letters_result", "letters_result_low" -> Routes.LettersResult
         "zodiac_pick" -> Routes.ZodiacPick
         "zodiac_result" -> Routes.ZodiacResult
         "wheel_spin" -> Routes.WheelSpin
@@ -80,14 +80,32 @@ object DebugUiPreview {
                     calc.pairMetrics("Sophia", "Dmitry"),
                 )
             }
+            "pair_result_low" -> {
+                val calc = dev.lovetest.core.domain.DefaultLoveScoreCalculator()
+                dev.lovetest.app.session.LoveTestSession.storePairResult(
+                    "Анна",
+                    "Макс",
+                    34,
+                    calc.pairMetrics("Анна", "Макс"),
+                )
+            }
             "calculator_result" -> {
                 dev.lovetest.app.session.LoveTestSession.storeLoveResult("Мария", "Иван", 68)
+            }
+            "calculator_result_low" -> {
+                dev.lovetest.app.session.LoveTestSession.storeLoveResult("Анна", "Макс", 38)
             }
             "victory_result" -> {
                 dev.lovetest.app.session.LoveTestSession.storeLoveResult("Ольга", "Ольга", 72)
             }
+            "victory_result_low" -> {
+                dev.lovetest.app.session.LoveTestSession.storeLoveResult("Анна", "Макс", 41)
+            }
             "letters_result" -> {
                 dev.lovetest.app.session.LoveTestSession.storeLoveResult("ЛЮБОВЬ", "СЧАСТЬ", 65)
+            }
+            "letters_result_low" -> {
+                dev.lovetest.app.session.LoveTestSession.storeLoveResult("АННА", "МАКС", 29)
             }
             "zodiac_result" -> {
                 dev.lovetest.app.session.LoveTestSession.storeLoveResult("Лев", "Рыбы", 78)

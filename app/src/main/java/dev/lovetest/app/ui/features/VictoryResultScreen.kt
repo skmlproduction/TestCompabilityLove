@@ -61,6 +61,7 @@ import dev.lovetest.core.ui.theme.LoveOnSurface
 import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
 import dev.lovetest.core.ui.theme.LovePrimary
 import dev.lovetest.core.ui.theme.LovePrimaryContainer
+import dev.lovetest.core.ui.theme.LoveResultMutedHeroBrush
 import dev.lovetest.core.ui.theme.LoveSurface
 
 private val VictoryResultHeroBrush = Brush.linearGradient(
@@ -69,15 +70,6 @@ private val VictoryResultHeroBrush = Brush.linearGradient(
         Color(0xFFC2185B),
         Color(0xFFE91E63),
         Color(0xFFFFB74D),
-    ),
-)
-
-private val VictoryResultHeroMutedBrush = Brush.linearGradient(
-    colors = listOf(
-        Color(0xFF757575),
-        Color(0xFF9E9E9E),
-        Color(0xFFB0A8AD),
-        Color(0xFFE7E0EC),
     ),
 )
 
@@ -208,7 +200,7 @@ private fun VictoryResultHeroCard(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(if (victory) VictoryResultHeroBrush else VictoryResultHeroMutedBrush)
+                .background(if (victory) VictoryResultHeroBrush else LoveResultMutedHeroBrush)
                 .padding(horizontal = 20.dp, vertical = 28.dp),
             contentAlignment = Alignment.Center,
         ) {
@@ -402,7 +394,7 @@ private fun VictorySharePreviewCard(
                 modifier = Modifier
                     .size(88.dp)
                     .clip(RoundedCornerShape(24.dp))
-                    .background(if (victory) VictoryResultHeroBrush else VictoryResultHeroMutedBrush),
+                    .background(if (victory) VictoryResultHeroBrush else LoveResultMutedHeroBrush),
                 contentAlignment = Alignment.Center,
             ) {
                 Text(

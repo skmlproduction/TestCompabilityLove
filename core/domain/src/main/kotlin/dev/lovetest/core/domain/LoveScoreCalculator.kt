@@ -7,15 +7,15 @@ package dev.lovetest.core.domain
 interface LoveScoreCalculator {
     fun calculatePercent(name1: String, name2: String): Int
 
-    fun isHighScore(percent: Int, threshold: Int = DEFAULT_HIGH_THRESHOLD): Boolean =
-        percent >= threshold
-
     fun pairMetrics(name1: String, name2: String): PairMetrics
 
     fun protocolSignals(name1: String, name2: String): ProtocolSignals
 
     companion object {
         const val DEFAULT_HIGH_THRESHOLD = 50
+
+        fun isHighScore(percent: Int, threshold: Int = DEFAULT_HIGH_THRESHOLD): Boolean =
+            percent >= threshold
     }
 }
 

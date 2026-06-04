@@ -55,6 +55,7 @@ import dev.lovetest.app.ui.share.LoveShareResultOverlay
 import dev.lovetest.app.ui.share.rememberLoveShareSheet
 import kotlinx.coroutines.delay
 import dev.lovetest.app.util.buildLoveShareText
+import dev.lovetest.core.domain.LoveScoreCalculator
 import dev.lovetest.core.ui.components.LoveCardShadowElevation
 import dev.lovetest.core.ui.components.LoveShadowCard
 import dev.lovetest.core.ui.components.LoveGradientBackground
@@ -67,6 +68,7 @@ import dev.lovetest.core.ui.theme.LoveOnSurface
 import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
 import dev.lovetest.core.ui.theme.LovePrimary
 import dev.lovetest.core.ui.theme.LovePrimaryContainer
+import dev.lovetest.core.ui.theme.LoveResultMutedHeroBrush
 import dev.lovetest.core.ui.theme.LoveSurface
 
 private val PairResultHeroBrush = Brush.linearGradient(
@@ -86,6 +88,7 @@ fun PairResultScreen(
     onHome: () -> Unit,
 ) {
     val percent = LoveTestSession.percent
+    val high = LoveScoreCalculator.isHighScore(percent)
     val name1 = LoveTestSession.name1.ifBlank { "…" }
     val name2 = LoveTestSession.name2.ifBlank { "…" }
     val metrics = LoveTestSession.pairMetrics
@@ -136,6 +139,7 @@ fun PairResultScreen(
                     namesLine = namesLine,
                     percent = percent,
                     percentCd = percentCd,
+                    high = high,
                     modifier = Modifier.padding(top = 8.dp),
                 )
                 PairMetricsCard(
@@ -194,6 +198,7 @@ private fun PairResultHeroCard(
     namesLine: String,
     percent: Int,
     percentCd: String,
+    high: Boolean,
     modifier: Modifier = Modifier,
 ) {
     LoveShadowCard(
@@ -205,7 +210,7 @@ private fun PairResultHeroCard(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(PairResultHeroBrush)
+                .background(if (high) PairResultHeroBrush else LoveResultMutedHeroBrush)
                 .padding(horizontal = 20.dp, vertical = 24.dp),
         ) {
             Column(
@@ -221,7 +226,7 @@ private fun PairResultHeroCard(
                         modifier = Modifier
                             .size(40.dp)
                             .clip(CircleShape)
-                            .background(Color.White),
+                            .background(Color.White.copy(alpha = if (high) 1f else 0.85f)),
                         contentAlignment = Alignment.Center,
                     ) {
                         LoveHeartIcon(Modifier.size(22.dp), color = LovePrimary)
@@ -238,7 +243,7 @@ private fun PairResultHeroCard(
                 LoveHeroPercentRing(
                     percent = percent,
                     label = stringResource(R.string.pair_result_percent_label),
-                    high = true,
+                    high = high,
                     contentDescription = percentCd,
                     modifier = Modifier.padding(top = 20.dp),
                 )

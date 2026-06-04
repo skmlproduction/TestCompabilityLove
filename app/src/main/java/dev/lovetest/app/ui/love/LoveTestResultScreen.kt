@@ -70,16 +70,9 @@ import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
 import dev.lovetest.core.ui.theme.LoveOutlineVariant
 import dev.lovetest.core.ui.theme.LovePrimary
 import dev.lovetest.core.ui.theme.LovePrimaryContainer
+import dev.lovetest.core.ui.theme.LoveResultMutedHeroBrush
 import dev.lovetest.core.ui.theme.LoveSecondary
 import dev.lovetest.core.ui.theme.LoveSurface
-
-private val MutedHeroBrush = Brush.linearGradient(
-    colors = listOf(
-        Color(0xFF9E9E9E),
-        Color(0xFFB0A8AD),
-        Color(0xFFE7E0EC),
-    ),
-)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -231,7 +224,7 @@ private fun LoveResultHeroCard(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(if (high) LoveHeroGradientBrush() else MutedHeroBrush)
+                .background(if (high) LoveHeroGradientBrush() else LoveResultMutedHeroBrush)
                 .padding(horizontal = 20.dp, vertical = 24.dp),
         ) {
             if (high) {

@@ -14,6 +14,7 @@
     <string name="splash_chip_zodiac">Zodiac</string>
     <string name="splash_chip_wheel">Wheel</string>
     <string name="splash_footer">dev.lovetest.app</string>
+    <string name="splash_footer_release"></string>
     <string name="onboarding_welcome_title">Welcome!</string>
     <string name="onboarding_welcome_body">Discover your compatibility percent from names — fun and free.</string>
     <string name="onboarding_tests_title">Many tests</string>
@@ -58,12 +59,15 @@
     <string name="onboarding_card_love_title">Love test</string>
     <string name="onboarding_card_love_cap1">Two names,</string>
     <string name="onboarding_card_love_cap2">one result.</string>
+    <string name="onboarding_card_love_cap">Two names — one result</string>
     <string name="onboarding_card_zodiac_title">Zodiac</string>
     <string name="onboarding_card_zodiac_cap1">Signs and</string>
     <string name="onboarding_card_zodiac_cap2">compatibility.</string>
+    <string name="onboarding_card_zodiac_cap">Signs and compatibility</string>
     <string name="onboarding_card_wheel_title">Wheel</string>
     <string name="onboarding_card_wheel_cap1">Random</string>
     <string name="onboarding_card_wheel_cap2">fantasy pick.</string>
+    <string name="onboarding_card_wheel_cap">Random pick</string>
     <string name="onboarding_no_reg_kicker">NO SIGN-UP</string>
     <string name="onboarding_no_reg_title">Start right away</string>
     <string name="onboarding_no_reg_body">Names stay on your device. No account needed.</string>

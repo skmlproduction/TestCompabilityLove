@@ -45,6 +45,7 @@ import dev.lovetest.app.session.LoveTestSession
 import dev.lovetest.app.ui.share.LoveShareResultOverlay
 import dev.lovetest.app.ui.share.rememberLoveShareSheet
 import dev.lovetest.app.util.buildLoveShareText
+import dev.lovetest.core.domain.LoveScoreCalculator
 import dev.lovetest.core.ui.components.LoveCardShadowElevation
 import dev.lovetest.core.ui.components.LoveShadowCard
 import dev.lovetest.core.ui.components.LoveGradientBackground
@@ -56,6 +57,7 @@ import dev.lovetest.core.ui.theme.LoveOnSurface
 import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
 import dev.lovetest.core.ui.theme.LovePrimary
 import dev.lovetest.core.ui.theme.LovePrimaryContainer
+import dev.lovetest.core.ui.theme.LoveResultMutedHeroBrush
 import dev.lovetest.core.ui.theme.LoveSurface
 
 private val LettersResultHeroBrush = Brush.linearGradient(
@@ -81,6 +83,7 @@ fun LettersResultScreen(
     val wordsLine = "${word1.uppercase()} + ${word2.uppercase()}"
     val secretCode = remember(word1, word2) { lettersSecretCode(word1, word2) }
     val percent = LoveTestSession.percent
+    val high = LoveScoreCalculator.isHighScore(percent)
     val harmonyTag = stringResource(R.string.letters_harmony_tag)
     val shareSheet = rememberLoveShareSheet()
     val context = LocalContext.current
@@ -125,6 +128,7 @@ fun LettersResultScreen(
                     word1 = word1,
                     word2 = word2,
                     secretCode = secretCode,
+                    high = high,
                     modifier = Modifier.padding(top = 8.dp),
                 )
                 LettersMessageCard(
@@ -180,6 +184,7 @@ private fun LettersResultHeroCard(
     word1: String,
     word2: String,
     secretCode: Int,
+    high: Boolean,
     modifier: Modifier = Modifier,
 ) {
     val secretCd = stringResource(R.string.letters_secret_cd, secretCode)
@@ -192,7 +197,7 @@ private fun LettersResultHeroCard(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(LettersResultHeroBrush)
+                .background(if (high) LettersResultHeroBrush else LoveResultMutedHeroBrush)
                 .padding(horizontal = 20.dp, vertical = 28.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {

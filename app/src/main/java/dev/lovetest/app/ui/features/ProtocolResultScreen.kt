@@ -40,6 +40,7 @@ import dev.lovetest.app.session.LoveTestSession
 import dev.lovetest.app.ui.share.LoveShareResultOverlay
 import dev.lovetest.app.ui.share.rememberLoveShareSheet
 import dev.lovetest.app.util.buildProtocolShareText
+import dev.lovetest.core.domain.LoveScoreCalculator
 import dev.lovetest.core.domain.ProtocolSignals
 import dev.lovetest.core.ui.components.LoveCardShadowElevation
 import dev.lovetest.core.ui.components.LoveShadowCard
@@ -53,20 +54,10 @@ import dev.lovetest.core.ui.theme.LoveProtocolContainer
 import dev.lovetest.core.ui.theme.LoveProtocolHeroGradientColors
 import dev.lovetest.core.ui.theme.LoveProtocolPrimary
 import dev.lovetest.core.ui.theme.LoveProtocolPrimaryDark
+import dev.lovetest.core.ui.theme.LoveResultMutedHeroBrush
 import dev.lovetest.core.ui.theme.LoveSurface
 
 private val ProtocolHeroBrush = Brush.linearGradient(colors = LoveProtocolHeroGradientColors)
-
-private val ProtocolHeroMutedBrush = Brush.linearGradient(
-    colors = listOf(
-        Color(0xFF37474F),
-        Color(0xFF546E7A),
-        Color(0xFF78909C),
-        Color(0xFFB0BEC5),
-    ),
-)
-
-private val ProtocolPercentMuted = Color(0xFF546E7A)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -76,6 +67,7 @@ fun ProtocolResultScreen(
     onHome: () -> Unit,
 ) {
     val percent = LoveTestSession.percent
+    val high = LoveScoreCalculator.isHighScore(percent)
     val name1 = LoveTestSession.name1.ifBlank { "…" }
     val name2 = LoveTestSession.name2.ifBlank { "…" }
     val signals = LoveTestSession.protocolSignals ?: return
@@ -121,7 +113,7 @@ fun ProtocolResultScreen(
                     namesLine = namesLine,
                     percent = percent,
                     percentCd = percentCd,
-                    isLowVerdict = signals.verdictBand == 0,
+                    high = high,
                     modifier = Modifier.padding(top = 8.dp),
                 )
                 Text(
@@ -193,12 +185,12 @@ private fun ProtocolResultHero(
     namesLine: String,
     percent: Int,
     percentCd: String,
-    isLowVerdict: Boolean,
+    high: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    val heroBrush = if (isLowVerdict) ProtocolHeroMutedBrush else ProtocolHeroBrush
-    val percentColor = if (isLowVerdict) ProtocolPercentMuted else Color.White
-    val namesColor = if (isLowVerdict) Color.White.copy(0.88f) else Color.White.copy(0.9f)
+    val heroBrush = if (high) ProtocolHeroBrush else LoveResultMutedHeroBrush
+    val percentColor = if (high) Color.White else LoveOnSurfaceVariant
+    val namesColor = if (high) Color.White.copy(0.9f) else Color.White
     LoveShadowCard(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(48.dp),

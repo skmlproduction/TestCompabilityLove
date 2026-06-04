@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -213,24 +214,25 @@ private fun PairInputHero(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(120.dp)
+            .heightIn(min = 132.dp)
             .clip(RoundedCornerShape(46.dp))
             .background(PairHeroBrush),
     ) {
         Row(
             modifier = Modifier
-                .align(Alignment.Center)
-                .padding(horizontal = 80.dp),
+                .align(Alignment.TopCenter)
+                .padding(top = 14.dp, start = 80.dp, end = 80.dp),
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Box(Modifier.size(72.dp).clip(CircleShape).background(Color.White.copy(0.25f)))
-            Box(Modifier.size(72.dp).clip(CircleShape).background(Color.White.copy(0.35f)))
-            Box(Modifier.size(72.dp).clip(CircleShape).background(Color.White.copy(0.25f)))
+            Box(Modifier.size(60.dp).clip(CircleShape).background(Color.White.copy(0.25f)))
+            Box(Modifier.size(60.dp).clip(CircleShape).background(Color.White.copy(0.35f)))
+            Box(Modifier.size(60.dp).clip(CircleShape).background(Color.White.copy(0.25f)))
         }
         Box(
             modifier = Modifier
-                .align(Alignment.Center)
+                .align(Alignment.TopCenter)
+                .padding(top = 24.dp)
                 .size(40.dp)
                 .clip(RoundedCornerShape(20.dp))
                 .background(Color.White.copy(0.2f)),

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -217,7 +218,7 @@ private fun LettersInputHero(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(120.dp)
+            .heightIn(min = 120.dp)
             .clip(RoundedCornerShape(46.dp))
             .background(LettersHeroBrush),
     ) {
@@ -235,7 +236,7 @@ private fun LettersInputHero(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .align(Alignment.CenterStart)
                 .padding(20.dp)
-                .padding(end = 120.dp),
+                .padding(end = 160.dp),
         ) {
             Text(
                 text = stringResource(R.string.letters_hero_title),

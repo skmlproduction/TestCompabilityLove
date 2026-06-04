@@ -1,5 +1,6 @@
 package dev.lovetest.core.ui.theme
 
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 val LovePrimary = Color(0xFFC2185B)
@@ -29,4 +30,13 @@ val LoveProtocolHeroGradientColors = listOf(
     LoveProtocolPrimary,
     LoveProtocolSecondary,
     LoveProtocolLight,
+)
+
+/** Desaturated hero for low compatibility scores (shared across result screens). */
+val LoveResultMutedHeroBrush = Brush.linearGradient(
+    colors = listOf(
+        Color(0xFF9E9E9E),
+        Color(0xFFB0A8AD),
+        Color(0xFFE7E0EC),
+    ),
 )

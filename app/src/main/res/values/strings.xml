@@ -16,6 +16,7 @@
     <string name="splash_chip_zodiac">Зодиак</string>
     <string name="splash_chip_wheel">Колесо</string>
     <string name="splash_footer">dev.lovetest.app</string>
+    <string name="splash_footer_release"></string>
 
     <!-- Onboarding -->
     <string name="onboarding_welcome_title">Добро пожаловать!</string>
@@ -62,12 +63,15 @@
     <string name="onboarding_card_love_title">Тест любви</string>
     <string name="onboarding_card_love_cap1">Два имени,</string>
     <string name="onboarding_card_love_cap2">один результат.</string>
+    <string name="onboarding_card_love_cap">Два имени — один результат</string>
     <string name="onboarding_card_zodiac_title">Зодиак</string>
     <string name="onboarding_card_zodiac_cap1">Знаки и</string>
     <string name="onboarding_card_zodiac_cap2">совместимость.</string>
+    <string name="onboarding_card_zodiac_cap">Знаки и совместимость</string>
     <string name="onboarding_card_wheel_title">Колесо</string>
     <string name="onboarding_card_wheel_cap1">Случайная</string>
     <string name="onboarding_card_wheel_cap2">фантазия.</string>
+    <string name="onboarding_card_wheel_cap">Случайный выбор</string>
     <string name="onboarding_no_reg_kicker">БЕЗ РЕГИСТРАЦИИ</string>
     <string name="onboarding_no_reg_title">Начните сразу</string>
     <string name="onboarding_no_reg_body">Имена остаются на устройстве. Аккаунт не нужен.</string>
@@ -80,7 +84,7 @@
     <string name="onboarding_tests_subline1">Проверьте себя, партнёра или друзей —</string>
     <string name="onboarding_tests_subline2">каждый режим даёт свой результат.</string>
     <string name="onboarding_ob_calc_cap">Быстрый %</string>
-    <string name="onboarding_ob_pair_cap">Совместимость</string>
+    <string name="onboarding_ob_pair_cap">Пара</string>
     <string name="onboarding_ob_victory_cap">В любви</string>
     <string name="onboarding_ob_letters_cap">Скрытые символы</string>
     <string name="onboarding_ob_wheel_cap">Случайность</string>
