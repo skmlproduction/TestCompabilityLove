@@ -10,9 +10,15 @@
             <data android:mimeType="text/plain" />
         </intent>
         <intent>
+            <action android:name="android.intent.action.SEND" />
+            <data android:mimeType="image/*" />
+        </intent>
+        <intent>
             <action android:name="android.intent.action.VIEW" />
             <data android:scheme="https" />
         </intent>
+        <package android:name="com.whatsapp" />
+        <package android:name="org.telegram.messenger" />
     </queries>
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -49,6 +55,15 @@
             android:name=".legal.LegalDocumentActivity"
             android:exported="false"
             android:theme="@style/Theme.LoveTester" />
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.share.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/share_file_paths" />
+        </provider>
     </application>
 
 </manifest>
