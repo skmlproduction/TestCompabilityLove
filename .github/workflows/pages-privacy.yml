@@ -1,4 +1,4 @@
-# Публикация privacy policy на GitHub Pages (build/legal-host/).
+# Публикация legal (privacy, terms, data collection) на GitHub Pages (build/legal-host/).
 # Включите: Settings → Pages → Source: GitHub Actions
 name: Privacy GitHub Pages
 
