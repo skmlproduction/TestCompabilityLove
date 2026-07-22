@@ -6,6 +6,14 @@ Package: `dev.lovetest.app` · `versionCode` 1 · IAP `remove_ads` · **Ads: No*
 
 ---
 
+## Вердикт (2026-07-22 — legal Pages live)
+
+| Трек | Вердикт | Комментарий |
+|------|---------|-------------|
+| **Internal testing** | **GO** | Legal **200×3** на `skmlproduction.github.io`; critical 11/11; P1 QA 12/12; store pack ✅ |
+| **Closed testing** | **GO после Internal** | + license testers, purchase/restore `remove_ads` — см. [CLOSED_IAP_SMOKE.md](./CLOSED_IAP_SMOKE.md) |
+| **Production 100%** | **NO-GO** | Closed IAP smoke ещё не подтверждён |
+
 ## Вердикт (2026-07-20 — Full App Recheck)
 
 | Трек | Вердикт | Комментарий |
@@ -56,7 +64,7 @@ Package: `dev.lovetest.app` · `versionCode` 1 · IAP `remove_ads` · **Ads: No*
 | Wheel ≠ gambling | ✅ IARC: Entertainment, no simulated gambling |
 | Legal HTML + URL в конфиге | ✅ `gradle.properties` → GitHub Pages URL |
 | UI-полировка | ✅ фазы 0–10 (2026-07-14): edge-to-edge, LoveFeatureTopBar, typography tokens |
-| `check_legal_urls` | 🔴 HTTP 404 — **единственный блокер в репо** (см. чеклист ниже) |
+| `check_legal_urls` | ✅ HTTP 200 ×3 (`skmlproduction.github.io/TestCompabilityLove`, 2026-07-22) |
 
 ---
 

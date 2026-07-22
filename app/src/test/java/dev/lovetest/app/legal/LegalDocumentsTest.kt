@@ -29,6 +29,21 @@ class LegalDocumentsTest {
     }
 
     @Test
+    fun resolveExternalTermsUrl_derivesFromPrivacyBase() {
+        assertEquals(
+            "https://user.github.io/repo/terms.html",
+            LegalDocuments.resolveExternalTermsUrl("https://user.github.io/repo/"),
+        )
+        assertEquals(
+            "https://skmlproduction.github.io/TestCompabilityLove/terms.html",
+            LegalDocuments.resolveExternalTermsUrl(
+                "https://skmlproduction.github.io/TestCompabilityLove/",
+            ),
+        )
+        assertNull(LegalDocuments.resolveExternalTermsUrl(""))
+    }
+
+    @Test
     fun hasExternalPrivacyPolicy_matchesBuildConfigField() {
         val configured = LegalDocuments.resolveExternalPrivacyUrl(
             dev.lovetest.app.BuildConfig.PRIVACY_POLICY_URL,

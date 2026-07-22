@@ -71,7 +71,7 @@ Store: `docs/store/README.md` · `docs/store/STORE_UPLOAD.md`
 
 - P0: 0
 - P1: 0 (Store PNG готовы)
-- P2: 0 (privacy URL → `https://maksimsokolov.github.io/TestCompabilityLove/`; Pages — после `git push` + workflow)
+- P2: 0 (privacy URL → `https://skmlproduction.github.io/TestCompabilityLove/`; Pages live 2026-07-22)
 
 ## CI
 

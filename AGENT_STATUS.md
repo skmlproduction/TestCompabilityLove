@@ -4,11 +4,15 @@
 > Обновляй ПОСЛЕ каждого осмысленного изменения. Новые записи журнала — сверху.
 
 ## Снимок
-- **Стадия:** Legal unblock in progress — first push ✅ на `skmlproduction/TestCompabilityLove`; privacy URL → `https://skmlproduction.github.io/TestCompabilityLove/`. Pages ещё **404** (нужен Settings → Pages → GitHub Actions + workflow).
-- **Next user:** 1) Repo Settings → Pages → Source **GitHub Actions** 2) Actions → **Privacy GitHub Pages** → Run workflow 3) `./scripts/check_legal_urls.sh` → 200×3. Затем Closed IAP.
-- Recheck: critical 11/11 · P1 QA 12/12 · unit ✅.
+- **Стадия:** Legal **200×3 ✅**; store validate ✅; unit ✅; canary **3/3 ✅** + spot QA hub/consent/paywall (emp_ready_p1, 2026-07-22 ~12:52).
+- **Dirty tree:** ~248 локальных изменений (P1 UI/tests/docs) **не запушены** — нужен commit по запросу.
+- **Next user:** Closed IAP — `docs/store/CLOSED_IAP_SMOKE.md`. Опционально: «закоммить P1» / Internal AAB upload.
+- Production: после Closed IAP.
 
 ## Журнал
+- 2026-07-22 ~12:53 — **Full check:** legal/repo/Pages OK; validate_store_upload OK; unit OK; Capture `emp_ready_p1` canary Consent+Love+Calc **3/3**, spot PNG **3/3**. Фикс leftover URL в LegalDocumentsTest → skmlproduction. Dirty ~248 files unpushed.
+- 2026-07-22 ~12:48 — **`check_legal_urls` OK** privacy/terms/data-collection **200**. Terms починен: добавлен `terms_of_use.html` + export (`95d3ed1`).
+- 2026-07-22 ~12:45 — terms 404: `terms_of_use.html` был untracked; commit+push `95d3ed1` (export пишет `terms.html`).
 - 2026-07-22 ~12:40 — User: SSH as **skmlproduction**, repo created, `git push -u origin main` ✅. URL обновлён на skmlproduction.github.io. Ждём Pages deploy.
 - 2026-07-20 ~06:54 — Повторные «продолжай»: legal/repo всё ещё 404. Статус → **IDLE_BLOCKED_USER**. Не гонял эмулятор/сборку.
 - 2026-07-20 ~06:53 — **Continue (noop):** legal/SSH без изменений (404 + Permission denied); AVD = чужой NeonKT. Agent-scope recheck исчерпан — нужен user GitHub SSH + repo + push.
