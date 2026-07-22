@@ -1,6 +1,9 @@
 # Go-live plan — Love Tester (остаток до Play)
 
-Обновлено: **2026-06-03** (финальный аудит).  
+> **2026-07-22:** Privacy **200** · AAB/pack **готовы** · P1 shipped · `print_store_checklist` без блокеров.  
+> **Сейчас:** [INTERNAL_UPLOAD_NOW.md](./INTERNAL_UPLOAD_NOW.md) → Play Internal → [CLOSED_IAP_SMOKE.md](./CLOSED_IAP_SMOKE.md).
+
+Обновлено: **2026-06-03** (финальный аудит) + статус 2026-07-22 сверху.  
 Монетизация v1: **[PRODUCT_DECISIONS.md](../product/PRODUCT_DECISIONS.md) §2** — premium-only, реклама выкл.
 
 Легенда: **код** = локально / репозиторий · **консоль** = Google Play Console · **календарь** = внешние зависимости (время, люди).
@@ -79,10 +82,10 @@
 |----------|----------------------|
 | Tests | 49 unit · 65 instrumented (56 Compose UI + 9 route smoke) |
 | Store PNG | 67/67 ✅ |
-| Privacy URL | ⏳ `https://example.com/privacy` |
-| Keystore | ⏳ debug upload key |
-| Release AAB / upload pack | ⏳ не собраны |
-| git | ⏳ no commits, no remote |
+| Privacy URL | ✅ `https://skmlproduction.github.io/TestCompabilityLove/` (2026-07-22) |
+| Keystore | ✅ production upload key (`print_upload_cert_sha.sh`) |
+| Release AAB / upload pack | ✅ `build/store-upload/` refreshed 2026-07-22 |
+| git | ✅ `skmlproduction/TestCompabilityLove` |
 
 ---
 

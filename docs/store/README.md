@@ -3,6 +3,7 @@
 | Файл | Назначение |
 |------|------------|
 | [PLAY_READY.md](./PLAY_READY.md) | **Сводка готовности к Play** |
+| [INTERNAL_UPLOAD_NOW.md](./INTERNAL_UPLOAD_NOW.md) | **Сейчас:** пути AAB, Privacy URL, cert SHA |
 | [STORE_UPLOAD.md](./STORE_UPLOAD.md) | Пошаговая загрузка AAB и скриншотов |
 | [LISTING_DRAFT.md](./LISTING_DRAFT.md) | Тексты листинга RU/EN |
 | [DATA_SAFETY_FORM.md](./DATA_SAFETY_FORM.md) | Черновик ответов Data safety |
