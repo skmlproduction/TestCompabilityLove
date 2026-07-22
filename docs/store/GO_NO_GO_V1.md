@@ -71,18 +71,16 @@ Package: `dev.lovetest.app` · `versionCode` 1 · IAP `remove_ads` · **Ads: No*
 ## Внешний чеклист (только вы / CI)
 
 ```bash
-# 1. Опубликовать legal (обязательно до Closed)
-git add -A && git commit -m "Love Tester v1.0.0 store-ready"
-git push -u origin main
-# GitHub → Actions → Privacy GitHub Pages (или дождаться push trigger)
-./scripts/check_legal_urls.sh   # ожидаем HTTP 200 ×3
+# Legal уже live (2026-07-22): ./scripts/check_legal_urls.sh → 200×3
+# Пакет: docs/store/INTERNAL_UPLOAD_NOW.md
 
-# 2. Internal testing (Play Console)
+# 1. Internal testing (Play Console)
 # Upload build/store-upload/app-release.aab + mapping.txt
-# См. INTERNAL_TESTING_RUNBOOK.md
+# См. INTERNAL_TESTING_RUNBOOK.md · INTERNAL_UPLOAD_NOW.md
 
-# 3. Closed testing (после Internal smoke)
+# 2. Closed testing (после Internal smoke)
 # License testers → purchase + restore remove_ads на устройстве
+# См. CLOSED_IAP_SMOKE.md
 ```
 
 ---
@@ -91,18 +89,17 @@ git push -u origin main
 
 | # | Задача | Зачем |
 |---|--------|-------|
-| 1 | **Создать repo на GitHub** (если HTTPS → 404) + **`git push`** + workflow **Privacy GitHub Pages** | Privacy URL **HTTP 200** (`./scripts/check_legal_urls.sh`) |
+| 1 | ~~Создать repo + Pages~~ | ✅ Legal **200×3** (`skmlproduction`) |
 | 2 | **Создать приложение** в Play Console (если ещё нет) | Первый upload |
 | 3 | Заполнить **App content**: Privacy URL, **Ads No**, IAP Yes, **13+** | Policy status green |
 | 4 | **Data safety** — по `DATA_SAFETY_FORM.md` | Блокер релиза |
 | 5 | **IARC** — по `IARC_QUESTIONNAIRE.md` (рулетка **нет**, wheel = fun) | Блокер релиза |
 | 6 | **Monetize** → `remove_ads` **Active** | Closed: тест покупки |
 | 7 | **Internal testers** (Gmail, до 100) | Установка с трека |
-| 8 | Upload **AAB** + **mapping.txt** | См. runbook ниже |
+| 8 | Upload **AAB** + **mapping.txt** | См. [INTERNAL_UPLOAD_NOW.md](./INTERNAL_UPLOAD_NOW.md) |
 | 9 | **App integrity** — upload certificate SHA | Совпадение с `print_upload_cert_sha.sh` |
 | 10 | Smoke на устройстве (Internal link) | Onboarding, tests, Settings→Privacy HTTPS |
-| 11 | *(Рекомендуется)* `./scripts/recapture_store_screenshots.sh` | Скрины после UI-фиксов |
-| 12 | *(Closed)* License testers + покупка/restore `remove_ads` | Перед Production |
+| 11 | *(Closed)* License testers + покупка/restore `remove_ads` | Перед Production |
 
 ---
 

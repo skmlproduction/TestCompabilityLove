@@ -51,9 +51,16 @@ set_config() {
   fi
 }
 
-set_config "hw.lcd.width" "${TARGET_WIDTH}"
-set_config "hw.lcd.height" "${TARGET_HEIGHT}"
-set_config "hw.lcd.density" "420"
+SNAP_HW="${AVD_DIR}/snapshots/emp_ready_p1/hardware.ini"
+if [[ -f "${SNAP_HW}" ]]; then
+  echo "Найден snapshot emp_ready_p1 — выравниваю config под него (не ломаю load)."
+  bash "${ROOT}/scripts/align_capture_snapshot_config.sh"
+else
+  set_config "hw.lcd.width" "${TARGET_WIDTH}"
+  set_config "hw.lcd.height" "${TARGET_HEIGHT}"
+  set_config "hw.lcd.density" "420"
+  echo "OK: ${AVD_NAME} → ${TARGET_WIDTH}×${TARGET_HEIGHT}"
+fi
 
-echo "OK: ${AVD_NAME} → ${TARGET_WIDTH}×${TARGET_HEIGHT}"
 echo "Запуск: ./scripts/start_capture_emulator.sh"
+echo "Snapshot boot: emulator -avd ${AVD_NAME} -snapshot emp_ready_p1 -no-snapshot-save"
