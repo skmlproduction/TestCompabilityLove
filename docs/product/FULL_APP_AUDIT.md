@@ -186,10 +186,10 @@
 
 ## E. Store & release blockers (P0)
 
-1. **Legal URLs 404** — `git push` → GitHub Actions «Privacy GitHub Pages» → `./scripts/check_legal_urls.sh` 200
-2. **RU PNG 1080×2400** — пересъёмка `capture_screenshot_catalog.sh ru` на эмуляторе 1080×1920
-3. **Closed IAP smoke** — purchase + restore на license tester (Play Console)
-4. **Play Console manual** — app, Data safety, IARC, upload AAB
+1. **Closed IAP smoke** — purchase + restore на license tester — `docs/store/CLOSED_IAP_SMOKE.md`
+2. Закоммитить локальный P1 dirty tree (~240 файлов) и запушить
+3. **Play Console manual** — app, Data safety, IARC, upload AAB (`build/store-upload/`)
+4. ~~Legal URLs 404~~ — ✅ HTTP 200 ×3 на skmlproduction Pages (2026-07-22)
 5. ~~IAP honesty~~ — ✅ paywall «support dev» при ADS off (2026-07-14)
 
 ---
