@@ -9,6 +9,7 @@
 - **Next user:** Closed IAP · commit P1 · Internal AAB upload.
 
 ## Журнал
+- 2026-07-22 ~13:01 — Follow-up push: `ShareCardContent` + `share_file_paths.xml` + FileProvider manifest + `LoveLayout` (deps for share capture на remote).
 - 2026-07-22 ~13:00 — **Find-work:** share URI grant fix + blank-bitmap guard; Xiaomi `installDebug` + QA **4/4** (MIUI не трогал). assembleDebug ✅.
 - 2026-07-22 ~12:57 — **Full check #2:** assembleDebug+androidTest ✅; Capture EXTRA_CANARY **5/5** + SPOT2 **4/4**; TRACKER/FULL_APP_AUDIT legal → live. Dirty tree всё ещё unpushed.
 - 2026-07-22 ~12:53 — **Full check:** legal/repo/Pages OK; validate_store_upload OK; unit OK; Capture canary Consent+Love+Calc **3/3**, spot PNG **3/3**. Фикс leftover URL в LegalDocumentsTest → skmlproduction. Dirty ~248 files unpushed.
