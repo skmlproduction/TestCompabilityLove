@@ -34,18 +34,18 @@ Package: `dev.lovetest.app` · `versionCode` 1 · `versionName` 1.0.0
 | Data safety / rating incomplete | [PLAY_FORMS_FILLED.md](./PLAY_FORMS_FILLED.md) |
 | Crashlytics не подключён — **не блокер v1**, но без автоматического краш-алерта — усилить ручной мониторинг vitals |
 
-### Вердикт на 2026-06-04 (обновлено)
+### Вердикт на 2026-07-22
 
 | Трек | Статус |
 |------|--------|
 | Upload-пакет + prod AAB | ✅ |
 | Prod keystore | ✅ (см. `AGENT_STATUS` SHA-256) |
-| Internal testing | **GO** — [GO_NO_GO_V1.md](./GO_NO_GO_V1.md) |
-| Privacy Pages | ⏳ после `git push` + Pages workflow |
-| Store PNG (UI-фиксы) | ⏳ пересъёмка рекомендуется |
-| Production 100% | **NO-GO** до Closed smoke |
+| Privacy Pages | ✅ HTTP 200 ×3 (`skmlproduction`) |
+| Store PNG | ✅ 67/67 · catalog 34/34 RU+EN |
+| Internal testing | **GO** — залить AAB: [INTERNAL_UPLOAD_NOW.md](./INTERNAL_UPLOAD_NOW.md) |
+| Production 100% | **NO-GO** до Closed IAP smoke |
 
-**Рекомендация:** **GO Internal** → Closed + billing → затем staged Production.
+**Рекомендация:** **Upload Internal сейчас** → smoke → Closed + billing → staged Production.
 
 ---
 
