@@ -4,15 +4,14 @@
 > Обновляй ПОСЛЕ каждого осмысленного изменения. Новые записи журнала — сверху.
 
 ## Снимок
-- **Стадия:** Legal **200×3 ✅**; assembleDebug dirty-tree ✅; canary today **8/8** instrumented (Consent/Love/Calc + Protocol/Zodiac/Wheel/A11y9/Share) + spot QA **7** PNG. Internal **GO**.
-- **Dirty tree:** ~240 локальных P1/UI/test файлов **не на GitHub** — скажите «закоммить P1» чтобы запушить.
-- **Next user:** Closed IAP (`docs/store/CLOSED_IAP_SMOKE.md`) · Internal AAB upload.
-- Production: после Closed IAP.
+- **Стадия:** Legal **200×3 ✅**; Internal **GO**. Share P1 fix: FileProvider `grantUriPermission`+ClipData; blank share bitmap reject. Xiaomi spot **4/4** (hub/love_input/paywall/share).
+- **Dirty tree:** ~240 P1 UI/test файлов всё ещё локально — скажите «закоммить P1».
+- **Next user:** Closed IAP · commit P1 · Internal AAB upload.
 
 ## Журнал
-- 2026-07-22 ~12:57 — **Full check #2:** assembleDebug+androidTest ✅; Capture `emp_ready_p1` EXTRA_CANARY **5/5** + SPOT2 **4/4**; TRACKER/FULL_APP_AUDIT legal → live. Dirty tree всё ещё unpushed.
+- 2026-07-22 ~13:00 — **Find-work:** share URI grant fix + blank-bitmap guard; Xiaomi `installDebug` + QA **4/4** (MIUI не трогал). assembleDebug ✅.
+- 2026-07-22 ~12:57 — **Full check #2:** assembleDebug+androidTest ✅; Capture EXTRA_CANARY **5/5** + SPOT2 **4/4**; TRACKER/FULL_APP_AUDIT legal → live. Dirty tree всё ещё unpushed.
 - 2026-07-22 ~12:53 — **Full check:** legal/repo/Pages OK; validate_store_upload OK; unit OK; Capture canary Consent+Love+Calc **3/3**, spot PNG **3/3**. Фикс leftover URL в LegalDocumentsTest → skmlproduction. Dirty ~248 files unpushed.
-- 2026-07-22 ~12:48 — **`check_legal_urls` OK** privacy/terms/data-collection **200**. Terms починен: добавлен `terms_of_use.html` + export (`95d3ed1`).
 - 2026-07-20 ~06:54 — Повторные «продолжай»: legal/repo всё ещё 404. Статус → **IDLE_BLOCKED_USER**. Не гонял эмулятор/сборку.
 - 2026-07-20 ~06:53 — **Continue (noop):** legal/SSH без изменений (404 + Permission denied); AVD = чужой NeonKT. Agent-scope recheck исчерпан — нужен user GitHub SSH + repo + push.
 - 2026-07-20 ~06:52 — **Continue:** legal всё ещё 404; NeonKT занял AVD (чужой). `testDebugUnitTest` + `:core:domain:test` ✅. Добавлен `docs/store/CLOSED_IAP_SMOKE.md` (фаза 4). **Idle на user legal push.**
