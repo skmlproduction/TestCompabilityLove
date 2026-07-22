@@ -104,16 +104,25 @@ elif ! bash scripts/check_privacy_url.sh "${privacy}" >/dev/null 2>&1; then
   note="См. docs/store/PRIVACY_HOSTING.md"
 else
   aab="$(ls -1 app/build/outputs/bundle/release/*.aab 2>/dev/null | head -1 || true)"
+  pack_aab="build/store-upload/app-release.aab"
+  pack_zip="build/love-tester-store-upload.zip"
   if [[ -z "${aab}" ]]; then
     step=4
     title="Собрать подписанный release AAB"
     cmd="./gradlew bundleReleaseLoveTest"
+  elif [[ -f "${pack_aab}" && -f "${pack_zip}" ]]; then
+    step=5
+    title="Загрузить AAB в Play Console (Internal testing)"
+    cmd="open docs/store/INTERNAL_UPLOAD_NOW.md"
+    note="Пакет уже готов: ${pack_aab} · ${pack_zip}
+Чеклист: ./scripts/print_store_checklist.sh (блокеров нет)
+Дальше: Closed IAP — docs/store/CLOSED_IAP_SMOKE.md"
   else
     step=5
     title="Финальный gate и upload-пакет"
     cmd="./gradlew finalizeStoreReleaseLoveTest"
     note="Загрузите build/store-upload/ или build/love-tester-store-upload.zip
-Инструкция: docs/store/INTERNAL_TESTING.md"
+Инструкция: docs/store/INTERNAL_UPLOAD_NOW.md"
   fi
 fi
 
