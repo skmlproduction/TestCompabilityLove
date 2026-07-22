@@ -11,6 +11,7 @@
 - Дальнейшие «find work» без Play upload = только idle rechecks.
 
 ## Журнал
+- 2026-07-22 ~13:35 — Idle recheck: checklist clean · legal 200×3 · AVD SKIP (RAM) · **no agent work left**.
 - 2026-07-22 ~13:32 — Recheck: clean · PRODUCTION_ROLLOUT verdict sync · agent IDLE.
 - 2026-07-22 ~13:30 — Stale privacy-404 docs cleared (`f91aa7f`).
 - 2026-07-22 ~13:11 — AAB pack · Legal live.
