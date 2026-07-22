@@ -36,14 +36,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.lovetest.app.BuildConfig
 import dev.lovetest.app.R
 import dev.lovetest.core.ui.components.LoveCardShadowElevation
 import dev.lovetest.core.ui.components.LoveShadowCard
 import dev.lovetest.core.ui.components.LoveGradientBackground
 import dev.lovetest.core.ui.components.LoveHeartIcon
 import dev.lovetest.core.ui.components.LoveHubBackgroundBlobs
+import dev.lovetest.core.ui.components.LoveLayout
 import dev.lovetest.core.ui.components.LoveOutlinedButton
 import dev.lovetest.core.ui.components.LovePrimaryButton
+import dev.lovetest.core.ui.components.loveEdgeToEdgeScreenPadding
 import dev.lovetest.core.ui.theme.LoveOnPrimaryContainer
 import dev.lovetest.core.ui.theme.LoveOnSurface
 import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
@@ -51,6 +54,7 @@ import dev.lovetest.core.ui.theme.LoveOutlineVariant
 import dev.lovetest.core.ui.theme.LovePrimary
 import dev.lovetest.core.ui.theme.LovePrimaryContainer
 import dev.lovetest.core.ui.theme.LoveSurface
+import dev.lovetest.core.ui.theme.LoveTypographyTokens
 
 @Composable
 fun ConsentScreen(
@@ -65,38 +69,49 @@ fun ConsentScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 24.dp),
+                .loveEdgeToEdgeScreenPadding(),
         ) {
-            ConsentIllustrationCard(modifier = Modifier.padding(top = 24.dp))
-            Text(
-                text = stringResource(R.string.consent_headline),
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold,
-                color = LoveOnSurface,
+            Column(
                 modifier = Modifier
-                    .padding(top = 20.dp)
-                    .semantics { heading() },
-            )
-            Text(
-                text = stringResource(R.string.consent_intro_line1),
-                style = MaterialTheme.typography.bodyLarge,
-                color = LoveOnSurfaceVariant,
-                modifier = Modifier.padding(top = 8.dp),
-            )
-            Text(
-                text = stringResource(R.string.consent_intro_line2),
-                style = MaterialTheme.typography.bodyLarge,
-                color = LoveOnSurfaceVariant,
-            )
+                    .weight(1f)
+                    .verticalScroll(rememberScrollState()),
+            ) {
+                if (!BuildConfig.ADS_ENABLED && BuildConfig.DEBUG) {
+                    ConsentAdsOffBanner(modifier = Modifier.padding(top = 8.dp))
+                }
+                ConsentIllustrationCard(
+                    modifier = Modifier.padding(
+                        top = if (BuildConfig.ADS_ENABLED || BuildConfig.DEBUG) 8.dp else 0.dp,
+                    ),
+                )
+                Text(
+                    text = stringResource(R.string.consent_headline),
+                    style = LoveTypographyTokens.ScreenHeadline,
+                    color = LoveOnSurface,
+                    modifier = Modifier
+                        .padding(top = 20.dp)
+                        .semantics { heading() },
+                )
+                Text(
+                    text = stringResource(R.string.consent_intro_line1),
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = LoveOnSurfaceVariant,
+                    modifier = Modifier.padding(top = 8.dp),
+                )
+                Text(
+                    text = stringResource(R.string.consent_intro_line2),
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = LoveOnSurfaceVariant,
+                )
 
-            ConsentDetailsCard(modifier = Modifier.padding(top = 20.dp))
-            ConsentPremiumHint(modifier = Modifier.padding(top = 16.dp))
+                ConsentDetailsCard(modifier = Modifier.padding(top = 20.dp))
+                ConsentPremiumHint(modifier = Modifier.padding(top = 16.dp, bottom = 8.dp))
+            }
 
             LovePrimaryButton(
                 text = stringResource(R.string.consent_accept),
                 onClick = onAccept,
-                modifier = Modifier.padding(top = 24.dp),
+                modifier = Modifier.padding(top = 8.dp),
             )
             LoveOutlinedButton(
                 text = stringResource(R.string.consent_manage),
@@ -114,9 +129,30 @@ fun ConsentScreen(
                     .fillMaxWidth()
                     .semantics { role = Role.Button }
                     .clickable(onClick = onOpenPrivacy)
-                    .padding(top = 16.dp, bottom = 32.dp),
+                    .padding(top = 16.dp, bottom = 16.dp),
             )
         }
+    }
+}
+
+@Composable
+private fun ConsentAdsOffBanner(modifier: Modifier = Modifier) {
+    LoveShadowCard(
+        modifier = modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(24.dp),
+        shadowElevation = LoveCardShadowElevation.Subtle,
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFFFF8E1)),
+    ) {
+        Text(
+            text = stringResource(R.string.consent_ads_off_banner),
+            style = LoveTypographyTokens.CardCaption,
+            fontWeight = FontWeight.SemiBold,
+            color = Color(0xFFE65100),
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+        )
     }
 }
 
@@ -126,7 +162,7 @@ private fun ConsentIllustrationCard(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxWidth()
             .decorativeForAccessibility(),
-        shape = RoundedCornerShape(48.dp),
+        shape = LoveLayout.ConsentIllustrationShape,
         shadowElevation = LoveCardShadowElevation.Hero,
         colors = CardDefaults.cardColors(containerColor = LovePrimaryContainer),
     ) {
@@ -214,9 +250,7 @@ private fun ConsentDetailsCard(modifier: Modifier = Modifier) {
         Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 24.dp)) {
             Text(
                 text = stringResource(R.string.consent_section_what),
-                style = MaterialTheme.typography.labelLarge,
-                fontWeight = FontWeight.Bold,
-                letterSpacing = 2.sp,
+                style = LoveTypographyTokens.SectionKicker,
                 color = LovePrimary,
             )
             listOf(

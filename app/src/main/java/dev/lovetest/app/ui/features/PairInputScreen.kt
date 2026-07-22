@@ -45,6 +45,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -53,31 +57,40 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.lovetest.app.R
 import dev.lovetest.app.prefs.rememberPairedNameFields
-import dev.lovetest.app.util.decorativeForAccessibility
+import dev.lovetest.app.ui.common.LoveFeatureTopBar
+import dev.lovetest.app.ui.common.NameInputHint
 import dev.lovetest.app.util.loveInputContentPadding
+import dev.lovetest.core.domain.NameInputValidator
+import dev.lovetest.app.util.loveInputFieldSemantics
+import dev.lovetest.app.util.loveInputLabelForAccessibility
 import dev.lovetest.core.ui.components.LoveCardShadowElevation
+import dev.lovetest.core.ui.components.LoveLayout
 import dev.lovetest.core.ui.components.LoveShadowCard
+import dev.lovetest.core.ui.components.LoveFeatureHero
 import dev.lovetest.core.ui.components.LoveGradientBackground
 import dev.lovetest.core.ui.components.LoveHeartIcon
 import dev.lovetest.core.ui.components.LoveHubBackgroundBlobs
 import dev.lovetest.core.ui.components.LovePrimaryButton
+import dev.lovetest.core.ui.components.loveEdgeToEdgeScreenPadding
+import dev.lovetest.core.ui.theme.LoveHeroEnd
 import dev.lovetest.core.ui.theme.LoveOnPrimaryContainer
 import dev.lovetest.core.ui.theme.LoveOnSurface
 import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
 import dev.lovetest.core.ui.theme.LoveOutline
 import dev.lovetest.core.ui.theme.LovePrimary
 import dev.lovetest.core.ui.theme.LovePrimaryContainer
+import dev.lovetest.core.ui.theme.LoveSecondary
 import dev.lovetest.core.ui.theme.LoveSurface
+import dev.lovetest.core.ui.theme.LoveTypographyTokens
 
 private val PairHeroBrush = Brush.linearGradient(
     colors = listOf(
-        Color(0xFFAD1457),
-        Color(0xFFC2185B),
-        Color(0xFFF48FB1),
+        LovePrimary,
+        LoveSecondary,
+        LoveHeroEnd,
     ),
 )
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PairInputScreen(
     onBack: () -> Unit,
@@ -86,7 +99,7 @@ fun PairInputScreen(
     val fields = rememberPairedNameFields()
     var name1 by fields.name1
     var name2 by fields.name2
-    val canSubmit = name1.isNotBlank() && name2.isNotBlank()
+    val canSubmit = NameInputValidator.canSubmitPair(name1, name2)
     val initial1 = name1.trim().firstOrNull()?.uppercaseChar()?.toString() ?: "?"
     val initial2 = name2.trim().firstOrNull()?.uppercaseChar()?.toString() ?: "?"
 
@@ -94,48 +107,18 @@ fun PairInputScreen(
         LoveGradientBackground(Modifier.fillMaxSize())
         LoveHubBackgroundBlobs(Modifier.fillMaxSize())
 
-        Scaffold(
-            containerColor = Color.Transparent,
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(
-                            text = stringResource(R.string.pair_title),
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.Bold,
-                        )
-                    },
-                    navigationIcon = {
-                        TextButton(onClick = onBack) {
-                            Icon(
-                                Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = null,
-                                tint = LovePrimary,
-                                modifier = Modifier.decorativeForAccessibility(),
-                            )
-                            Text(
-                                stringResource(R.string.nav_back),
-                                color = LovePrimary,
-                                fontWeight = FontWeight.SemiBold,
-                                modifier = Modifier.padding(start = 4.dp),
-                            )
-                        }
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = LoveSurface.copy(alpha = 0.85f),
-                    ),
-                )
-            },
-        ) { padding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-                    .verticalScroll(rememberScrollState())
-                    .loveInputContentPadding()
-                    .padding(horizontal = 24.dp),
-            ) {
-                PairInputHero(modifier = Modifier.padding(top = 8.dp))
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .loveEdgeToEdgeScreenPadding(includeNavigationBar = false)
+                .loveInputContentPadding()
+                .verticalScroll(rememberScrollState()),
+        ) {
+            LoveFeatureTopBar(
+                title = stringResource(R.string.pair_title),
+                onBack = onBack,
+            )
+            PairInputHero(modifier = Modifier.padding(top = 8.dp))
                 PairPreviewStrip(
                     initial1 = initial1,
                     initial2 = initial2,
@@ -157,6 +140,7 @@ fun PairInputScreen(
                             highlighted = true,
                             placeholder = "",
                         )
+                        NameInputHint(name1)
                         PairNameField(
                             label = stringResource(R.string.pair_name2_label),
                             value = name2,
@@ -165,6 +149,7 @@ fun PairInputScreen(
                             placeholder = stringResource(R.string.pair_name2_hint),
                             modifier = Modifier.padding(top = 20.dp),
                         )
+                        NameInputHint(name2)
                         Text(
                             text = stringResource(R.string.pair_quick_pick),
                             style = MaterialTheme.typography.bodyMedium,
@@ -201,65 +186,58 @@ fun PairInputScreen(
                     onClick = { onSubmit(name1.trim(), name2.trim()) },
                     enabled = canSubmit,
                     modifier = Modifier
-                        .padding(top = 24.dp, bottom = 32.dp)
-                        .height(48.dp),
+                        .padding(top = 24.dp, bottom = 32.dp),
                 )
-            }
         }
     }
 }
 
 @Composable
 private fun PairInputHero(modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .heightIn(min = 132.dp)
-            .clip(RoundedCornerShape(46.dp))
-            .background(PairHeroBrush),
+    LoveFeatureHero(
+        modifier = modifier,
+        brush = PairHeroBrush,
+        minHeight = LoveLayout.FeatureHeroTallMinHeight,
+        shape = LoveLayout.HubHeroShape,
     ) {
-        Row(
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .padding(top = 14.dp, start = 80.dp, end = 80.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Box(Modifier.size(60.dp).clip(CircleShape).background(Color.White.copy(0.25f)))
-            Box(Modifier.size(60.dp).clip(CircleShape).background(Color.White.copy(0.35f)))
-            Box(Modifier.size(60.dp).clip(CircleShape).background(Color.White.copy(0.25f)))
-        }
-        Box(
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .padding(top = 24.dp)
-                .size(40.dp)
-                .clip(RoundedCornerShape(20.dp))
-                .background(Color.White.copy(0.2f)),
-            contentAlignment = Alignment.Center,
-        ) {
-            LoveHeartIcon(Modifier.size(24.dp), color = Color.White)
-        }
         Column(
             modifier = Modifier
-                .align(Alignment.BottomStart)
+                .fillMaxWidth()
                 .padding(20.dp),
         ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Box(Modifier.size(48.dp).clip(CircleShape).background(Color.White.copy(0.25f)))
+                Box(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .size(36.dp)
+                        .clip(CircleShape)
+                        .background(Color.White.copy(0.35f)),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    LoveHeartIcon(Modifier.size(20.dp), color = Color.White)
+                }
+                Box(Modifier.size(48.dp).clip(CircleShape).background(Color.White.copy(0.25f)))
+            }
             Text(
                 text = stringResource(R.string.pair_hero_title),
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
+                style = LoveTypographyTokens.HeroTitle,
                 color = Color.White,
+                modifier = Modifier.padding(top = 12.dp),
             )
             Text(
                 text = stringResource(R.string.pair_hero_body1),
-                style = MaterialTheme.typography.bodyMedium,
+                style = LoveTypographyTokens.HeroBody,
                 color = Color.White.copy(0.9f),
                 modifier = Modifier.padding(top = 6.dp),
             )
             Text(
                 text = stringResource(R.string.pair_hero_body2),
-                style = MaterialTheme.typography.bodyMedium,
+                style = LoveTypographyTokens.HeroBody,
                 color = Color.White.copy(0.9f),
             )
             Box(
@@ -271,8 +249,7 @@ private fun PairInputHero(modifier: Modifier = Modifier) {
             ) {
                 Text(
                     text = stringResource(R.string.pair_test_badge),
-                    style = MaterialTheme.typography.labelLarge,
-                    fontWeight = FontWeight.Bold,
+                    style = LoveTypographyTokens.HubHeroChip,
                     color = Color.White,
                 )
             }
@@ -323,7 +300,7 @@ private fun PairPreviewStrip(
                 ) {
                     LoveHeartIcon(Modifier.size(22.dp), color = Color.White)
                 }
-                PairAvatar(initial2, Color(0xFFF8BBD0), Color(0xFF880E4F))
+                PairAvatar(initial2, LoveHeroEnd, LoveOnPrimaryContainer)
             }
         }
     }
@@ -359,15 +336,15 @@ private fun PairNameField(
     Column(modifier = modifier.fillMaxWidth()) {
         Text(
             text = label,
-            style = MaterialTheme.typography.titleSmall,
-            fontWeight = FontWeight.SemiBold,
+            style = LoveTypographyTokens.FieldLabel,
             color = LovePrimary,
+            modifier = Modifier.loveInputLabelForAccessibility(),
         )
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 8.dp)
-                .height(52.dp)
+                .height(LoveLayout.LoveTestInputFieldHeight)
                 .clip(RoundedCornerShape(28.dp))
                 .background(Color.White)
                 .border(
@@ -385,7 +362,9 @@ private fun PairNameField(
                 textStyle = TextStyle(fontSize = 18.sp, color = LoveOnSurface),
                 keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words),
                 cursorBrush = SolidColor(LovePrimary),
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .loveInputFieldSemantics(label = label, value = value, placeholder = placeholder),
                 decorationBox = { inner ->
                     if (value.isEmpty() && placeholder.isNotEmpty()) {
                         Text(placeholder, style = MaterialTheme.typography.bodyLarge, color = LoveOnSurfaceVariant)
@@ -401,13 +380,19 @@ private fun PairNameField(
 private fun PairChip(label: String, onSelect: (String, String) -> Unit) {
     Box(
         modifier = Modifier
+            .heightIn(min = LoveLayout.PresetChipMinHeight)
             .clip(RoundedCornerShape(28.dp))
             .background(LovePrimaryContainer)
+            .semantics(mergeDescendants = true) {
+                role = Role.Button
+                contentDescription = label
+            }
             .clickable {
                 val parts = label.split(" + ", limit = 2)
                 if (parts.size == 2) onSelect(parts[0].trim(), parts[1].trim())
             }
             .padding(horizontal = 16.dp, vertical = 12.dp),
+        contentAlignment = Alignment.Center,
     ) {
         Text(
             text = label,

@@ -14,18 +14,30 @@ import dev.lovetest.core.ui.theme.LoveTestTheme
 import io.mockk.coEvery
 import io.mockk.mockk
 import org.junit.After
+import dev.lovetest.app.testing.LoveInstrumentedCleanup
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.junit.Before
 import org.koin.compose.KoinApplication
+import org.koin.core.context.stopKoin
 import org.koin.dsl.module
 
 @RunWith(AndroidJUnit4::class)
 class SplashScreenComposeTest {
 
+
+    @get:Rule
+    val cleanup = LoveInstrumentedCleanup()
+
     @get:Rule
     val composeRule = createAndroidComposeRule<ComponentActivity>()
+
+    @Before
+    fun stopPreviousKoin() {
+        stopKoin()
+    }
 
     @After
     fun tearDown() {
@@ -37,7 +49,7 @@ class SplashScreenComposeTest {
         DebugUiPreview.applyFromIntent(
             Intent().putExtra(NavIntents.EXTRA_DEBUG_UI_PREVIEW, "splash_brand"),
         )
-        val headline1 = composeRule.activity.getString(R.string.splash_headline_line1)
+        val heroLine1 = composeRule.activity.getString(R.string.splash_hero_line1)
         val chipTest = composeRule.activity.getString(R.string.splash_chip_test)
         val prefs = mockk<AppPreferences>(relaxed = true) {
             coEvery { loadSessionSnapshot() } returns null
@@ -61,7 +73,7 @@ class SplashScreenComposeTest {
         }
 
         composeRule.waitForIdle()
-        composeRule.onNodeWithText(headline1).assertIsDisplayed()
+        composeRule.onNodeWithText(heroLine1).assertIsDisplayed()
         composeRule.onNodeWithText(chipTest).assertIsDisplayed()
     }
 }

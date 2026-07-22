@@ -17,6 +17,11 @@ object DebugUiPreview {
             ?.takeIf { it.isNotEmpty() }
     }
 
+    /** Clears sticky preview id (instrumented tests / after capture). */
+    fun clear() {
+        screenId = null
+    }
+
     fun current(): String? = if (BuildConfig.DEBUG) screenId else null
 
     fun matches(id: String): Boolean = BuildConfig.DEBUG && screenId == id
@@ -73,20 +78,25 @@ object DebugUiPreview {
             }
             "pair_result" -> {
                 val calc = dev.lovetest.core.domain.DefaultLoveScoreCalculator()
+                val n1 = "Sophia"
+                val n2 = "Dmitry"
+                // Keep hero % and metric bars on the same calculated base (no hardcode drift).
                 dev.lovetest.app.session.LoveTestSession.storePairResult(
-                    "Sophia",
-                    "Dmitry",
-                    74,
-                    calc.pairMetrics("Sophia", "Dmitry"),
+                    n1,
+                    n2,
+                    calc.calculatePercent(n1, n2),
+                    calc.pairMetrics(n1, n2),
                 )
             }
             "pair_result_low" -> {
                 val calc = dev.lovetest.core.domain.DefaultLoveScoreCalculator()
+                val n1 = "Анна"
+                val n2 = "Макс"
                 dev.lovetest.app.session.LoveTestSession.storePairResult(
-                    "Анна",
-                    "Макс",
-                    34,
-                    calc.pairMetrics("Анна", "Макс"),
+                    n1,
+                    n2,
+                    calc.calculatePercent(n1, n2),
+                    calc.pairMetrics(n1, n2),
                 )
             }
             "calculator_result" -> {

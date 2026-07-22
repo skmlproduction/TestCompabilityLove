@@ -3,37 +3,28 @@ package dev.lovetest.app.ui.love
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Card
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
+import dev.lovetest.app.ui.common.LoveFeatureTopBar
+import dev.lovetest.core.ui.components.loveEdgeToEdgeScreenPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
@@ -41,40 +32,35 @@ import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import dev.lovetest.app.R
 import dev.lovetest.app.session.LoveTestSession
 import dev.lovetest.app.ui.share.LoveShareResultOverlay
 import dev.lovetest.app.ui.share.rememberLoveShareSheet
 import dev.lovetest.app.util.buildLoveShareText
+import dev.lovetest.app.ui.common.LoveFeatureResultActions
 import dev.lovetest.app.ui.common.LoveHeroPercentRing
 import dev.lovetest.core.domain.LoveScoreCalculator
 import dev.lovetest.core.ui.components.LoveCardShadowElevation
+import dev.lovetest.core.ui.components.LoveLayout
 import dev.lovetest.core.ui.components.LoveShadowCard
 import dev.lovetest.core.ui.components.LoveGradientBackground
 import dev.lovetest.core.ui.components.LoveHeartIcon
 import dev.lovetest.core.ui.components.LoveHeroGradientBrush
-import dev.lovetest.core.ui.components.LoveOutlinedButton
-import dev.lovetest.core.ui.components.LovePrimaryButton
-import dev.lovetest.core.ui.theme.LoveBgGlowTop
 import dev.lovetest.core.ui.theme.LoveErrorContainer
 import dev.lovetest.core.ui.theme.LoveOnErrorContainer
 import dev.lovetest.core.ui.theme.LoveOnPrimaryContainer
 import dev.lovetest.core.ui.theme.LoveOnSurface
 import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
-import dev.lovetest.core.ui.theme.LoveOutlineVariant
 import dev.lovetest.core.ui.theme.LovePrimary
 import dev.lovetest.core.ui.theme.LovePrimaryContainer
 import dev.lovetest.core.ui.theme.LoveResultMutedHeroBrush
 import dev.lovetest.core.ui.theme.LoveSecondary
 import dev.lovetest.core.ui.theme.LoveSurface
+import dev.lovetest.core.ui.theme.LoveTypographyTokens
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoveTestResultScreen(
     onShare: () -> Unit,
@@ -101,95 +87,69 @@ fun LoveTestResultScreen(
             LoveResultFloatingHearts(Modifier.fillMaxSize())
         }
 
-        Scaffold(
-            containerColor = Color.Transparent,
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(
-                            text = stringResource(R.string.love_test_result_title),
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.Bold,
-                        )
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = LoveSurface.copy(alpha = 0.85f),
-                    ),
-                )
-            },
-        ) { padding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-                    .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 24.dp),
-            ) {
-                LoveResultHeroCard(
-                    high = high,
-                    name1 = name1,
-                    name2 = name2,
-                    percent = percent,
-                    percentLabel = stringResource(
-                        if (high) R.string.love_test_result_percent_label_love
-                        else R.string.compatibility_label,
-                    ),
-                    heroTag = stringResource(
-                        if (high) R.string.love_test_result_high_tag
-                        else R.string.love_test_result_low_tag,
-                    ),
-                    percentContentDescription = percentCd,
-                    modifier = Modifier.padding(top = 8.dp),
-                )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .loveEdgeToEdgeScreenPadding(includeNavigationBar = false)
+                .navigationBarsPadding()
+                .verticalScroll(rememberScrollState()),
+        ) {
+            LoveFeatureTopBar(
+                title = stringResource(R.string.love_test_result_title),
+            )
 
-                if (high) {
-                    LoveResultHighMessageCard(modifier = Modifier.padding(top = 20.dp))
-                    LoveSharePreviewCard(
-                        percent = percent,
-                        names = "$name1 + $name2",
-                        modifier = Modifier.padding(top = 20.dp),
-                    )
+            LoveResultHeroCard(
+                high = high,
+                name1 = name1,
+                name2 = name2,
+                percent = percent,
+                percentLabel = stringResource(
+                    if (high) R.string.love_test_result_percent_label_love
+                    else R.string.compatibility_label,
+                ),
+                heroTag = stringResource(
+                    if (high) R.string.love_test_result_high_tag
+                    else R.string.love_test_result_low_tag,
+                ),
+                percentContentDescription = percentCd,
+                modifier = Modifier.padding(top = 8.dp),
+            )
+
+            if (high) {
+                LoveResultHighMessageCard(modifier = Modifier.padding(top = 20.dp))
+            } else {
+                LoveResultLowMessageCard(modifier = Modifier.padding(top = 20.dp))
+            }
+
+            // CTAs before decorative tip/preview so Share stays above the fold.
+            LoveFeatureResultActions(
+                tryAgainLabel = stringResource(R.string.love_test_try_again),
+                onShare = shareSheet.open,
+                onTryAgain = onTryAgain,
+                onHome = onHome,
+                topSpacing = 20.dp,
+                disclaimerRes = if (high) {
+                    R.string.love_test_result_disclaimer_long
                 } else {
-                    LoveResultLowMessageCard(modifier = Modifier.padding(top = 20.dp))
-                    LoveResultTipCard(modifier = Modifier.padding(top = 16.dp))
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 24.dp, bottom = 8.dp),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        BrokenHeartDecor(modifier = Modifier.size(80.dp))
-                    }
-                }
-
-                LovePrimaryButton(
-                    text = stringResource(R.string.love_test_share_cta),
-                    onClick = shareSheet.open,
-                    modifier = Modifier.padding(top = 20.dp),
+                    R.string.result_entertainment_only
+                },
+            )
+            if (high) {
+                LoveSharePreviewCard(
+                    percent = percent,
+                    names = "$name1 + $name2",
+                    modifier = Modifier.padding(top = 20.dp, bottom = 32.dp),
                 )
-                LoveOutlinedButton(
-                    text = stringResource(R.string.love_test_try_again),
-                    onClick = onTryAgain,
-                    modifier = Modifier.padding(top = 12.dp),
-                )
-                LoveResultHomeButton(
-                    text = stringResource(R.string.love_test_back_home),
-                    onClick = onHome,
-                    modifier = Modifier.padding(top = 12.dp),
-                )
-
-                Text(
-                    text = stringResource(
-                        if (high) R.string.love_test_result_disclaimer_long
-                        else R.string.result_entertainment_only,
-                    ),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = LoveOnSurfaceVariant,
-                    textAlign = TextAlign.Center,
+            } else {
+                LoveResultTipCard(modifier = Modifier.padding(top = 16.dp))
+                Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 20.dp, bottom = 32.dp),
-                )
+                        .padding(top = 24.dp, bottom = 32.dp),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    BrokenHeartDecor(modifier = Modifier.size(80.dp))
+                }
             }
         }
         LoveShareResultOverlay(
@@ -199,7 +159,8 @@ fun LoveTestResultScreen(
             name2 = name2,
             harmonyTag = harmonyTag,
             shareText = shareText,
-            onShare = onShare,
+            high = high,
+            onShareFallback = onShare,
         )
     }
 }
@@ -217,7 +178,7 @@ private fun LoveResultHeroCard(
 ) {
     LoveShadowCard(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(48.dp),
+        shape = LoveLayout.ResultHeroShape,
         shadowElevation = LoveCardShadowElevation.Hero,
         colors = CardDefaults.cardColors(containerColor = Color.Transparent),
     ) {
@@ -252,9 +213,11 @@ private fun LoveResultHeroCard(
                 ) {
                     Text(
                         text = name1,
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold,
+                        style = LoveTypographyTokens.CardTitleLight,
                         color = Color.White,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.weight(1f, fill = false),
                     )
                     LoveHeartIcon(
                         modifier = Modifier
@@ -264,9 +227,11 @@ private fun LoveResultHeroCard(
                     )
                     Text(
                         text = name2,
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold,
+                        style = LoveTypographyTokens.CardTitleLight,
                         color = Color.White,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.weight(1f, fill = false),
                     )
                 }
 
@@ -275,6 +240,7 @@ private fun LoveResultHeroCard(
                     label = percentLabel,
                     high = high,
                     contentDescription = percentContentDescription,
+                    ringSize = LoveLayout.LoveTestResultRingSize,
                     modifier = Modifier.padding(top = 20.dp),
                 )
 
@@ -289,8 +255,7 @@ private fun LoveResultHeroCard(
                 ) {
                     Text(
                         text = heroTag,
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold,
+                        style = LoveTypographyTokens.CardTitleLight,
                         color = Color.White,
                         textAlign = TextAlign.Center,
                     )
@@ -311,25 +276,24 @@ private fun LoveResultHighMessageCard(modifier: Modifier = Modifier) {
         Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 24.dp)) {
             Text(
                 text = stringResource(R.string.love_test_result_high_card_title),
-                style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.Bold,
+                style = LoveTypographyTokens.ScreenHeadline,
                 color = LoveOnSurface,
             )
             Text(
                 text = stringResource(R.string.love_test_result_high_body1),
-                style = MaterialTheme.typography.bodyLarge,
+                style = LoveTypographyTokens.HeroBody,
                 color = LoveOnSurfaceVariant,
                 modifier = Modifier.padding(top = 12.dp),
             )
             Text(
                 text = stringResource(R.string.love_test_result_high_body2),
-                style = MaterialTheme.typography.bodyLarge,
+                style = LoveTypographyTokens.HeroBody,
                 color = LoveOnSurfaceVariant,
                 modifier = Modifier.padding(top = 4.dp),
             )
             Text(
                 text = stringResource(R.string.love_test_result_high_body3),
-                style = MaterialTheme.typography.bodyLarge,
+                style = LoveTypographyTokens.HeroBody,
                 color = LoveOnSurfaceVariant,
                 modifier = Modifier.padding(top = 4.dp),
             )
@@ -342,8 +306,7 @@ private fun LoveResultHighMessageCard(modifier: Modifier = Modifier) {
             ) {
                 Text(
                     text = stringResource(R.string.love_test_result_high_chip),
-                    style = MaterialTheme.typography.labelLarge,
-                    fontWeight = FontWeight.Bold,
+                    style = LoveTypographyTokens.HubHeroChip,
                     color = LoveOnPrimaryContainer,
                 )
             }
@@ -371,43 +334,30 @@ private fun LoveResultLowMessageCard(modifier: Modifier = Modifier) {
                 ) {
                     Text(
                         text = "!",
-                        style = MaterialTheme.typography.headlineSmall,
-                        fontWeight = FontWeight.ExtraBold,
+                        style = LoveTypographyTokens.ScreenHeadline,
                         color = LovePrimary,
                     )
                 }
                 Text(
                     text = stringResource(R.string.love_test_result_low_message),
-                    style = MaterialTheme.typography.headlineSmall,
-                    fontWeight = FontWeight.Bold,
+                    style = LoveTypographyTokens.ScreenHeadline,
                     color = LoveOnErrorContainer,
                     modifier = Modifier.padding(start = 16.dp),
                 )
             }
-            Text(
-                text = stringResource(R.string.love_test_result_low_body1),
-                style = MaterialTheme.typography.bodyLarge,
-                color = LoveOnErrorContainer.copy(alpha = 0.88f),
-                modifier = Modifier.padding(top = 16.dp),
-            )
-            Text(
-                text = stringResource(R.string.love_test_result_low_body2),
-                style = MaterialTheme.typography.bodyLarge,
-                color = LoveOnErrorContainer.copy(alpha = 0.88f),
-                modifier = Modifier.padding(top = 4.dp),
-            )
-            Text(
-                text = stringResource(R.string.love_test_result_low_body3),
-                style = MaterialTheme.typography.bodyLarge,
-                color = LoveOnErrorContainer.copy(alpha = 0.88f),
-                modifier = Modifier.padding(top = 4.dp),
-            )
-            Text(
-                text = stringResource(R.string.love_test_result_low_body4),
-                style = MaterialTheme.typography.bodyLarge,
-                color = LoveOnErrorContainer.copy(alpha = 0.88f),
-                modifier = Modifier.padding(top = 4.dp),
-            )
+            listOf(
+                R.string.love_test_result_low_body1,
+                R.string.love_test_result_low_body2,
+                R.string.love_test_result_low_body3,
+                R.string.love_test_result_low_body4,
+            ).forEachIndexed { index, res ->
+                Text(
+                    text = stringResource(res),
+                    style = LoveTypographyTokens.HeroBody,
+                    color = LoveOnErrorContainer.copy(alpha = 0.88f),
+                    modifier = Modifier.padding(top = if (index == 0) 16.dp else 4.dp),
+                )
+            }
             Box(
                 modifier = Modifier
                     .padding(top = 16.dp)
@@ -417,8 +367,7 @@ private fun LoveResultLowMessageCard(modifier: Modifier = Modifier) {
             ) {
                 Text(
                     text = stringResource(R.string.love_test_result_low_chip, threshold),
-                    style = MaterialTheme.typography.labelLarge,
-                    fontWeight = FontWeight.Bold,
+                    style = LoveTypographyTokens.HubHeroChip,
                     color = LoveOnErrorContainer,
                 )
             }
@@ -437,13 +386,12 @@ private fun LoveResultTipCard(modifier: Modifier = Modifier) {
         Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 20.dp)) {
             Text(
                 text = stringResource(R.string.love_test_result_low_tip_title),
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
+                style = LoveTypographyTokens.CardTitle,
                 color = LoveOnSurface,
             )
             Text(
                 text = stringResource(R.string.love_test_result_low_tip_body),
-                style = MaterialTheme.typography.bodyLarge,
+                style = LoveTypographyTokens.HeroBody,
                 color = LoveOnSurfaceVariant,
                 modifier = Modifier.padding(top = 8.dp),
             )
@@ -457,6 +405,7 @@ private fun LoveSharePreviewCard(
     names: String,
     modifier: Modifier = Modifier,
 ) {
+    val previewRingSize = 80.dp
     LoveShadowCard(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(32.dp),
@@ -470,63 +419,37 @@ private fun LoveSharePreviewCard(
         ) {
             Box(
                 modifier = Modifier
-                    .size(88.dp)
+                    .size(previewRingSize)
                     .clip(RoundedCornerShape(24.dp))
                     .background(LoveHeroGradientBrush()),
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
                     text = "$percent%",
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontWeight = FontWeight.ExtraBold,
+                    style = LoveTypographyTokens.percentForRing(previewRingSize),
                     color = Color.White,
                 )
             }
             Column(modifier = Modifier.padding(start = 16.dp)) {
                 Text(
                     text = names,
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
+                    style = LoveTypographyTokens.CardTitle,
                     color = LoveOnSurface,
                 )
                 Text(
                     text = stringResource(R.string.love_test_share_preview_subtitle),
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = LoveTypographyTokens.CardCaption,
                     color = LoveOnSurfaceVariant,
                     modifier = Modifier.padding(top = 4.dp),
                 )
                 Text(
                     text = stringResource(R.string.love_test_share_preview_hint),
-                    style = MaterialTheme.typography.bodySmall,
+                    style = LoveTypographyTokens.CardCaption,
                     color = LoveOnSurfaceVariant,
                     modifier = Modifier.padding(top = 4.dp),
                 )
             }
         }
-    }
-}
-
-@Composable
-private fun LoveResultHomeButton(
-    text: String,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(52.dp)
-            .clip(RoundedCornerShape(44.dp))
-            .background(LovePrimaryContainer)
-            .clickable(onClick = onClick),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(
-            text = text,
-            style = MaterialTheme.typography.labelLarge,
-            fontWeight = FontWeight.SemiBold,
-            color = LoveOnPrimaryContainer,
-        )
     }
 }
 

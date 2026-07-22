@@ -11,6 +11,7 @@
 | [PLAY_CONSOLE_COPY.md](./PLAY_CONSOLE_COPY.md) | Готовые блоки текста для вставки |
 | [INTERNAL_TESTING.md](./INTERNAL_TESTING.md) | Первый релиз Internal track |
 | [BILLING_SETUP.md](./BILLING_SETUP.md) | SKU remove_ads в Play Console |
+| [CLOSED_IAP_SMOKE.md](./CLOSED_IAP_SMOKE.md) | **Closed:** purchase + restore smoke (ручной) |
 | [IARC_QUESTIONNAIRE.md](./IARC_QUESTIONNAIRE.md) | Черновик Content rating (IARC) |
 | [PRIVACY_HOSTING.md](./PRIVACY_HOSTING.md) | GitHub Pages / HTTPS privacy |
 

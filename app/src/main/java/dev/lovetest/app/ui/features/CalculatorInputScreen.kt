@@ -47,31 +47,40 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.lovetest.app.R
-import dev.lovetest.app.util.decorativeForAccessibility
+import dev.lovetest.app.ui.common.LoveFeatureTopBar
+import dev.lovetest.app.ui.common.NameInputHint
 import dev.lovetest.app.util.loveInputContentPadding
+import dev.lovetest.app.util.loveInputFieldSemantics
+import dev.lovetest.app.util.loveInputLabelForAccessibility
 import dev.lovetest.app.prefs.rememberPairedNameFields
+import dev.lovetest.core.domain.NameInputValidator
 import dev.lovetest.core.ui.components.LoveCardShadowElevation
+import dev.lovetest.core.ui.components.LoveFeatureHero
+import dev.lovetest.core.ui.components.LoveLayout
 import dev.lovetest.core.ui.components.LoveShadowCard
 import dev.lovetest.core.ui.components.LoveGradientBackground
 import dev.lovetest.core.ui.components.LoveHubBackgroundBlobs
 import dev.lovetest.core.ui.components.LovePrimaryButton
+import dev.lovetest.core.ui.components.loveEdgeToEdgeScreenPadding
+import dev.lovetest.core.ui.theme.LoveHeroEnd
 import dev.lovetest.core.ui.theme.LoveOnPrimaryContainer
 import dev.lovetest.core.ui.theme.LoveOnSurface
 import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
 import dev.lovetest.core.ui.theme.LoveOutline
+import dev.lovetest.core.ui.theme.LoveOutlineVariant
 import dev.lovetest.core.ui.theme.LovePrimary
 import dev.lovetest.core.ui.theme.LovePrimaryContainer
 import dev.lovetest.core.ui.theme.LoveSurface
+import dev.lovetest.core.ui.theme.LoveTypographyTokens
 
 private val CalculatorHeroBrush = Brush.linearGradient(
     colors = listOf(
-        Color(0xFF880E4F),
-        Color(0xFFC2185B),
-        Color(0xFFF8BBD0),
+        Color(0xFF5C1228),
+        LovePrimary,
+        LoveHeroEnd,
     ),
 )
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CalculatorInputScreen(
     onBack: () -> Unit,
@@ -80,57 +89,27 @@ fun CalculatorInputScreen(
     val fields = rememberPairedNameFields()
     var name1 by fields.name1
     var name2 by fields.name2
-    val canSubmit = name1.isNotBlank() && name2.isNotBlank()
+    val canSubmit = NameInputValidator.canSubmitPair(name1, name2)
     val letterPreview = name1.trim().firstOrNull()?.uppercaseChar()?.toString() ?: "?"
 
     Box(modifier = Modifier.fillMaxSize()) {
         LoveGradientBackground(Modifier.fillMaxSize())
         LoveHubBackgroundBlobs(Modifier.fillMaxSize())
 
-        Scaffold(
-            containerColor = Color.Transparent,
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(
-                            text = stringResource(R.string.calculator_title),
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.Bold,
-                        )
-                    },
-                    navigationIcon = {
-                        TextButton(onClick = onBack) {
-                            Icon(
-                                Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = null,
-                                tint = LovePrimary,
-                                modifier = Modifier.decorativeForAccessibility(),
-                            )
-                            Text(
-                                text = stringResource(R.string.nav_back),
-                                color = LovePrimary,
-                                fontWeight = FontWeight.SemiBold,
-                                modifier = Modifier.padding(start = 4.dp),
-                            )
-                        }
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = LoveSurface.copy(alpha = 0.85f),
-                    ),
-                )
-            },
-        ) { padding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-                    .verticalScroll(rememberScrollState())
-                    .loveInputContentPadding()
-                    .padding(horizontal = 24.dp),
-            ) {
-                CalculatorHeroCard(
-                    modifier = Modifier.padding(top = 8.dp),
-                )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .loveEdgeToEdgeScreenPadding(includeNavigationBar = false)
+                .loveInputContentPadding()
+                .verticalScroll(rememberScrollState()),
+        ) {
+            LoveFeatureTopBar(
+                title = stringResource(R.string.calculator_title),
+                onBack = onBack,
+            )
+            CalculatorHeroCard(
+                modifier = Modifier.padding(top = 8.dp),
+            )
                 LoveShadowCard(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -148,6 +127,7 @@ fun CalculatorInputScreen(
                             badge = "1",
                             placeholder = "",
                         )
+                        NameInputHint(name1)
                         CalculatorNameField(
                             label = stringResource(R.string.calculator_name2_label),
                             value = name2,
@@ -157,9 +137,10 @@ fun CalculatorInputScreen(
                             placeholder = stringResource(R.string.calculator_name2_hint),
                             modifier = Modifier.padding(top = 20.dp),
                         )
+                        NameInputHint(name2)
                         Text(
                             text = stringResource(R.string.calculator_letters_preview),
-                            style = MaterialTheme.typography.bodyMedium,
+                            style = LoveTypographyTokens.CardCaption,
                             color = LoveOnSurfaceVariant,
                             modifier = Modifier.padding(top = 24.dp),
                         )
@@ -183,18 +164,18 @@ fun CalculatorInputScreen(
                                 .fillMaxWidth()
                                 .padding(top = 20.dp)
                                 .clip(RoundedCornerShape(24.dp))
-                                .background(Color(0xFFF3EDF7))
+                                .background(LovePrimaryContainer)
                                 .padding(horizontal = 16.dp, vertical = 14.dp),
                         ) {
                             Text(
                                 text = stringResource(R.string.calculator_info_line1),
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = Color(0xFF49454F),
+                                style = LoveTypographyTokens.HeroBody,
+                                color = LoveOnPrimaryContainer,
                             )
                             Text(
                                 text = stringResource(R.string.calculator_info_line2),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = LoveOnSurfaceVariant,
+                                style = LoveTypographyTokens.CardCaption,
+                                color = LoveOnPrimaryContainer,
                                 modifier = Modifier.padding(top = 6.dp),
                             )
                         }
@@ -205,65 +186,58 @@ fun CalculatorInputScreen(
                     onClick = { onSubmit(name1.trim(), name2.trim()) },
                     enabled = canSubmit,
                     modifier = Modifier
-                        .padding(top = 24.dp, bottom = 32.dp)
-                        .height(48.dp),
+                        .padding(top = 24.dp, bottom = 32.dp),
                 )
-            }
         }
     }
 }
 
 @Composable
 private fun CalculatorHeroCard(modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(110.dp)
-            .clip(RoundedCornerShape(46.dp))
-            .background(CalculatorHeroBrush),
+    LoveFeatureHero(
+        modifier = modifier,
+        brush = CalculatorHeroBrush,
+        minHeight = LoveLayout.LoveTestInputHeroMinHeight,
+        shape = LoveLayout.HubHeroShape,
     ) {
-        Text(
-            text = "%",
-            style = MaterialTheme.typography.displayLarge.copy(
-                fontSize = 56.sp,
-                fontWeight = FontWeight.ExtraBold,
-            ),
-            color = Color.White.copy(0.35f),
-            modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(top = 12.dp, end = 24.dp),
-        )
         Row(
             modifier = Modifier
-                .align(Alignment.CenterEnd)
-                .padding(end = 20.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp, vertical = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            LetterBadge("A")
-            LetterBadge("Z", alpha = 0.15f)
-        }
-        Column(
-            modifier = Modifier
-                .align(Alignment.CenterStart)
-                .padding(start = 20.dp, end = 100.dp),
-        ) {
-            Text(
-                text = stringResource(R.string.calculator_hero_title),
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
-                color = Color.White,
-            )
-            Text(
-                text = stringResource(R.string.calculator_hero_body1),
-                style = MaterialTheme.typography.bodyMedium,
-                color = Color.White.copy(0.9f),
-                modifier = Modifier.padding(top = 6.dp),
-            )
-            Text(
-                text = stringResource(R.string.calculator_hero_body2),
-                style = MaterialTheme.typography.bodyMedium,
-                color = Color.White.copy(0.9f),
-            )
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = stringResource(R.string.calculator_hero_title),
+                    style = LoveTypographyTokens.HeroTitle,
+                    color = Color.White,
+                )
+                Text(
+                    text = stringResource(R.string.calculator_hero_body1),
+                    style = LoveTypographyTokens.HeroBody,
+                    color = Color.White.copy(0.9f),
+                    modifier = Modifier.padding(top = 6.dp),
+                )
+                Text(
+                    text = stringResource(R.string.calculator_hero_body2),
+                    style = LoveTypographyTokens.HeroBody,
+                    color = Color.White.copy(0.9f),
+                )
+            }
+            Column(horizontalAlignment = Alignment.End) {
+                Text(
+                    text = "%",
+                    style = MaterialTheme.typography.displayLarge.copy(
+                        fontSize = 40.sp,
+                        fontWeight = FontWeight.ExtraBold,
+                    ),
+                    color = Color.White.copy(0.35f),
+                )
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    LetterBadge("A")
+                    LetterBadge("Z", alpha = 0.15f)
+                }
+            }
         }
     }
 }
@@ -299,15 +273,15 @@ private fun CalculatorNameField(
     Column(modifier = modifier.fillMaxWidth()) {
         Text(
             text = label,
-            style = MaterialTheme.typography.titleSmall,
-            fontWeight = FontWeight.SemiBold,
+            style = LoveTypographyTokens.FieldLabel,
             color = LovePrimary,
+            modifier = Modifier.loveInputLabelForAccessibility(),
         )
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 8.dp)
-                .height(52.dp)
+                .height(LoveLayout.LoveTestInputFieldHeight)
                 .clip(RoundedCornerShape(28.dp))
                 .background(Color.White)
                 .border(
@@ -325,7 +299,9 @@ private fun CalculatorNameField(
                 textStyle = TextStyle(fontSize = 18.sp, color = LoveOnSurface),
                 keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words),
                 cursorBrush = SolidColor(LovePrimary),
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .loveInputFieldSemantics(label = label, value = value, placeholder = placeholder),
                 decorationBox = { inner ->
                     if (value.isEmpty() && placeholder.isNotEmpty()) {
                         Text(placeholder, style = MaterialTheme.typography.bodyLarge, color = LoveOnSurfaceVariant)
@@ -338,7 +314,7 @@ private fun CalculatorNameField(
                     .align(Alignment.CenterEnd)
                     .padding(end = 8.dp)
                     .clip(RoundedCornerShape(12.dp))
-                    .background(if (highlighted) LovePrimaryContainer else Color(0xFFF3EDF7))
+                    .background(if (highlighted) LovePrimaryContainer else LoveOutlineVariant)
                     .padding(horizontal = 14.dp, vertical = 6.dp),
             ) {
                 Text(
@@ -358,14 +334,14 @@ private fun LetterChip(letter: String, primary: Boolean) {
         modifier = Modifier
             .size(48.dp)
             .clip(RoundedCornerShape(14.dp))
-            .background(if (primary) LovePrimaryContainer else Color(0xFFE8DEF8)),
+            .background(if (primary) LovePrimaryContainer else LoveHeroEnd.copy(alpha = 0.55f)),
         contentAlignment = Alignment.Center,
     ) {
         Text(
             text = letter,
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.ExtraBold,
-            color = if (primary) LovePrimary else Color(0xFF6750A4),
+            color = if (primary) LovePrimary else LoveOnPrimaryContainer,
             textAlign = TextAlign.Center,
         )
     }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1080" height="2400" viewBox="0 0 1080 2400" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1080" y2="2400" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF8F6"/>
+      <stop offset="1" stop-color="#F3D9E0"/>
+    </linearGradient>
+    <linearGradient id="hero" x1="72" y1="200" x2="1008" y2="520" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A4A45"/>
+      <stop offset="0.55" stop-color="#0F6B63"/>
+      <stop offset="1" stop-color="#2A9B90"/>
+    </linearGradient>
+  </defs>
+  <rect width="1080" height="2400" fill="url(#bg)"/>
+  <circle cx="920" cy="180" r="200" fill="#F3D9E0" opacity="0.55"/>
+  <circle cx="120" cy="2100" r="260" fill="#F3D9E0" opacity="0.4"/>
+  <text x="72" y="140" fill="#6B5E66" font-family="Inter,Roboto,Arial,sans-serif" font-size="22" font-weight="600" letter-spacing="3">ЭКРАН 32 · PROTOCOL_CALCULATING</text>
+
+  <text x="72" y="220" fill="#1A1218" font-family="Inter,Roboto,Arial,sans-serif" font-size="40" font-weight="900">Протокол</text>
+  <rect x="72" y="300" width="936" height="420" rx="54" fill="url(#hero)"/>
+  <text x="120" y="460" fill="#fff" font-family="Inter,Roboto,Arial,sans-serif" font-size="44" font-weight="900">Анализируем сигналы</text>
+  <text x="120" y="540" fill="#fff" font-family="Inter,Roboto,Arial,sans-serif" font-size="28" opacity="0.92"></text>
+  <rect x="72" y="800" width="936" height="200" rx="38" fill="#fff" stroke="#F3D9E0" stroke-width="2"/>
+  <text x="120" y="910" fill="#6B5E66" font-family="Inter,Roboto,Arial,sans-serif" font-size="28">Editorial card — один блок контента.</text>
+  <rect x="72" y="2100" width="936" height="112" rx="56" fill="#9F2A4A"/>
+  <text x="540" y="2170" text-anchor="middle" fill="#fff" font-family="Inter,Roboto,Arial,sans-serif" font-size="32" font-weight="800">Далее</text>
+
+</svg>

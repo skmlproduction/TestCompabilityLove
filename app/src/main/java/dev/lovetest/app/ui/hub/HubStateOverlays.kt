@@ -43,8 +43,13 @@ import dev.lovetest.core.ui.components.LoveCardShadowElevation
 import dev.lovetest.core.ui.components.LoveOutlinedButton
 import dev.lovetest.core.ui.components.LovePrimaryButton
 import dev.lovetest.core.ui.components.loveCardShadow
+import dev.lovetest.core.ui.theme.LoveErrorContainer
+import dev.lovetest.core.ui.theme.LoveOnErrorContainer
+import dev.lovetest.core.ui.theme.LoveOnPrimaryContainer
 import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
+import dev.lovetest.core.ui.theme.LoveOutlineVariant
 import dev.lovetest.core.ui.theme.LovePrimary
+import dev.lovetest.core.ui.theme.LovePrimaryContainer
 import dev.lovetest.core.ui.theme.LoveSurface
 
 @Composable
@@ -52,8 +57,9 @@ fun HubLoadingOverlay(modifier: Modifier = Modifier) {
     val loadingCd = stringResource(R.string.hub_loading_cd)
     val panelShape = RoundedCornerShape(38.dp)
     val progress = remember { Animatable(0.63f) }
+    // Finite pulse: infinite loop keeps Compose test idling resources busy forever.
     LaunchedEffect(Unit) {
-        while (true) {
+        repeat(3) {
             progress.animateTo(0.85f, tween(1400, easing = LinearEasing))
             progress.animateTo(0.45f, tween(1400, easing = LinearEasing))
         }
@@ -70,7 +76,7 @@ fun HubLoadingOverlay(modifier: Modifier = Modifier) {
                 .padding(horizontal = 24.dp)
                 .fillMaxWidth()
                 .loveCardShadow(panelShape, elevation = LoveCardShadowElevation.Hero)
-                .border(2.dp, Color(0xFFFCE4EC), panelShape),
+                .border(2.dp, LovePrimaryContainer, panelShape),
             shape = panelShape,
             colors = CardDefaults.cardColors(containerColor = LoveSurface.copy(alpha = 0.88f)),
             elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
@@ -82,10 +88,11 @@ fun HubLoadingOverlay(modifier: Modifier = Modifier) {
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 CircularProgressIndicator(
+                    progress = { progress.value.coerceIn(0f, 1f) },
                     modifier = Modifier.size(72.dp),
                     color = LovePrimary,
                     strokeWidth = 12.dp,
-                    trackColor = Color(0xFFFCE4EC),
+                    trackColor = LovePrimaryContainer,
                 )
                 Text(
                     text = stringResource(R.string.hub_loading_overlay_status),
@@ -114,20 +121,20 @@ fun HubLoadingOverlay(modifier: Modifier = Modifier) {
                         .fillMaxWidth(0.75f)
                         .clip(RoundedCornerShape(5.dp)),
                     color = LovePrimary,
-                    trackColor = Color(0xFFE7E0EC),
+                    trackColor = LoveOutlineVariant,
                 )
                 Box(
                     modifier = Modifier
                         .padding(top = 20.dp)
                         .clip(RoundedCornerShape(32.dp))
-                        .background(Color(0xFFFCE4EC))
+                        .background(LovePrimaryContainer)
                         .padding(horizontal = 24.dp, vertical = 12.dp),
                 ) {
                     Text(
                         text = stringResource(R.string.hub_loading_cancel_unavailable),
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.SemiBold,
-                        color = Color(0xFF880E4F),
+                        color = LoveOnPrimaryContainer,
                     )
                 }
             }
@@ -139,7 +146,7 @@ fun HubLoadingOverlay(modifier: Modifier = Modifier) {
 fun HubErrorTopBanner(modifier: Modifier = Modifier) {
     Surface(
         modifier = modifier.fillMaxWidth(),
-        color = Color(0xFFF9DEDC),
+        color = LoveErrorContainer,
     ) {
         Row(
             modifier = Modifier.padding(horizontal = 24.dp, vertical = 14.dp),
@@ -148,14 +155,14 @@ fun HubErrorTopBanner(modifier: Modifier = Modifier) {
             Icon(
                 Icons.Default.WifiOff,
                 contentDescription = null,
-                tint = Color(0xFF410E0B),
+                tint = LoveOnErrorContainer,
                 modifier = Modifier.decorativeForAccessibility(),
             )
             Text(
                 text = stringResource(R.string.error_network_banner),
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.SemiBold,
-                color = Color(0xFF410E0B),
+                color = LoveOnErrorContainer,
                 modifier = Modifier.padding(start = 12.dp),
             )
         }
@@ -178,7 +185,7 @@ fun HubErrorNetworkOverlay(
                 .padding(horizontal = 24.dp)
                 .fillMaxWidth()
                 .loveCardShadow(panelShape, elevation = LoveCardShadowElevation.Hero)
-                .border(4.dp, Color(0xFFF9DEDC), panelShape),
+                .border(4.dp, LoveErrorContainer, panelShape),
             shape = panelShape,
             colors = CardDefaults.cardColors(containerColor = LoveSurface),
             elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
@@ -193,13 +200,13 @@ fun HubErrorNetworkOverlay(
                     modifier = Modifier
                         .size(96.dp)
                         .clip(CircleShape)
-                        .background(Color(0xFFF9DEDC)),
+                        .background(LoveErrorContainer),
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
                         Icons.Default.WifiOff,
                         contentDescription = null,
-                        tint = Color(0xFF410E0B),
+                        tint = LoveOnErrorContainer,
                         modifier = Modifier
                             .size(48.dp)
                             .decorativeForAccessibility(),
@@ -209,7 +216,7 @@ fun HubErrorNetworkOverlay(
                     text = stringResource(R.string.error_network_title),
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold,
-                    color = Color(0xFF410E0B),
+                    color = LoveOnErrorContainer,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(top = 24.dp),
                 )
@@ -230,7 +237,7 @@ fun HubErrorNetworkOverlay(
                 Text(
                     text = stringResource(R.string.error_network_body_ads),
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Color(0xFF79747E),
+                    color = LoveOnSurfaceVariant,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(top = 8.dp),
                 )

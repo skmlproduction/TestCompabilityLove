@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -44,6 +45,10 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -51,31 +56,40 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.lovetest.app.R
 import dev.lovetest.app.debug.DebugUiPreview
-import dev.lovetest.app.util.decorativeForAccessibility
+import dev.lovetest.app.ui.common.LoveFeatureTopBar
+import dev.lovetest.app.ui.common.NameInputHint
 import dev.lovetest.app.util.loveInputContentPadding
+import dev.lovetest.app.util.loveInputFieldSemantics
+import dev.lovetest.app.util.loveInputLabelForAccessibility
+import dev.lovetest.core.domain.NameInputValidator
 import dev.lovetest.core.ui.components.LoveCardShadowElevation
+import dev.lovetest.core.ui.components.LoveFeatureHero
+import dev.lovetest.core.ui.components.LoveLayout
 import dev.lovetest.core.ui.components.LoveShadowCard
 import dev.lovetest.core.ui.components.LoveGradientBackground
 import dev.lovetest.core.ui.components.LoveHubBackgroundBlobs
 import dev.lovetest.core.ui.components.LovePrimaryButton
+import dev.lovetest.core.ui.components.loveEdgeToEdgeScreenPadding
+import dev.lovetest.core.ui.theme.LoveHeroEnd
+import dev.lovetest.core.ui.theme.LoveOnPrimaryContainer
 import dev.lovetest.core.ui.theme.LoveOnSurface
 import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
 import dev.lovetest.core.ui.theme.LoveOutline
 import dev.lovetest.core.ui.theme.LovePrimary
 import dev.lovetest.core.ui.theme.LovePrimaryContainer
 import dev.lovetest.core.ui.theme.LoveSurface
+import dev.lovetest.core.ui.theme.LoveTypographyTokens
 
 private val LettersHeroBrush = Brush.linearGradient(
     colors = listOf(
-        Color(0xFF4A148C),
-        Color(0xFF6750A4),
-        Color(0xFFE8DEF8),
+        Color(0xFF5C1228),
+        LovePrimary,
+        LoveHeroEnd,
     ),
 )
 
-private val LettersAccent = Color(0xFF6750A4)
+private val LettersAccent = LovePrimary
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LettersInputScreen(
     onBack: () -> Unit,
@@ -89,55 +103,26 @@ fun LettersInputScreen(
             word2 = "СЧАСТЬ"
         }
     }
-    val canSubmit = word1.isNotBlank() && word2.isNotBlank()
+    val canSubmit = NameInputValidator.canSubmitPair(word1, word2)
     val previewLetters = remember(word1) { previewLettersFromWord(word1) }
 
     Box(modifier = Modifier.fillMaxSize()) {
         LoveGradientBackground(Modifier.fillMaxSize())
         LoveHubBackgroundBlobs(Modifier.fillMaxSize())
 
-        Scaffold(
-            containerColor = Color.Transparent,
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(
-                            text = stringResource(R.string.letters_title),
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.Bold,
-                        )
-                    },
-                    navigationIcon = {
-                        TextButton(onClick = onBack) {
-                            Icon(
-                                Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = null,
-                                tint = LettersAccent,
-                                modifier = Modifier.decorativeForAccessibility(),
-                            )
-                            Text(
-                                stringResource(R.string.nav_back),
-                                color = LettersAccent,
-                                fontWeight = FontWeight.SemiBold,
-                                modifier = Modifier.padding(start = 4.dp),
-                            )
-                        }
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = LoveSurface.copy(alpha = 0.85f),
-                    ),
-                )
-            },
-        ) { padding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-                    .verticalScroll(rememberScrollState())
-                    .loveInputContentPadding()
-                    .padding(horizontal = 24.dp),
-            ) {
-                LettersInputHero(modifier = Modifier.padding(top = 8.dp))
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .loveEdgeToEdgeScreenPadding(includeNavigationBar = false)
+                .loveInputContentPadding()
+                .verticalScroll(rememberScrollState()),
+        ) {
+            LoveFeatureTopBar(
+                title = stringResource(R.string.letters_title),
+                onBack = onBack,
+                backContentColor = LettersAccent,
+            )
+            LettersInputHero(modifier = Modifier.padding(top = 8.dp))
                 LettersStreamPreview(
                     letters = previewLetters,
                     modifier = Modifier.padding(top = 16.dp),
@@ -158,6 +143,7 @@ fun LettersInputScreen(
                             highlighted = true,
                             placeholder = "",
                         )
+                        NameInputHint(word1)
                         LettersWordField(
                             label = stringResource(R.string.letters_word2_label),
                             value = word2,
@@ -166,12 +152,13 @@ fun LettersInputScreen(
                             placeholder = stringResource(R.string.letters_word2_hint),
                             modifier = Modifier.padding(top = 20.dp),
                         )
+                        NameInputHint(word2)
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(top = 20.dp)
                                 .clip(RoundedCornerShape(24.dp))
-                                .background(Color(0xFFF3EDF7))
+                                .background(LovePrimaryContainer)
                                 .padding(16.dp),
                         ) {
                             Column {
@@ -204,70 +191,62 @@ fun LettersInputScreen(
                     text = stringResource(R.string.letters_cta),
                     onClick = { onSubmit(word1.trim(), word2.trim()) },
                     enabled = canSubmit,
-                    modifier = Modifier
-                        .padding(top = 24.dp, bottom = 32.dp)
-                        .height(48.dp),
+                    modifier = Modifier.padding(top = 24.dp, bottom = 32.dp),
                 )
-            }
         }
     }
 }
 
 @Composable
 private fun LettersInputHero(modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .heightIn(min = 120.dp)
-            .clip(RoundedCornerShape(46.dp))
-            .background(LettersHeroBrush),
+    LoveFeatureHero(
+        modifier = modifier,
+        brush = LettersHeroBrush,
+        minHeight = LoveLayout.FeatureHeroTallMinHeight,
+        shape = LoveLayout.HubHeroShape,
     ) {
         Row(
             modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(20.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp, vertical = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            LettersDecorTile("A")
-            LettersDecorTile("Z", alpha = 0.2f)
-            LettersDecorTile("a", small = true, alpha = 0.15f)
-        }
-        Column(
-            modifier = Modifier
-                .align(Alignment.CenterStart)
-                .padding(20.dp)
-                .padding(end = 160.dp),
-        ) {
-            Text(
-                text = stringResource(R.string.letters_hero_title),
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
-                color = Color.White,
-            )
-            Text(
-                text = stringResource(R.string.letters_hero_body1),
-                style = MaterialTheme.typography.bodyMedium,
-                color = Color.White.copy(0.92f),
-                modifier = Modifier.padding(top = 6.dp),
-            )
-            Text(
-                text = stringResource(R.string.letters_hero_body2),
-                style = MaterialTheme.typography.bodyMedium,
-                color = Color.White.copy(0.92f),
-            )
-            Box(
-                modifier = Modifier
-                    .padding(top = 10.dp)
-                    .clip(RoundedCornerShape(22.dp))
-                    .background(Color.White.copy(0.22f))
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-            ) {
+            Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = stringResource(R.string.letters_test_badge),
-                    style = MaterialTheme.typography.labelLarge,
-                    fontWeight = FontWeight.Bold,
+                    text = stringResource(R.string.letters_hero_title),
+                    style = LoveTypographyTokens.HeroTitle,
                     color = Color.White,
                 )
+                Text(
+                    text = stringResource(R.string.letters_hero_body1),
+                    style = LoveTypographyTokens.HeroBody,
+                    color = Color.White.copy(0.92f),
+                    modifier = Modifier.padding(top = 6.dp),
+                )
+                Text(
+                    text = stringResource(R.string.letters_hero_body2),
+                    style = LoveTypographyTokens.HeroBody,
+                    color = Color.White.copy(0.92f),
+                )
+                Box(
+                    modifier = Modifier
+                        .padding(top = 10.dp)
+                        .clip(RoundedCornerShape(22.dp))
+                        .background(Color.White.copy(0.22f))
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                ) {
+                    Text(
+                        text = stringResource(R.string.letters_test_badge),
+                        style = MaterialTheme.typography.labelLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White,
+                    )
+                }
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                LettersDecorTile("A")
+                LettersDecorTile("Z", alpha = 0.2f)
+                LettersDecorTile("a", small = true, alpha = 0.15f)
             }
         }
     }
@@ -309,6 +288,7 @@ private fun LettersStreamPreview(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .horizontalScroll(rememberScrollState())
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -325,9 +305,7 @@ private fun LettersStreamPreview(
                 text = stringResource(R.string.letters_stream_arrow),
                 style = MaterialTheme.typography.bodySmall,
                 color = LoveOnSurfaceVariant,
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(start = 4.dp),
+                modifier = Modifier.padding(start = 4.dp),
             )
         }
     }
@@ -340,12 +318,12 @@ private fun LettersStreamTile(
     muted: Boolean = false,
 ) {
     val bg = when {
-        muted -> Color(0xFFF3EDF7)
+        muted -> LovePrimaryContainer
         highlight -> LovePrimaryContainer
-        else -> Color(0xFFE8DEF8)
+        else -> LoveHeroEnd.copy(alpha = 0.55f)
     }
     val fg = when {
-        muted -> Color(0xFF49454F)
+        muted -> LoveOnSurfaceVariant
         highlight -> LovePrimary
         else -> LettersAccent
     }
@@ -372,15 +350,15 @@ private fun LettersWordField(
     Column(modifier = modifier.fillMaxWidth()) {
         Text(
             text = label,
-            style = MaterialTheme.typography.titleSmall,
-            fontWeight = FontWeight.SemiBold,
+            style = LoveTypographyTokens.FieldLabel,
             color = LettersAccent,
+            modifier = Modifier.loveInputLabelForAccessibility(),
         )
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 8.dp)
-                .height(52.dp)
+                .height(LoveLayout.LoveTestInputFieldHeight)
                 .clip(RoundedCornerShape(28.dp))
                 .background(Color.White)
                 .border(
@@ -402,7 +380,9 @@ private fun LettersWordField(
                 ),
                 keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words),
                 cursorBrush = SolidColor(LettersAccent),
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .loveInputFieldSemantics(label = label, value = value, placeholder = placeholder),
                 decorationBox = { inner ->
                     if (value.isEmpty() && placeholder.isNotEmpty()) {
                         Text(placeholder, color = LoveOnSurfaceVariant)
@@ -419,19 +399,25 @@ private fun LettersExampleChip(label: String, onSelect: (String, String) -> Unit
     Box(
         modifier = Modifier
             .padding(top = 10.dp)
+            .heightIn(min = LoveLayout.PresetChipMinHeight)
             .clip(RoundedCornerShape(24.dp))
-            .background(Color(0xFFE8DEF8))
+            .background(LovePrimaryContainer)
+            .semantics(mergeDescendants = true) {
+                role = Role.Button
+                contentDescription = label
+            }
             .clickable {
                 val parts = label.split(" + ", limit = 2)
                 if (parts.size == 2) onSelect(parts[0].trim(), parts[1].trim())
             }
             .padding(horizontal = 20.dp, vertical = 12.dp),
+        contentAlignment = Alignment.Center,
     ) {
         Text(
             text = label,
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.SemiBold,
-            color = Color(0xFF4A148C),
+            color = LoveOnPrimaryContainer,
         )
     }
 }

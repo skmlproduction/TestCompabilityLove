@@ -19,8 +19,8 @@ if [[ "${store_ok}" != true ]]; then
   echo "      ./scripts/generate_debug_upload_keystore.sh  # smoke-test"
 fi
 
-./gradlew verifyLoveTest --no-daemon -q
-./gradlew bundleRelease --no-daemon
+./gradlew verifyLoveTest -q
+./gradlew bundleRelease
 
 AAB="$(ls -1 app/build/outputs/bundle/release/*.aab 2>/dev/null | head -1 || true)"
 if [[ -n "${AAB}" ]]; then

@@ -9,6 +9,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import dev.lovetest.app.R
 import dev.lovetest.core.ui.theme.LoveTestTheme
 import org.junit.Assert.assertTrue
+import org.junit.Assume
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -18,6 +19,20 @@ class PremiumThankYouScreenComposeTest {
 
     @get:Rule
     val composeRule = createAndroidComposeRule<ComponentActivity>()
+
+    @Test
+    fun thankYou_showsSupportWhatsNextWhenAdsOff() {
+        Assume.assumeFalse(dev.lovetest.app.BuildConfig.ADS_ENABLED)
+        val body1 = composeRule.activity.getString(R.string.premium_whats_next_body1_support)
+
+        composeRule.setContent {
+            LoveTestTheme {
+                PremiumThankYouScreen(onHome = {}, onLoveTest = {})
+            }
+        }
+
+        composeRule.onNodeWithText(body1).assertIsDisplayed()
+    }
 
     @Test
     fun thankYou_showsHeadlineAndHomeCta() {

@@ -22,10 +22,10 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.foundation.layout.navigationBarsPadding
+import dev.lovetest.app.ui.common.LoveFeatureTopBar
+import dev.lovetest.core.ui.components.loveEdgeToEdgeScreenPadding
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
@@ -47,40 +47,46 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.lovetest.app.R
 import dev.lovetest.app.session.LoveTestSession
+import dev.lovetest.app.ui.common.FeatureLowTipCard
+import dev.lovetest.app.ui.common.FeatureLowWarningCard
+import dev.lovetest.app.ui.common.LoveFeatureResultActions
 import dev.lovetest.app.ui.common.LoveHeroPercentRing
+import dev.lovetest.core.domain.DefaultLoveScoreCalculator
+import dev.lovetest.core.domain.PairMetrics
 import dev.lovetest.app.ui.share.LoveShareResultOverlay
 import dev.lovetest.app.ui.share.rememberLoveShareSheet
 import kotlinx.coroutines.delay
 import dev.lovetest.app.util.buildLoveShareText
 import dev.lovetest.core.domain.LoveScoreCalculator
 import dev.lovetest.core.ui.components.LoveCardShadowElevation
+import dev.lovetest.core.ui.components.LoveLayout
 import dev.lovetest.core.ui.components.LoveShadowCard
 import dev.lovetest.core.ui.components.LoveGradientBackground
 import dev.lovetest.core.ui.components.LoveHeartIcon
 import dev.lovetest.core.ui.components.LoveHubBackgroundBlobs
-import dev.lovetest.core.ui.components.LoveOutlinedButton
-import dev.lovetest.core.ui.components.LovePrimaryButton
+import dev.lovetest.core.ui.theme.LoveHeroEnd
 import dev.lovetest.core.ui.theme.LoveOnPrimaryContainer
 import dev.lovetest.core.ui.theme.LoveOnSurface
 import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
 import dev.lovetest.core.ui.theme.LovePrimary
 import dev.lovetest.core.ui.theme.LovePrimaryContainer
 import dev.lovetest.core.ui.theme.LoveResultMutedHeroBrush
+import dev.lovetest.core.ui.theme.LoveSecondary
 import dev.lovetest.core.ui.theme.LoveSurface
 
 private val PairResultHeroBrush = Brush.linearGradient(
     colors = listOf(
-        Color(0xFFAD1457),
-        Color(0xFFC2185B),
-        Color(0xFFE91E63),
-        Color(0xFFF48FB1),
+        Color(0xFF5C1228),
+        LovePrimary,
+        LoveSecondary,
+        LoveHeroEnd,
     ),
 )
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PairResultScreen(
     onShare: () -> Unit,
@@ -92,6 +98,7 @@ fun PairResultScreen(
     val name1 = LoveTestSession.name1.ifBlank { "…" }
     val name2 = LoveTestSession.name2.ifBlank { "…" }
     val metrics = LoveTestSession.pairMetrics
+        ?: remember(name1, name2) { DefaultLoveScoreCalculator().pairMetrics(name1, name2) }
     val initial1 = name1.firstOrNull()?.uppercaseChar()?.toString() ?: "?"
     val initial2 = name2.firstOrNull()?.uppercaseChar()?.toString() ?: "?"
     val namesLine = "$name1 + $name2"
@@ -107,33 +114,17 @@ fun PairResultScreen(
         LoveGradientBackground(Modifier.fillMaxSize())
         LoveHubBackgroundBlobs(Modifier.fillMaxSize())
 
-        Scaffold(
-            containerColor = Color.Transparent,
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(
-                            text = stringResource(R.string.pair_result_title),
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.fillMaxWidth(),
-                            textAlign = TextAlign.Center,
-                        )
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = LoveSurface.copy(alpha = 0.85f),
-                    ),
-                )
-            },
-        ) { padding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-                    .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 24.dp),
-            ) {
-                PairResultHeroCard(
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .loveEdgeToEdgeScreenPadding(includeNavigationBar = false)
+                .navigationBarsPadding()
+                .verticalScroll(rememberScrollState()),
+        ) {
+            LoveFeatureTopBar(
+                title = stringResource(R.string.pair_result_title),
+            )
+            PairResultHeroCard(
                     initial1 = initial1,
                     initial2 = initial2,
                     namesLine = namesLine,
@@ -142,42 +133,32 @@ fun PairResultScreen(
                     high = high,
                     modifier = Modifier.padding(top = 8.dp),
                 )
+                if (!high) {
+                    FeatureLowWarningCard(modifier = Modifier.padding(top = 20.dp))
+                    FeatureLowTipCard(modifier = Modifier.padding(top = 16.dp))
+                }
+                // CTAs before metrics so Share stays above the fold.
+                LoveFeatureResultActions(
+                    tryAgainLabel = stringResource(R.string.pair_try_another),
+                    onShare = shareSheet.open,
+                    onTryAgain = onTryAnother,
+                    onHome = onHome,
+                )
                 PairMetricsCard(
                     metrics = metrics,
                     modifier = Modifier.padding(top = 20.dp),
                 )
-                LovePrimaryButton(
-                    text = stringResource(R.string.love_test_share_cta),
-                    onClick = shareSheet.open,
-                    modifier = Modifier.padding(top = 24.dp),
-                )
-                LoveOutlinedButton(
-                    text = stringResource(R.string.pair_try_another),
-                    onClick = onTryAnother,
-                    modifier = Modifier.padding(top = 12.dp),
-                )
-                PairResultHomeButton(
-                    text = stringResource(R.string.love_test_back_home),
-                    onClick = onHome,
-                    modifier = Modifier.padding(top = 12.dp),
-                )
-                Text(
-                    text = stringResource(R.string.result_entertainment_only),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = LoveOnSurfaceVariant,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp),
-                )
-                PairSharePreviewCard(
-                    percent = percent,
-                    namesLine = namesLine,
-                    initial1 = initial1,
-                    initial2 = initial2,
-                    modifier = Modifier.padding(top = 16.dp, bottom = 32.dp),
-                )
-            }
+                if (high) {
+                    PairSharePreviewCard(
+                        percent = percent,
+                        namesLine = namesLine,
+                        initial1 = initial1,
+                        initial2 = initial2,
+                        modifier = Modifier.padding(top = 16.dp, bottom = 32.dp),
+                    )
+                } else {
+                    Box(modifier = Modifier.padding(bottom = 32.dp))
+                }
         }
         LoveShareResultOverlay(
             sheet = shareSheet,
@@ -186,7 +167,8 @@ fun PairResultScreen(
             name2 = name2,
             harmonyTag = harmonyTag,
             shareText = shareText,
-            onShare = onShare,
+            high = high,
+            onShareFallback = onShare,
         )
     }
 }
@@ -203,7 +185,7 @@ private fun PairResultHeroCard(
 ) {
     LoveShadowCard(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(48.dp),
+        shape = LoveLayout.ResultHeroShape,
         shadowElevation = LoveCardShadowElevation.Hero,
         colors = CardDefaults.cardColors(containerColor = Color.Transparent),
     ) {
@@ -238,13 +220,19 @@ private fun PairResultHeroCard(
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
-                    modifier = Modifier.padding(top = 16.dp),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp),
                 )
                 LoveHeroPercentRing(
                     percent = percent,
                     label = stringResource(R.string.pair_result_percent_label),
                     high = high,
                     contentDescription = percentCd,
+                    ringSize = LoveLayout.LoveTestResultRingSize,
                     modifier = Modifier.padding(top = 20.dp),
                 )
                 Box(
@@ -289,7 +277,7 @@ private fun PairResultAvatar(letter: String) {
 
 @Composable
 private fun PairMetricsCard(
-    metrics: dev.lovetest.core.domain.PairMetrics?,
+    metrics: PairMetrics,
     modifier: Modifier = Modifier,
 ) {
     LoveShadowCard(
@@ -305,7 +293,7 @@ private fun PairMetricsCard(
                 fontWeight = FontWeight.Bold,
                 color = LoveOnSurface,
             )
-            metrics?.let { m ->
+            metrics.let { m ->
                 PairMetricBar(
                     label = stringResource(R.string.pair_metric_overall),
                     value = m.connection,
@@ -316,14 +304,14 @@ private fun PairMetricsCard(
                 PairMetricBar(
                     label = stringResource(R.string.pair_metric_trust),
                     value = m.trust,
-                    color = Color(0xFFE91E63),
+                    color = LoveSecondary,
                     modifier = Modifier.padding(top = 16.dp),
                     animationDelayMs = 120,
                 )
                 PairMetricBar(
                     label = stringResource(R.string.pair_metric_passion),
                     value = m.passion,
-                    color = Color(0xFFF48FB1),
+                    color = LoveHeroEnd,
                     modifier = Modifier.padding(top = 16.dp),
                     animationDelayMs = 240,
                 )
@@ -379,38 +367,39 @@ private fun PairMetricBar(
         )
     }
     Column(modifier = modifier.fillMaxWidth()) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.SemiBold,
+            color = LoveOnSurfaceVariant,
+        )
         Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(
-                text = label,
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.SemiBold,
-                color = LoveOnSurfaceVariant,
-            )
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .height(16.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(LovePrimaryContainer),
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(animatedFraction.value)
+                        .height(16.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(color),
+                )
+            }
             Text(
                 text = "$pct%",
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.ExtraBold,
                 color = LovePrimary,
-            )
-        }
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp)
-                .height(16.dp)
-                .clip(RoundedCornerShape(8.dp))
-                .background(Color(0xFFF3EDF7)),
-        ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth(animatedFraction.value)
-                    .height(16.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(color),
+                modifier = Modifier.padding(start = 12.dp),
             )
         }
     }
@@ -449,10 +438,10 @@ private fun PairSharePreviewCard(
                     modifier = Modifier
                         .size(48.dp)
                         .clip(CircleShape)
-                        .background(Color(0xFFF8BBD0)),
+                        .background(LoveHeroEnd),
                     contentAlignment = Alignment.Center,
                 ) {
-                    Text(initial2, fontWeight = FontWeight.ExtraBold, color = Color(0xFF880E4F))
+                    Text(initial2, fontWeight = FontWeight.ExtraBold, color = LoveOnPrimaryContainer)
                 }
             }
             Column(modifier = Modifier.padding(start = 16.dp)) {
@@ -476,29 +465,5 @@ private fun PairSharePreviewCard(
                 )
             }
         }
-    }
-}
-
-@Composable
-private fun PairResultHomeButton(
-    text: String,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(52.dp)
-            .clip(RoundedCornerShape(44.dp))
-            .background(LovePrimaryContainer)
-            .clickable(onClick = onClick),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(
-            text = text,
-            style = MaterialTheme.typography.labelLarge,
-            fontWeight = FontWeight.SemiBold,
-            color = LoveOnPrimaryContainer,
-        )
     }
 }

@@ -29,7 +29,7 @@ if [[ "${FIRST_PUSH_FAST:-}" == "1" ]]; then
   echo "→ skip verifyLoveTestBeforeStore (FIRST_PUSH_FAST=1)"
 else
   echo "→ verifyLoveTestBeforeStore"
-  ./gradlew verifyLoveTestBeforeStore --no-daemon -q
+  ./gradlew verifyLoveTestBeforeStore -q
 fi
 echo ""
 echo "→ git status"

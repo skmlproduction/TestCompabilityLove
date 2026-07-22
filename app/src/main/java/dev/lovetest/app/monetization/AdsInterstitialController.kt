@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.asStateFlow
 
 /**
  * Показ межстраничной рекламы между сессиями (после теста → hub).
- * При [BuildConfig.ADS_ENABLED] Hub сначала пробует [AdMobInterstitialManager],
- * иначе — UI placeholder из screen29.
+ * При [BuildConfig.ADS_ENABLED] Hub показывает [AdMobInterstitialManager].
+ * Debug-only UI placeholder (screen29) — только через [DebugUiPreview], не production fallback.
  */
 object AdsInterstitialController {
 

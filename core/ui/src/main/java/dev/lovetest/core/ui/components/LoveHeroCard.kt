@@ -26,12 +26,11 @@ fun LoveHeroCard(
     kicker: String? = null,
     trailing: @Composable (() -> Unit)? = null,
 ) {
-    val shape = RoundedCornerShape(24.dp)
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .loveCardShadow(shape, elevation = LoveCardShadowElevation.Card)
-            .clip(shape)
+            .loveCardShadow(LoveLayout.HeroShape, elevation = LoveCardShadowElevation.Card)
+            .clip(LoveLayout.HeroShape)
             .background(LoveHeroGradientBrush())
             .padding(24.dp),
     ) {

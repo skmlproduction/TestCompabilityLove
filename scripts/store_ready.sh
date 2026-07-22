@@ -6,7 +6,7 @@ cd "${ROOT}"
 
 echo "=== store_ready ==="
 bash scripts/preflight_store.sh
-./gradlew verifyLoveTest --no-daemon -q
+./gradlew verifyLoveTest -q
 echo ""
 echo "OK: код и инвентарь. Далее на машине с эмулятором:"
 echo "  ./gradlew captureScreenshotCatalogRu"

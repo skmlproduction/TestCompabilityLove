@@ -6,9 +6,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.lovetest.core.ui.theme.LovePrimary
 
 private val ShadowAmbient = Color(0x141C1B1F)
-private val DefaultSpotTint = Color(0xFFC2185B)
+private val DefaultSpotTint = LovePrimary
 
 /**
  * Approximates SVG `cardShadow`: neutral depth (dy=16, blur≈24) + tinted accent (dy=2, blur≈7).

@@ -5,15 +5,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import dev.lovetest.core.ui.theme.LoveBgGlowBottom
+import dev.lovetest.core.ui.theme.LoveHeroEnd
 
 @Composable
 fun LoveHubBackgroundBlobs(modifier: Modifier = Modifier) {
     Canvas(modifier = modifier.fillMaxSize()) {
         drawCircle(
-            color = Color(0xFFF8BBD0).copy(alpha = 0.42f),
+            color = LoveHeroEnd.copy(alpha = 0.42f),
             radius = 220.dp.toPx(),
             center = Offset(size.width * 0.83f, 140.dp.toPx()),
         )

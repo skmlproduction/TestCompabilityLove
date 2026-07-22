@@ -6,6 +6,7 @@ import dev.lovetest.app.BuildConfig
 import dev.lovetest.app.prefs.AppPreferences
 import dev.lovetest.app.session.LoveTestSession
 import dev.lovetest.core.domain.LoveScoreCalculator
+import dev.lovetest.core.domain.NameInputValidator
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -38,7 +39,8 @@ class LoveTestFlowViewModel(
         val n2 = name2.trim()
         _uiState.value = CalculatingUiState(n1, n2)
         val frames = 36
-        val frameDelay = 1_800L / frames
+        // DEBUG: shorter animation keeps instrumented flows under LMK budgets.
+        val frameDelay = if (BuildConfig.DEBUG) 25L else 1_800L / frames
         for (i in 1..frames) {
             delay(frameDelay)
             val progress = i / frames.toFloat()
@@ -67,8 +69,9 @@ class LoveTestFlowViewModel(
     /**
      * @return false если расчёт уже идёт (повторный вызов игнорируется).
      */
-    fun runLoveTest(name1: String, name2: String, onDone: () -> Unit): Boolean =
-        launchCalculation {
+    fun runLoveTest(name1: String, name2: String, onDone: () -> Unit): Boolean {
+        if (!NameInputValidator.canSubmitPair(name1, name2)) return false
+        return launchCalculation {
             animateCalculating(name1, name2)
             val n1 = name1.trim()
             val n2 = name2.trim()
@@ -78,9 +81,11 @@ class LoveTestFlowViewModel(
             persistSession()
             onDone()
         }
+    }
 
-    fun runPairTest(name1: String, name2: String, onDone: () -> Unit): Boolean =
-        launchCalculation {
+    fun runPairTest(name1: String, name2: String, onDone: () -> Unit): Boolean {
+        if (!NameInputValidator.canSubmitPair(name1, name2)) return false
+        return launchCalculation {
             animateCalculating(name1, name2)
             val n1 = name1.trim()
             val n2 = name2.trim()
@@ -91,9 +96,11 @@ class LoveTestFlowViewModel(
             persistSession()
             onDone()
         }
+    }
 
-    fun runSingleNameTest(name: String, onDone: () -> Unit): Boolean =
-        launchCalculation {
+    fun runSingleNameTest(name: String, onDone: () -> Unit): Boolean {
+        if (!NameInputValidator.canSubmitSingle(name)) return false
+        return launchCalculation {
             val n = name.trim()
             animateCalculating(n, n)
             preferences.saveLastNames(n, n)
@@ -102,6 +109,7 @@ class LoveTestFlowViewModel(
             persistSession()
             onDone()
         }
+    }
 
     fun runWheelSpin(prize: String, segmentIndex: Int, onDone: () -> Unit): Boolean =
         launchCalculation {
@@ -112,8 +120,9 @@ class LoveTestFlowViewModel(
             onDone()
         }
 
-    fun runProtocolTest(name1: String, name2: String, onDone: () -> Unit): Boolean =
-        launchCalculation {
+    fun runProtocolTest(name1: String, name2: String, onDone: () -> Unit): Boolean {
+        if (!NameInputValidator.canSubmitPair(name1, name2)) return false
+        return launchCalculation {
             animateCalculating(name1, name2)
             val n1 = name1.trim()
             val n2 = name2.trim()
@@ -124,6 +133,7 @@ class LoveTestFlowViewModel(
             persistSession()
             onDone()
         }
+    }
 
     private suspend fun persistSession() {
         preferences.saveSessionSnapshot(LoveTestSession.encodeSnapshot())

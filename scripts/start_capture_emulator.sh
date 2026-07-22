@@ -23,26 +23,35 @@ fi
 bash "${ROOT}/scripts/ensure_capture_avd.sh"
 
 if adb devices | grep -E '\tdevice$' >/dev/null 2>&1; then
-  echo "Устройство уже подключено — пропускаю запуск эмулятора"
-  adb shell getprop sys.boot_completed 2>/dev/null | grep -q 1 && exit 0
+  if [[ "${LOVETEST_FORCE_EMULATOR:-}" != "1" ]]; then
+    echo "Устройство уже подключено — пропускаю запуск эмулятора"
+    adb shell getprop sys.boot_completed 2>/dev/null | grep -q 1 && exit 0
+  else
+    echo "LOVETEST_FORCE_EMULATOR=1 — запускаю эмулятор (adb -e для capture)"
+  fi
 fi
 
 echo "Запуск эмулятора (фон)…"
+# -skin 1080x1920: защита от чужих агентов, переписывающих hw.lcd.height в config.ini
 nohup emulator -avd "${AVD_NAME}" \
+  -skin 1080x1920 \
+  -no-snapshot-load \
   -no-snapshot-save \
   -no-boot-anim \
-  -gpu auto \
+  -memory 1536 \
+  -gpu swiftshader_indirect \
   >/tmp/lovetest-emulator.log 2>&1 &
 
-echo "Ожидание adb device (до ${BOOT_TIMEOUT_SEC}s)…"
-adb wait-for-device
+echo "Ожидание adb emulator (до ${BOOT_TIMEOUT_SEC}s)…"
+adb -e wait-for-device
 
 deadline=$((SECONDS + BOOT_TIMEOUT_SEC))
 while [[ "${SECONDS}" -lt "${deadline}" ]]; do
-  boot="$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r' || true)"
+  boot="$(adb -e shell getprop sys.boot_completed 2>/dev/null | tr -d '\r' || true)"
   if [[ "${boot}" == "1" ]]; then
-    wm_size="$(adb shell wm size 2>/dev/null | tr -d '\r' || true)"
+    wm_size="$(adb -e shell wm size 2>/dev/null | tr -d '\r' || adb shell wm size 2>/dev/null | tr -d '\r' || true)"
     echo "OK: эмулятор готов ${wm_size}"
+    echo "Для съёмки: LOVETEST_USE_EMULATOR=1 ./scripts/capture_screenshot_catalog.sh …"
     exit 0
   fi
   sleep 3

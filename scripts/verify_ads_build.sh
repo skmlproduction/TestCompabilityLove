@@ -9,7 +9,7 @@ echo "=== verify_ads_build ==="
 echo "Compile debug with -Plovetest.ads.enabled=true"
 echo ""
 
-./gradlew :app:assembleDebug -Plovetest.ads.enabled=true --no-daemon -q
+./gradlew :app:assembleDebug -Plovetest.ads.enabled=true -q
 
 merged="$(find app/build/intermediates/merged_manifest/debug -name AndroidManifest.xml 2>/dev/null | head -1 || true)"
 if [[ -n "${merged}" ]] && grep -q 'com.google.android.gms.permission.AD_ID' "${merged}"; then

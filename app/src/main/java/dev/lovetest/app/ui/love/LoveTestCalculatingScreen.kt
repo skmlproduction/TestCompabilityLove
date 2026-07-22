@@ -14,22 +14,21 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Card
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
+import dev.lovetest.app.ui.common.LoveFeatureTopBar
+import dev.lovetest.core.ui.components.loveEdgeToEdgeScreenPadding
+import dev.lovetest.core.ui.theme.LoveTypographyTokens
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -54,6 +53,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.lovetest.app.R
 import dev.lovetest.core.ui.components.LoveCardShadowElevation
+import dev.lovetest.core.ui.components.LoveLayout
 import dev.lovetest.core.ui.components.LoveShadowCard
 import dev.lovetest.core.ui.components.LoveGradientBackground
 import dev.lovetest.core.ui.components.LoveHeartIcon
@@ -75,7 +75,6 @@ enum class TestCalculatingFlavor {
     Protocol,
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoveTestCalculatingScreen(
     flavor: TestCalculatingFlavor = TestCalculatingFlavor.Love,
@@ -100,148 +99,133 @@ fun LoveTestCalculatingScreen(
         LoveGradientBackground(Modifier.fillMaxSize())
         LoveCalculatingFloatingHearts(Modifier.fillMaxSize())
 
-        Scaffold(
-            containerColor = Color.Transparent,
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(
-                            text = stringResource(
-                                if (isProtocol) R.string.protocol_title else R.string.love_test_title,
-                            ),
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.Bold,
-                        )
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = LoveSurface.copy(alpha = 0.85f),
-                    ),
-                )
-            },
-        ) { padding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-                    .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 24.dp),
-            ) {
-                LoveCalculatingNamesCard(
-                    name1 = uiState.name1.ifBlank { "…" },
-                    name2 = uiState.name2.ifBlank { "…" },
-                    modifier = Modifier.padding(top = 8.dp),
-                )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .loveEdgeToEdgeScreenPadding(includeNavigationBar = false)
+                .navigationBarsPadding()
+                .verticalScroll(rememberScrollState()),
+        ) {
+            LoveFeatureTopBar(
+                title = stringResource(
+                    if (isProtocol) R.string.protocol_title else R.string.love_test_title,
+                ),
+            )
 
-                LoveShadowCard(
+            LoveCalculatingNamesCard(
+                name1 = uiState.name1.ifBlank { "…" },
+                name2 = uiState.name2.ifBlank { "…" },
+                modifier = Modifier.padding(top = 8.dp),
+            )
+
+            LoveShadowCard(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 20.dp),
+                shape = LoveLayout.HeroShape,
+                shadowElevation = LoveCardShadowElevation.Card,
+                colors = CardDefaults.cardColors(containerColor = LoveSurface),
+            ) {
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 20.dp),
-                    shape = RoundedCornerShape(48.dp),
-                    shadowElevation = LoveCardShadowElevation.Card,
-                    colors = CardDefaults.cardColors(containerColor = LoveSurface),
+                        .padding(horizontal = 20.dp, vertical = 28.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    Column(
+                    Text(
+                        text = stringResource(
+                            if (isProtocol) R.string.protocol_calculating_title
+                            else R.string.love_test_calculating_title,
+                        ),
+                        style = LoveTypographyTokens.FeatureScreenTitle,
+                        color = accent,
+                        textAlign = TextAlign.Center,
+                    )
+                    Text(
+                        text = stringResource(
+                            if (isProtocol) R.string.protocol_calculating_subtitle
+                            else R.string.love_test_calculating_subtitle,
+                        ),
+                        style = LoveTypographyTokens.HeroBody,
+                        color = LoveOnSurfaceVariant,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(top = 8.dp),
+                    )
+
+                    LoveCalculatingProgressRing(
+                        progress = uiState.progress,
+                        accent = accent,
+                        accentContainer = accentContainer,
+                        modifier = Modifier.padding(top = 28.dp),
+                    )
+
+                    Text(
+                        text = stringResource(R.string.love_test_calculating_percent_ghost),
+                        style = MaterialTheme.typography.displayLarge.copy(
+                            fontSize = 32.sp,
+                            fontWeight = FontWeight.ExtraBold,
+                        ),
+                        color = accent.copy(alpha = 0.12f),
+                        modifier = Modifier.padding(top = 8.dp),
+                    )
+
+                    LinearProgressIndicator(
+                        progress = { uiState.progress },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 20.dp, vertical = 28.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        Text(
-                            text = stringResource(
-                                if (isProtocol) R.string.protocol_calculating_title
-                                else R.string.love_test_calculating_title,
-                            ),
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.Bold,
-                            color = accent,
-                            textAlign = TextAlign.Center,
-                        )
-                        Text(
-                            text = stringResource(
-                                if (isProtocol) R.string.protocol_calculating_subtitle
-                                else R.string.love_test_calculating_subtitle,
-                            ),
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = LoveOnSurfaceVariant,
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier.padding(top = 8.dp),
-                        )
+                            .padding(top = 24.dp)
+                            .height(12.dp)
+                            .clip(RoundedCornerShape(6.dp)),
+                        color = accent,
+                        trackColor = LoveOutlineVariant,
+                        strokeCap = StrokeCap.Round,
+                    )
 
-                        LoveCalculatingProgressRing(
-                            progress = uiState.progress,
-                            accent = accent,
-                            accentContainer = accentContainer,
-                            modifier = Modifier.padding(top = 28.dp),
-                        )
-
-                        Text(
-                            text = stringResource(R.string.love_test_calculating_percent_ghost),
-                            style = MaterialTheme.typography.displayLarge.copy(
-                                fontSize = 56.sp,
-                                fontWeight = FontWeight.ExtraBold,
-                            ),
-                            color = accent.copy(alpha = 0.12f),
-                            modifier = Modifier.padding(top = 8.dp),
-                        )
-
-                        LinearProgressIndicator(
-                            progress = { uiState.progress },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 24.dp)
-                                .height(12.dp)
-                                .clip(RoundedCornerShape(6.dp)),
-                            color = accent,
-                            trackColor = LoveOutlineVariant,
-                            strokeCap = StrokeCap.Round,
-                        )
-
-                        CalculatingStepRow(
-                            label = stringResource(
-                                if (isProtocol) R.string.protocol_calculating_step1
-                                else R.string.love_test_calculating_step1,
-                            ),
-                            stepIndex = 0,
-                            activeStep = uiState.activeStep,
-                            accent = accent,
-                            modifier = Modifier.padding(top = 28.dp),
-                        )
-                        CalculatingStepRow(
-                            label = stringResource(
-                                if (isProtocol) R.string.protocol_calculating_step2
-                                else R.string.love_test_calculating_step2,
-                            ),
-                            stepIndex = 1,
-                            activeStep = uiState.activeStep,
-                            accent = accent,
-                            modifier = Modifier.padding(top = 12.dp),
-                        )
-                        CalculatingStepRow(
-                            label = stringResource(
-                                if (isProtocol) R.string.protocol_calculating_step3
-                                else R.string.love_test_calculating_step3,
-                            ),
-                            stepIndex = 2,
-                            activeStep = uiState.activeStep,
-                            accent = accent,
-                            modifier = Modifier.padding(top = 12.dp, bottom = 8.dp),
-                        )
-                    }
+                    CalculatingStepRow(
+                        label = stringResource(
+                            if (isProtocol) R.string.protocol_calculating_step1
+                            else R.string.love_test_calculating_step1,
+                        ),
+                        stepIndex = 0,
+                        activeStep = uiState.activeStep,
+                        accent = accent,
+                        modifier = Modifier.padding(top = 28.dp),
+                    )
+                    CalculatingStepRow(
+                        label = stringResource(
+                            if (isProtocol) R.string.protocol_calculating_step2
+                            else R.string.love_test_calculating_step2,
+                        ),
+                        stepIndex = 1,
+                        activeStep = uiState.activeStep,
+                        accent = accent,
+                        modifier = Modifier.padding(top = 12.dp),
+                    )
+                    CalculatingStepRow(
+                        label = stringResource(
+                            if (isProtocol) R.string.protocol_calculating_step3
+                            else R.string.love_test_calculating_step3,
+                        ),
+                        stepIndex = 2,
+                        activeStep = uiState.activeStep,
+                        accent = accent,
+                        modifier = Modifier.padding(top = 12.dp, bottom = 8.dp),
+                    )
                 }
-
-                Text(
-                    text = stringResource(
-                        if (isProtocol) R.string.protocol_calculating_footer
-                        else R.string.love_test_calculating_footer,
-                    ),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = LoveOnSurfaceVariant,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 24.dp, bottom = 32.dp),
-                )
             }
+
+            Text(
+                text = stringResource(
+                    if (isProtocol) R.string.protocol_calculating_footer
+                    else R.string.love_test_calculating_footer,
+                ),
+                style = LoveTypographyTokens.CardCaption,
+                color = LoveOnSurfaceVariant,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 24.dp, bottom = 32.dp),
+            )
         }
     }
 }
@@ -267,9 +251,7 @@ private fun LoveCalculatingNamesCard(
         ) {
             Text(
                 text = name1,
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
-                color = LoveOnSurface,
+                style = LoveTypographyTokens.CardTitleLight.copy(color = LoveOnSurface),
                 textAlign = TextAlign.Center,
                 modifier = Modifier.weight(1f),
             )
@@ -279,9 +261,7 @@ private fun LoveCalculatingNamesCard(
             )
             Text(
                 text = name2,
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
-                color = LoveOnSurface,
+                style = LoveTypographyTokens.CardTitleLight.copy(color = LoveOnSurface),
                 textAlign = TextAlign.Center,
                 modifier = Modifier.weight(1f),
             )
@@ -304,11 +284,12 @@ private fun LoveCalculatingProgressRing(
     )
 
     Box(
-        modifier = modifier.size(220.dp),
+        modifier = modifier.size(LoveLayout.LoveTestCalculatingRingSize),
         contentAlignment = Alignment.Center,
     ) {
+        val ringStroke = 8.dp
         Canvas(Modifier.fillMaxSize()) {
-            val stroke = 14.dp.toPx()
+            val stroke = ringStroke.toPx()
             val diameter = size.minDimension - stroke
             val topLeft = Offset(
                 (size.width - diameter) / 2f,
@@ -341,19 +322,19 @@ private fun LoveCalculatingProgressRing(
         }
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             LoveHeartIcon(
-                modifier = Modifier.size((72 * pulse).dp),
+                modifier = Modifier.size((56 * pulse).dp),
                 color = accent.copy(alpha = 0.95f),
             )
             Row(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                modifier = Modifier.padding(top = 8.dp),
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                modifier = Modifier.padding(top = 6.dp),
             ) {
                 LoveHeartIcon(
-                    modifier = Modifier.size(20.dp),
+                    modifier = Modifier.size(16.dp),
                     color = LoveSecondary.copy(alpha = 0.5f),
                 )
                 LoveHeartIcon(
-                    modifier = Modifier.size(20.dp),
+                    modifier = Modifier.size(16.dp),
                     color = LoveSecondary.copy(alpha = 0.5f),
                 )
             }
@@ -378,13 +359,13 @@ private fun CalculatingStepRow(
     ) {
         Box(
             modifier = Modifier
-                .size(24.dp)
+                .size(12.dp)
                 .clip(CircleShape)
                 .background(dotColor),
         )
         Text(
             text = label,
-            style = MaterialTheme.typography.bodyMedium,
+            style = LoveTypographyTokens.HeroBody,
             color = textColor,
             modifier = Modifier.padding(start = 12.dp),
         )

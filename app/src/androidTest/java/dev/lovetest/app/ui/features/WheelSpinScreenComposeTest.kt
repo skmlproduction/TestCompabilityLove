@@ -3,6 +3,7 @@ package dev.lovetest.app.ui.features
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dev.lovetest.app.R
@@ -32,5 +33,22 @@ class WheelSpinScreenComposeTest {
         composeRule.onNodeWithText(hero).assertIsDisplayed()
         composeRule.onNodeWithText(cta).assertIsDisplayed()
         composeRule.onNodeWithText(ready).assertIsDisplayed()
+        composeRule.onNodeWithText(composeRule.activity.getString(R.string.wheel_spin_note3)).assertIsDisplayed()
+    }
+
+    @Test
+    fun wheelSpin_discHasSegmentsContentDescription() {
+        val segments = composeRule.activity.resources
+            .getStringArray(R.array.wheel_segments)
+            .joinToString()
+        val segmentsCd = composeRule.activity.getString(R.string.wheel_segments_cd, segments)
+
+        composeRule.setContent {
+            LoveTestTheme {
+                WheelSpinScreen(onBack = {}, onSpinComplete = { _, _ -> })
+            }
+        }
+
+        composeRule.onNodeWithContentDescription(segmentsCd).assertIsDisplayed()
     }
 }

@@ -45,32 +45,46 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.lovetest.app.R
+import dev.lovetest.app.ui.common.LoveFeatureTopBar
+import dev.lovetest.app.ui.common.NameInputHint
 import dev.lovetest.app.util.decorativeForAccessibility
 import dev.lovetest.app.util.loveInputContentPadding
+import dev.lovetest.app.util.loveInputFieldSemantics
+import dev.lovetest.app.util.loveInputLabelForAccessibility
 import dev.lovetest.app.prefs.rememberLastSingleName
+import dev.lovetest.core.domain.NameInputValidator
 import dev.lovetest.core.ui.components.LoveCardShadowElevation
+import dev.lovetest.core.ui.components.LoveFeatureHero
+import dev.lovetest.core.ui.components.LoveLayout
 import dev.lovetest.core.ui.components.LoveShadowCard
 import dev.lovetest.core.ui.components.LoveGradientBackground
 import dev.lovetest.core.ui.components.LoveHubBackgroundBlobs
 import dev.lovetest.core.ui.components.LovePrimaryButton
+import dev.lovetest.core.ui.components.loveEdgeToEdgeScreenPadding
 import dev.lovetest.core.ui.theme.LoveOnPrimaryContainer
 import dev.lovetest.core.ui.theme.LoveOnSurface
 import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
 import dev.lovetest.core.ui.theme.LovePrimary
 import dev.lovetest.core.ui.theme.LovePrimaryContainer
+import dev.lovetest.core.ui.theme.LoveSecondary
 import dev.lovetest.core.ui.theme.LoveSurface
+import dev.lovetest.core.ui.theme.LoveTypographyTokens
 
 private val VictoryInputHeroBrush = Brush.linearGradient(
     colors = listOf(
-        Color(0xFFC2185B),
-        Color(0xFFE91E63),
-        Color(0xFFFFB74D),
+        LovePrimary,
+        LoveSecondary,
+        Color(0xFFE8C547),
     ),
 )
 
@@ -78,56 +92,30 @@ private val TrophyGoldBrush = Brush.linearGradient(
     colors = listOf(Color(0xFFFFD54F), Color(0xFFFF8F00)),
 )
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VictoryInputScreen(
     onBack: () -> Unit,
     onSubmit: (String) -> Unit,
 ) {
     var name by rememberLastSingleName()
-    val canSubmit = name.isNotBlank()
+    val canSubmit = NameInputValidator.canSubmitSingle(name)
 
     Box(modifier = Modifier.fillMaxSize()) {
         LoveGradientBackground(Modifier.fillMaxSize())
         LoveHubBackgroundBlobs(Modifier.fillMaxSize())
 
-        Scaffold(
-            containerColor = Color.Transparent,
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(
-                            text = stringResource(R.string.victory_title),
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.Bold,
-                        )
-                    },
-                    navigationIcon = {
-                        TextButton(onClick = onBack) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowBack, null, tint = LovePrimary)
-                            Text(
-                                stringResource(R.string.nav_back),
-                                color = LovePrimary,
-                                fontWeight = FontWeight.SemiBold,
-                                modifier = Modifier.padding(start = 4.dp),
-                            )
-                        }
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = LoveSurface.copy(alpha = 0.85f),
-                    ),
-                )
-            },
-        ) { padding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-                    .verticalScroll(rememberScrollState())
-                    .loveInputContentPadding()
-                    .padding(horizontal = 24.dp),
-            ) {
-                VictoryInputHero(modifier = Modifier.padding(top = 8.dp))
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .loveEdgeToEdgeScreenPadding(includeNavigationBar = false)
+                .loveInputContentPadding()
+                .verticalScroll(rememberScrollState()),
+        ) {
+            LoveFeatureTopBar(
+                title = stringResource(R.string.victory_title),
+                onBack = onBack,
+            )
+            VictoryInputHero(modifier = Modifier.padding(top = 8.dp))
                 VictoryOutcomePreview(modifier = Modifier.padding(top = 16.dp))
                 LoveShadowCard(
                     modifier = Modifier
@@ -143,6 +131,7 @@ fun VictoryInputScreen(
                             style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.SemiBold,
                             color = LovePrimary,
+                            modifier = Modifier.loveInputLabelForAccessibility(),
                         )
                         Box(
                             modifier = Modifier
@@ -164,7 +153,11 @@ fun VictoryInputScreen(
                                 cursorBrush = SolidColor(LovePrimary),
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(end = 48.dp),
+                                    .padding(end = 48.dp)
+                                    .loveInputFieldSemantics(
+                                        label = stringResource(R.string.victory_name_label),
+                                        value = name,
+                                    ),
                             )
                             Box(
                                 modifier = Modifier
@@ -184,6 +177,7 @@ fun VictoryInputScreen(
                                 )
                             }
                         }
+                        NameInputHint(name)
                         Text(
                             text = stringResource(R.string.victory_popular_names),
                             style = MaterialTheme.typography.bodyMedium,
@@ -226,64 +220,59 @@ fun VictoryInputScreen(
                     text = stringResource(R.string.victory_cta),
                     onClick = { onSubmit(name.trim()) },
                     enabled = canSubmit,
-                    modifier = Modifier
-                        .padding(top = 24.dp, bottom = 32.dp)
-                        .height(48.dp),
+                    modifier = Modifier.padding(top = 24.dp, bottom = 32.dp),
                 )
-            }
         }
     }
 }
 
 @Composable
 private fun VictoryInputHero(modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .heightIn(min = 120.dp)
-            .clip(RoundedCornerShape(46.dp))
-            .background(VictoryInputHeroBrush),
+    LoveFeatureHero(
+        modifier = modifier,
+        brush = VictoryInputHeroBrush,
+        minHeight = LoveLayout.FeatureHeroTallMinHeight,
+        shape = LoveLayout.HubHeroShape,
     ) {
-        Box(modifier = Modifier.align(Alignment.CenterEnd).padding(end = 24.dp)) {
-            VictoryTrophyDecor(modifier = Modifier.size(80.dp))
-        }
-        Column(
+        Row(
             modifier = Modifier
-                .align(Alignment.CenterStart)
-                .padding(20.dp)
-                .padding(end = 100.dp),
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp, vertical = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(
-                text = stringResource(R.string.victory_hero_title),
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
-                color = Color.White,
-            )
-            Text(
-                text = stringResource(R.string.victory_hero_body1),
-                style = MaterialTheme.typography.bodyMedium,
-                color = Color.White.copy(0.9f),
-                modifier = Modifier.padding(top = 6.dp),
-            )
-            Text(
-                text = stringResource(R.string.victory_hero_body2),
-                style = MaterialTheme.typography.bodyMedium,
-                color = Color.White.copy(0.9f),
-            )
-            Box(
-                modifier = Modifier
-                    .padding(top = 10.dp)
-                    .clip(RoundedCornerShape(22.dp))
-                    .background(Color.White.copy(0.22f))
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-            ) {
+            Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = stringResource(R.string.victory_test_badge),
-                    style = MaterialTheme.typography.labelLarge,
-                    fontWeight = FontWeight.Bold,
+                    text = stringResource(R.string.victory_hero_title),
+                    style = LoveTypographyTokens.HeroTitle,
                     color = Color.White,
                 )
+                Text(
+                    text = stringResource(R.string.victory_hero_body1),
+                    style = LoveTypographyTokens.HeroBody,
+                    color = Color.White.copy(0.9f),
+                    modifier = Modifier.padding(top = 6.dp),
+                )
+                Text(
+                    text = stringResource(R.string.victory_hero_body2),
+                    style = LoveTypographyTokens.HeroBody,
+                    color = Color.White.copy(0.9f),
+                )
+                Box(
+                    modifier = Modifier
+                        .padding(top = 10.dp)
+                        .clip(RoundedCornerShape(22.dp))
+                        .background(Color.White.copy(0.22f))
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                ) {
+                    Text(
+                        text = stringResource(R.string.victory_test_badge),
+                        style = MaterialTheme.typography.labelLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White,
+                    )
+                }
             }
+            VictoryTrophyDecor(modifier = Modifier.size(72.dp))
         }
     }
 }
@@ -351,10 +340,16 @@ private fun VictoryOutcomeChip(text: String, background: Color, foreground: Colo
 private fun VictoryNameChip(label: String, onSelect: (String) -> Unit) {
     Box(
         modifier = Modifier
+            .heightIn(min = LoveLayout.PresetChipMinHeight)
             .clip(RoundedCornerShape(24.dp))
             .background(LovePrimaryContainer)
+            .semantics(mergeDescendants = true) {
+                role = Role.Button
+                contentDescription = label
+            }
             .clickable { onSelect(label) }
             .padding(horizontal = 16.dp, vertical = 12.dp),
+        contentAlignment = Alignment.Center,
     ) {
         Text(
             text = label,

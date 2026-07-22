@@ -23,8 +23,8 @@ run_step() {
   echo ""
 }
 
-run_step "verifyLoveTest" ./gradlew verifyLoveTest --no-daemon -q
-run_step "verifyLoveTestBeforeStore (PNG gate)" ./gradlew verifyLoveTestBeforeStore --no-daemon -q
+run_step "verifyLoveTest" ./gradlew verifyLoveTest -q
+run_step "verifyLoveTestBeforeStore (PNG gate)" ./gradlew verifyLoveTestBeforeStore -q
 run_step "audit P0" python3 scripts/audit_screens_matrix.py --write docs/product/AUDIT_REPORT.md
 run_step "export privacy for hosting" bash scripts/export_privacy_for_hosting.sh
 run_step "release gate" bash scripts/release_gate.sh
@@ -32,7 +32,7 @@ run_step "release gate" bash scripts/release_gate.sh
 if [[ -f keystore.properties ]]; then
   store_path="$(grep -E '^storeFile=' keystore.properties 2>/dev/null | cut -d= -f2- | tr -d ' ' || true)"
   if [[ -n "${store_path}" && -f "${store_path}" ]]; then
-    run_step "bundleRelease" ./gradlew bundleRelease --no-daemon -q
+    run_step "bundleRelease" ./gradlew bundleRelease -q
   else
     echo "→ skip bundleRelease (keystore storeFile invalid)"
     echo ""

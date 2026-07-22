@@ -30,7 +30,8 @@ class LoveTestApplication : Application(), KoinComponent {
 
     private val billingLifecycleObserver = object : DefaultLifecycleObserver {
         override fun onDestroy(owner: LifecycleOwner) {
-            billingManager.destroy()
+            // Instrumented tests may tear down Koin before process death.
+            runCatching { billingManager.destroy() }
         }
     }
 
@@ -41,15 +42,22 @@ class LoveTestApplication : Application(), KoinComponent {
             modules(appModule)
         }
         ProcessLifecycleOwner.get().lifecycle.addObserver(billingLifecycleObserver)
+        // Resolve while Koin is alive — androidTest cleanup calls stopKoin() between cases.
+        val prefs = preferences
+        val billing = billingManager
+        val consent = adsConsentManager
+        val ads = adMobManager
         appScope.launch {
-            syncPremiumOnStartup(preferences, billingManager)
-            bootstrapAdsIfAllowed(this@LoveTestApplication, preferences, adsConsentManager, adMobManager)
+            runCatching {
+                syncPremiumOnStartup(prefs, billing)
+                bootstrapAdsIfAllowed(this@LoveTestApplication, prefs, consent, ads)
+            }
         }
     }
 
     @Deprecated("Deprecated in Java")
     override fun onTerminate() {
-        billingManager.destroy()
+        runCatching { billingManager.destroy() }
         ProcessLifecycleOwner.get().lifecycle.removeObserver(billingLifecycleObserver)
         super.onTerminate()
     }

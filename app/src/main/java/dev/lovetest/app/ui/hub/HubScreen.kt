@@ -7,11 +7,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -28,7 +30,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -50,8 +51,11 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.lovetest.app.BuildConfig
@@ -62,6 +66,7 @@ import dev.lovetest.app.debug.DebugUiPreview
 import dev.lovetest.app.monetization.AdMobInterstitialManager
 import dev.lovetest.app.monetization.AdsConsentManager
 import dev.lovetest.app.monetization.AdsInterstitialController
+import dev.lovetest.app.monetization.InterstitialLoadState
 import dev.lovetest.app.prefs.AppPreferences
 import dev.lovetest.app.ui.share.AdInterstitialPlaceholder
 import dev.lovetest.core.ui.components.LoveCardShadowElevation
@@ -69,7 +74,9 @@ import dev.lovetest.core.ui.components.LoveGradientBackground
 import dev.lovetest.core.ui.components.LoveHeartIcon
 import dev.lovetest.core.ui.components.LoveHeroGradientBrush
 import dev.lovetest.core.ui.components.LoveHubBackgroundBlobs
+import dev.lovetest.core.ui.components.LoveLayout
 import dev.lovetest.core.ui.components.loveCardShadow
+import dev.lovetest.core.ui.components.loveScreenHorizontalPadding
 import dev.lovetest.core.ui.theme.LoveOnPrimaryContainer
 import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
 import dev.lovetest.core.ui.theme.LoveOutlineVariant
@@ -78,6 +85,7 @@ import dev.lovetest.core.ui.theme.LovePrimaryContainer
 import dev.lovetest.core.ui.theme.LoveProtocolHeroGradientColors
 import dev.lovetest.core.ui.theme.LoveProtocolPrimary
 import dev.lovetest.core.ui.theme.LoveSurface
+import dev.lovetest.core.ui.theme.LoveTypographyTokens
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
 
@@ -114,13 +122,26 @@ fun HubScreen(
         }
     }
 
-    LaunchedEffect(adPending, isPremium) {
+    val adLoadState by adMobManager.loadState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(adPending, isPremium, adLoadState) {
         if (!adPending || isPremium || !BuildConfig.ADS_ENABLED || !adsConsentManager.canRequestAds()) {
             return@LaunchedEffect
         }
         val activity = context.findActivity() ?: return@LaunchedEffect
-        if (adMobManager.show(activity) { AdsInterstitialController.consume() }) {
-            AdsInterstitialController.consume()
+        when (adLoadState) {
+            InterstitialLoadState.Ready -> {
+                if (adMobManager.show(activity) { AdsInterstitialController.consume() }) {
+                    AdsInterstitialController.consume()
+                }
+            }
+            InterstitialLoadState.Failed -> {
+                // No production placeholder — drop pending and continue hub.
+                AdsInterstitialController.consume()
+                adMobManager.preload()
+            }
+            InterstitialLoadState.Idle -> adMobManager.preload()
+            InterstitialLoadState.Loading -> Unit
         }
     }
 
@@ -150,7 +171,7 @@ fun HubScreen(
             LoveGradientBackground(Modifier.fillMaxSize())
             LoveHubBackgroundBlobs(Modifier.fillMaxSize())
 
-            if (state == HubDisplayState.ErrorNetwork) {
+            if (BuildConfig.DEBUG && state == HubDisplayState.ErrorNetwork) {
                 HubErrorTopBanner(
                     modifier = Modifier
                         .align(Alignment.TopCenter)
@@ -163,9 +184,9 @@ fun HubScreen(
                     .fillMaxSize()
                     .statusBarsPadding()
                     .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 24.dp),
+                    .loveScreenHorizontalPadding(),
             ) {
-                HubTopBar(onOpenSettings = onOpenSettings)
+                HubTopBar()
 
                 HubWelcomeHero(modifier = Modifier.padding(top = 8.dp))
 
@@ -177,15 +198,14 @@ fun HubScreen(
 
                 Text(
                     text = stringResource(R.string.hub_section_tests),
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontWeight = FontWeight.Bold,
+                    style = LoveTypographyTokens.HubSectionTitle,
                     modifier = Modifier.padding(top = 24.dp),
                 )
                 Text(
                     text = stringResource(R.string.hub_section_subtitle),
-                    style = MaterialTheme.typography.bodyLarge,
+                    style = LoveTypographyTokens.HubSectionSubtitle,
                     color = LoveOnSurfaceVariant,
-                    modifier = Modifier.padding(top = 4.dp, bottom = 16.dp),
+                    modifier = Modifier.padding(top = 4.dp, bottom = 12.dp),
                 )
 
                 FeaturedLoveTestCard(
@@ -207,7 +227,7 @@ fun HubScreen(
                         badge = { RingBadge() },
                         onClick = onOpenPair,
                     ),
-                    modifier = Modifier.padding(top = 12.dp),
+                    modifier = Modifier.padding(top = LoveLayout.HubGridRowSpacing),
                 )
                 HubTestGridRow(
                     left = HubTestItem(
@@ -222,7 +242,7 @@ fun HubScreen(
                         badge = { LettersBadge() },
                         onClick = onOpenLetters,
                     ),
-                    modifier = Modifier.padding(top = 12.dp),
+                    modifier = Modifier.padding(top = LoveLayout.HubGridRowSpacing),
                 )
                 HubTestGridRow(
                     left = HubTestItem(
@@ -237,12 +257,12 @@ fun HubScreen(
                         badge = { RingBadge() },
                         onClick = onOpenZodiac,
                     ),
-                    modifier = Modifier.padding(top = 12.dp),
+                    modifier = Modifier.padding(top = LoveLayout.HubGridRowSpacing),
                 )
 
-                HubProtocolStrip(
+                HubFeaturedProtocolCard(
                     onClick = onOpenProtocol,
-                    modifier = Modifier.padding(top = 16.dp),
+                    modifier = Modifier.padding(top = 12.dp),
                 )
 
                 ShareHintCard(
@@ -250,10 +270,10 @@ fun HubScreen(
                 )
             }
 
-            if (state == HubDisplayState.Loading) {
+            if (BuildConfig.DEBUG && state == HubDisplayState.Loading) {
                 HubLoadingOverlay()
             }
-            if (state == HubDisplayState.ErrorNetwork) {
+            if (BuildConfig.DEBUG && state == HubDisplayState.ErrorNetwork) {
                 HubErrorNetworkOverlay(
                     onRetry = viewModel::retryFromError,
                     onContinueOffline = viewModel::retryFromError,
@@ -279,7 +299,7 @@ fun HubScreen(
 }
 
 @Composable
-private fun HubTopBar(onOpenSettings: () -> Unit) {
+private fun HubTopBar() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -287,71 +307,53 @@ private fun HubTopBar(onOpenSettings: () -> Unit) {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Column {
-            Text(
-                text = stringResource(R.string.app_name),
-                style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.ExtraBold,
-            )
-        }
-        IconButton(
-            onClick = onOpenSettings,
-            modifier = Modifier
-                .size(48.dp)
-                .clip(CircleShape)
-                .background(LovePrimaryContainer),
-        ) {
-            Icon(
-                Icons.Default.Settings,
-                contentDescription = stringResource(R.string.hub_settings_cd),
-                tint = LovePrimary,
-            )
-        }
+        Text(
+            text = stringResource(R.string.app_name),
+            style = LoveTypographyTokens.AppTitle,
+        )
     }
 }
 
 @Composable
 private fun HubWelcomeHero(modifier: Modifier = Modifier) {
-    val shape = RoundedCornerShape(46.dp)
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(200.dp)
-            .loveCardShadow(shape, elevation = LoveCardShadowElevation.Hero)
-            .clip(shape)
+            .heightIn(min = LoveLayout.HubHeroHeight)
+            .loveCardShadow(LoveLayout.HubHeroShape, elevation = LoveCardShadowElevation.Hero)
+            .clip(LoveLayout.HubHeroShape)
             .background(LoveHeroGradientBrush())
-            .padding(24.dp),
+            .padding(horizontal = 20.dp, vertical = 16.dp),
     ) {
         Column(modifier = Modifier.align(Alignment.CenterStart)) {
             Text(
                 text = stringResource(R.string.hub_hero_title),
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.ExtraBold,
-                fontSize = 32.sp,
+                style = LoveTypographyTokens.HeroTitle,
                 color = Color.White,
             )
             Text(
                 text = stringResource(R.string.hub_hero_body_line1),
-                style = MaterialTheme.typography.bodyLarge,
+                style = LoveTypographyTokens.HeroBody,
                 color = Color.White.copy(alpha = 0.92f),
-                modifier = Modifier.padding(top = 6.dp),
+                modifier = Modifier.padding(top = 4.dp),
             )
             Text(
                 text = stringResource(R.string.hub_hero_body_line2),
-                style = MaterialTheme.typography.bodyLarge,
+                style = LoveTypographyTokens.HeroBody,
                 color = Color.White.copy(alpha = 0.92f),
             )
             Box(
                 modifier = Modifier
-                    .padding(top = 12.dp)
+                    .padding(top = 8.dp)
+                    .height(LoveLayout.HubHeroChipHeight)
                     .clip(RoundedCornerShape(24.dp))
                     .background(Color.White.copy(alpha = 0.22f))
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                    .padding(horizontal = 14.dp),
+                contentAlignment = Alignment.Center,
             ) {
                 Text(
                     text = stringResource(R.string.hub_hero_chip),
-                    style = MaterialTheme.typography.labelLarge,
-                    fontWeight = FontWeight.Bold,
+                    style = LoveTypographyTokens.HubHeroChip,
                     color = Color.White,
                 )
             }
@@ -359,7 +361,8 @@ private fun HubWelcomeHero(modifier: Modifier = Modifier) {
         LoveHeartIcon(
             modifier = Modifier
                 .size(56.dp)
-                .align(Alignment.TopEnd),
+                .align(Alignment.TopEnd)
+                .padding(top = 4.dp),
             color = Color.White.copy(alpha = 0.9f),
         )
     }
@@ -373,94 +376,128 @@ private fun HubProtocolGradientBrush(): Brush =
     )
 
 @Composable
-private fun HubProtocolStrip(
+private fun HubFeaturedProtocolCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val shape = RoundedCornerShape(38.dp)
-    Card(
+    val shape = LoveLayout.HubFeaturedShape
+    val title = stringResource(R.string.hub_protocol_title)
+    val subtitle = stringResource(R.string.hub_protocol_subtitle)
+    Box(
         modifier = modifier
             .fillMaxWidth()
+            .heightIn(min = LoveLayout.HubProtocolFeaturedCardHeight)
             .loveCardShadow(shape, elevation = LoveCardShadowElevation.Card, spotTint = LoveProtocolPrimary)
+            .clip(shape)
+            .background(HubProtocolGradientBrush())
+            .border(2.dp, Color.White.copy(alpha = 0.28f), shape)
+            .semantics(mergeDescendants = true) {
+                contentDescription = "$title. $subtitle"
+            }
             .clickable(onClick = onClick),
-        shape = shape,
-        colors = CardDefaults.cardColors(containerColor = Color.Transparent),
-        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
     ) {
         Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .background(HubProtocolGradientBrush())
-                .padding(horizontal = 20.dp, vertical = 18.dp),
+                .align(Alignment.TopStart)
+                .padding(start = 12.dp, top = 8.dp)
+                .clip(RoundedCornerShape(20.dp))
+                .background(Color.White)
+                .padding(horizontal = 12.dp, vertical = 4.dp),
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
+            Text(
+                text = stringResource(R.string.hub_protocol_badge_novo),
+                style = LoveTypographyTokens.HubGoLabel.copy(fontSize = 10.sp),
+                color = LoveProtocolPrimary,
+            )
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(start = 12.dp, end = 80.dp, top = 22.dp, bottom = 6.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            HubProtocolStepsIcon(
+                modifier = Modifier.size(LoveLayout.HubGridIconSize),
+            )
+            Column(modifier = Modifier.padding(start = 10.dp)) {
+                Text(
+                    text = stringResource(R.string.hub_protocol_title),
+                    style = LoveTypographyTokens.CardTitleLight,
+                    color = Color.White,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+                Text(
+                    text = stringResource(R.string.hub_protocol_subtitle),
+                    style = LoveTypographyTokens.CardCaptionLight,
+                    color = Color.White.copy(alpha = 0.9f),
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                )
                 Box(
                     modifier = Modifier
-                        .size(56.dp)
-                        .clip(RoundedCornerShape(18.dp))
-                        .background(Color.White.copy(alpha = 0.22f)),
-                    contentAlignment = Alignment.Center,
+                        .padding(top = 4.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(Color.White.copy(alpha = 0.22f))
+                        .padding(horizontal = 10.dp, vertical = 3.dp),
                 ) {
-                    Text(
-                        text = "✓",
-                        fontSize = 28.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White,
-                    )
-                }
-                Column(
-                    modifier = Modifier
-                        .padding(start = 14.dp)
-                        .weight(1f),
-                ) {
-                    Text(
-                        text = stringResource(R.string.hub_protocol_title),
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White,
-                    )
-                    Text(
-                        text = stringResource(R.string.hub_protocol_subtitle),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.White.copy(alpha = 0.92f),
-                        modifier = Modifier.padding(top = 4.dp),
-                    )
                     Text(
                         text = stringResource(R.string.hub_protocol_test_label),
-                        style = MaterialTheme.typography.labelLarge,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White.copy(alpha = 0.88f),
-                        modifier = Modifier.padding(top = 8.dp),
-                    )
-                }
-                Column(horizontalAlignment = Alignment.End) {
-                    Box(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(20.dp))
-                            .background(Color.White)
-                            .padding(horizontal = 12.dp, vertical = 6.dp),
-                    ) {
-                        Text(
-                            text = stringResource(R.string.hub_protocol_badge_novo),
-                            style = MaterialTheme.typography.labelMedium,
-                            fontWeight = FontWeight.ExtraBold,
-                            color = LoveProtocolPrimary,
-                        )
-                    }
-                    Icon(
-                        Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                        contentDescription = null,
-                        tint = Color.White,
-                        modifier = Modifier
-                            .padding(top = 8.dp)
-                            .decorativeForAccessibility(),
+                        style = LoveTypographyTokens.HubHeroChip,
+                        color = Color.White,
                     )
                 }
             }
         }
+        HubGoPill(
+            label = stringResource(R.string.hub_featured_go),
+            accentColor = LoveProtocolPrimary,
+            modifier = Modifier.align(Alignment.CenterEnd).padding(end = 12.dp),
+        )
+    }
+}
+
+@Composable
+private fun HubProtocolStepsIcon(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .clip(RoundedCornerShape(LoveLayout.HubGridIconCorner))
+            .background(Color.White.copy(alpha = 0.22f)),
+        contentAlignment = Alignment.Center,
+    ) {
+        Column(verticalArrangement = Arrangement.spacedBy(3.dp)) {
+            repeat(3) { index ->
+                Box(
+                    Modifier
+                        .size(width = 12.dp, height = 3.dp)
+                        .clip(RoundedCornerShape(1.dp))
+                        .background(Color.White.copy(alpha = 0.75f - index * 0.1f)),
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun HubGoPill(
+    label: String,
+    accentColor: Color,
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier = modifier
+            .height(LoveLayout.HubGoPillHeight)
+            .defaultMinSize(minWidth = LoveLayout.HubGoPillMinWidth)
+            .clip(RoundedCornerShape(LoveLayout.HubGoPillCorner))
+            .background(Color.White)
+            .padding(horizontal = 16.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            text = label,
+            style = LoveTypographyTokens.HubGoLabel,
+            color = accentColor,
+        )
     }
 }
 
@@ -471,10 +508,28 @@ private fun PremiumStrip(
     modifier: Modifier = Modifier,
 ) {
     val shape = RoundedCornerShape(32.dp)
+    val title = stringResource(
+        if (BuildConfig.ADS_ENABLED) {
+            R.string.hub_premium_title
+        } else {
+            R.string.hub_premium_title_support
+        },
+    )
+    val subtitle = stringResource(
+        when {
+            isPremium && !BuildConfig.ADS_ENABLED -> R.string.hub_premium_subtitle_active_support
+            isPremium -> R.string.hub_premium_subtitle_active
+            !BuildConfig.ADS_ENABLED -> R.string.hub_premium_subtitle_support
+            else -> R.string.hub_premium_subtitle
+        },
+    )
     Card(
         modifier = modifier
             .fillMaxWidth()
             .loveCardShadow(shape, elevation = LoveCardShadowElevation.Subtle)
+            .semantics(mergeDescendants = true) {
+                contentDescription = "$title. $subtitle"
+            }
             .clickable(onClick = onClick),
         shape = shape,
         colors = CardDefaults.cardColors(containerColor = LovePrimaryContainer),
@@ -489,17 +544,13 @@ private fun PremiumStrip(
             LoveHeartIcon(modifier = Modifier.size(32.dp), color = LovePrimary)
             Column(modifier = Modifier.padding(start = 12.dp).weight(1f)) {
                 Text(
-                    text = stringResource(R.string.hub_premium_title),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
+                    text = title,
+                    style = LoveTypographyTokens.HubPremiumTitle,
                     color = LoveOnPrimaryContainer,
                 )
                 Text(
-                    text = stringResource(
-                        if (isPremium) R.string.hub_premium_subtitle_active
-                        else R.string.hub_premium_subtitle,
-                    ),
-                    style = MaterialTheme.typography.bodySmall,
+                    text = subtitle,
+                    style = LoveTypographyTokens.HubPremiumSubtitle,
                     color = LoveOnPrimaryContainer,
                 )
             }
@@ -519,53 +570,49 @@ private fun FeaturedLoveTestCard(
     subtitle: String,
     onClick: () -> Unit,
 ) {
-    val shape = RoundedCornerShape(38.dp)
+    val shape = LoveLayout.HubFeaturedShape
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .heightIn(min = 100.dp)
+            .heightIn(min = LoveLayout.HubFeaturedCardHeight)
             .loveCardShadow(shape, elevation = LoveCardShadowElevation.Card)
             .clip(shape)
             .background(LoveHeroGradientBrush())
             .border(2.dp, Color.White.copy(alpha = 0.35f), shape)
-            .clickable(onClick = onClick)
-            .padding(horizontal = 20.dp, vertical = 16.dp),
+            .semantics(mergeDescendants = true) {
+                contentDescription = "$title. $subtitle"
+            }
+            .clickable(onClick = onClick),
     ) {
         Row(
             modifier = Modifier
                 .align(Alignment.CenterStart)
-                .padding(end = 96.dp),
+                .padding(start = 12.dp, end = 88.dp, top = 12.dp, bottom = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            LoveHeartIcon(modifier = Modifier.size(36.dp), color = Color.White)
-            Column(modifier = Modifier.padding(start = 14.dp)) {
+            LoveHeartIcon(modifier = Modifier.size(28.dp), color = Color.White)
+            Column(modifier = Modifier.padding(start = 10.dp)) {
                 Text(
                     text = title,
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
+                    style = LoveTypographyTokens.CardTitleLight,
                     color = Color.White,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                 )
                 Text(
                     text = subtitle,
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = LoveTypographyTokens.CardCaptionLight,
                     color = Color.White.copy(alpha = 0.9f),
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
                 )
             }
         }
-        Box(
-            modifier = Modifier
-                .align(Alignment.CenterEnd)
-                .clip(RoundedCornerShape(28.dp))
-                .background(Color.White)
-                .padding(horizontal = 24.dp, vertical = 10.dp),
-        ) {
-            Text(
-                text = stringResource(R.string.hub_featured_go),
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.ExtraBold,
-                color = LovePrimary,
-            )
-        }
+        HubGoPill(
+            label = stringResource(R.string.hub_featured_go),
+            accentColor = LovePrimary,
+            modifier = Modifier.align(Alignment.CenterEnd).padding(end = 12.dp),
+        )
     }
 }
 
@@ -593,41 +640,51 @@ private fun HubTestGridRow(
 
 @Composable
 private fun HubGridCard(item: HubTestItem, modifier: Modifier = Modifier) {
-    val shape = RoundedCornerShape(32.dp)
+    val shape = LoveLayout.HubGridShape
     Card(
         modifier = modifier
-            .height(88.dp)
+            .heightIn(min = LoveLayout.HubGridCellHeight)
             .loveCardShadow(shape, elevation = LoveCardShadowElevation.Subtle)
+            .semantics(mergeDescendants = true) {
+                contentDescription = "${item.title}. ${item.subtitle}"
+            }
             .clickable(onClick = item.onClick),
         shape = shape,
         colors = CardDefaults.cardColors(containerColor = LoveSurface),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
     ) {
         Row(
-            modifier = Modifier.padding(14.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 10.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Box(
                 modifier = Modifier
-                    .size(40.dp)
-                    .clip(RoundedCornerShape(12.dp))
+                    .size(LoveLayout.HubGridIconSize)
+                    .clip(RoundedCornerShape(LoveLayout.HubGridIconCorner))
                     .background(LovePrimaryContainer),
                 contentAlignment = Alignment.Center,
             ) {
                 item.badge()
             }
-            Column(modifier = Modifier.padding(start = 10.dp)) {
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 8.dp),
+            ) {
                 Text(
                     text = item.title,
-                    style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.Bold,
-                    maxLines = 1,
+                    style = LoveTypographyTokens.CardTitle,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
                 )
                 Text(
                     text = item.subtitle,
-                    style = MaterialTheme.typography.bodySmall,
+                    style = LoveTypographyTokens.CardCaption,
                     color = LoveOnSurfaceVariant,
-                    maxLines = 1,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
                 )
             }
         }
@@ -636,39 +693,49 @@ private fun HubGridCard(item: HubTestItem, modifier: Modifier = Modifier) {
 
 @Composable
 private fun PercentBadge() {
-    Text("%", fontSize = 22.sp, fontWeight = FontWeight.Bold, color = LovePrimary)
+    Text("%", style = LoveTypographyTokens.CardTitle, color = LovePrimary)
 }
 
 @Composable
 private fun RingBadge() {
     Box(
         modifier = Modifier
-            .size(28.dp)
-            .border(3.dp, LovePrimary, CircleShape),
+            .size(14.dp)
+            .border(2.dp, LovePrimary, CircleShape),
     )
 }
 
 @Composable
 private fun DiamondBadge() {
-    Box(
-        modifier = Modifier
-            .size(20.dp)
-            .background(LovePrimary, RoundedCornerShape(2.dp)),
-    )
+    androidx.compose.foundation.Canvas(modifier = Modifier.size(14.dp)) {
+        val path = androidx.compose.ui.graphics.Path().apply {
+            moveTo(size.width / 2f, 0f)
+            lineTo(size.width, size.height / 2f)
+            lineTo(size.width / 2f, size.height)
+            lineTo(0f, size.height / 2f)
+            close()
+        }
+        drawPath(path, LovePrimary)
+    }
 }
 
 @Composable
 private fun LettersBadge() {
-    Text("Aa", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = LovePrimary)
+    Text("Aa", style = LoveTypographyTokens.CardTitle, color = LovePrimary)
 }
 
 @Composable
 private fun WheelBadge() {
-    androidx.compose.foundation.Canvas(modifier = Modifier.size(28.dp)) {
-        val stroke = 3.dp.toPx()
-        drawCircle(color = LovePrimary, radius = 10.dp.toPx(), style = Stroke(stroke))
-        drawLine(LovePrimary, center, Offset(center.x, center.y - 12.dp.toPx()), stroke)
-        drawLine(LovePrimary, Offset(center.x - 8.dp.toPx(), center.y), Offset(center.x + 8.dp.toPx(), center.y), stroke)
+    androidx.compose.foundation.Canvas(modifier = Modifier.size(14.dp)) {
+        val stroke = 2.dp.toPx()
+        drawCircle(color = LovePrimary, radius = 5.dp.toPx(), style = Stroke(stroke))
+        drawLine(LovePrimary, center, Offset(center.x, center.y - 6.dp.toPx()), stroke)
+        drawLine(
+            LovePrimary,
+            Offset(center.x - 5.dp.toPx(), center.y),
+            Offset(center.x + 5.dp.toPx(), center.y),
+            stroke,
+        )
     }
 }
 
@@ -704,12 +771,11 @@ private fun ShareHintCard(modifier: Modifier = Modifier) {
             Column(modifier = Modifier.padding(start = 12.dp)) {
                 Text(
                     text = stringResource(R.string.hub_share_card_title),
-                    style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.Bold,
+                    style = LoveTypographyTokens.CardTitle,
                 )
                 Text(
                     text = stringResource(R.string.hub_share_card_subtitle),
-                    style = MaterialTheme.typography.bodySmall,
+                    style = LoveTypographyTokens.CardCaption,
                     color = LoveOnSurfaceVariant,
                 )
             }
@@ -727,13 +793,14 @@ private fun HubBottomNav(
     Surface(
         color = LoveSurface.copy(alpha = 0.95f),
         shadowElevation = 8.dp,
+        modifier = Modifier.navigationBarsPadding(),
     ) {
         Column {
             HorizontalDivider(color = LoveOutlineVariant)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 12.dp),
+                    .padding(vertical = 10.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly,
             ) {
                 HubNavItem(
@@ -786,15 +853,23 @@ private fun HubNavItem(
     onClick: () -> Unit,
     icon: @Composable () -> Unit,
 ) {
+    val description = if (selected) {
+        stringResource(R.string.hub_nav_item_selected, label)
+    } else {
+        label
+    }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
+            .semantics(mergeDescendants = true) {
+                contentDescription = description
+            }
             .clickable(onClick = onClick)
             .padding(horizontal = 16.dp),
     ) {
         Box(
             modifier = Modifier
-                .size(40.dp)
+                .size(36.dp)
                 .clip(CircleShape)
                 .background(if (selected) LovePrimaryContainer else LoveOutlineVariant),
             contentAlignment = Alignment.Center,
@@ -803,10 +878,12 @@ private fun HubNavItem(
         }
         Text(
             text = label,
-            style = MaterialTheme.typography.labelSmall,
+            style = LoveTypographyTokens.SectionKicker,
             color = if (selected) LovePrimary else LoveOnSurfaceVariant,
             textDecoration = TextDecoration.None,
-            modifier = Modifier.padding(top = 4.dp),
+            modifier = Modifier
+                .padding(top = 4.dp)
+                .decorativeForAccessibility(),
         )
     }
 }

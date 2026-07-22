@@ -1,52 +1,54 @@
-# Google Play — черновик листинга (Love Tester)
+# Google Play — листинг Love Tester (финал v1.0)
 
-Перед публикацией перепишите тексты; не копируйте дословно референс `info/description.rtf`.
+Канонические тексты для Console: **[PLAY_CONSOLE_COPY.md](./PLAY_CONSOLE_COPY.md)**.
 
-## RU
+## ASO-ключи (естественно в текстах)
 
-**Название:** Тест на совместимость и любовь
+| RU | EN |
+|----|-----|
+| тест на совместимость, love test, тест любви | love test, compatibility test |
+| love calculator, калькулятор любви, по имени | love calculator, name compatibility |
+| тест пары, имя, зодиак, колесо | couple test, zodiac, idea wheel |
 
-**Краткое описание (80 символов):**  
-Развлекательные тесты совместимости по именам — весело и бесплатно.
+## Честность скриншотов (7 приоритетных)
 
-**Полное описание (черновик):**  
-Узнайте процент «совместимости» по именам в игровом формате. Love Tester — набор лёгких тестов для пары и друзей: классический love test, **протокол любви** (3 шага → сигналы → вердикт), калькулятор букв, пара, знаки зодиака, колесо идей и другие режимы.
+**Статус 2026-06-03:** RU/EN — 7/7 файлов в `docs/screenshots/{ru,en}/`, **1080×1920**, **270–545 KB** (не placeholder).  
+`build/store-upload/listing-screenshots/` — копии для upload-пакета.
 
-Результаты носят **развлекательный характер** и не являются научным прогнозом или советом.
+| screen_id | Дисклеймер в UI |
+|-----------|-----------------|
+| `love_test_result` | Да — длинный disclaimer на результате |
+| `protocol_result` | Да — «только для развлечения» |
+| `wheel_spin` | Да — «not a bet» / entertainment (EN/RU strings) |
+| `premium_paywall` | Опциональная покупка, кнопка «бесплатно» |
 
-**Что внутри:**
-- Тест совместимости по двум именам
-- **Протокол любви** — пошаговый режим (тест №8)
-- Несколько игровых режимов в одном приложении
-- Поделиться результатом с друзьями
-- Русский и английский интерфейс
-- Premium без рекламы (опционально)
+**Не в первых 7 кадрах:** `onboarding_disclaimer` — при желании добавьте **8-й** скриншот в Console для усиления доверия.
 
-## EN
+Пересъёмка (если меняли UI):
 
-**Title:** Love Tester
-
-**Short description:**  
-Fun name-based compatibility tests for couples and friends.
-
-**Full description (draft):**  
-Discover a playful “compatibility” percent from two names. Love Tester bundles lighthearted modes: classic love test, **love protocol** (3 steps → signals → verdict), letter calculator, pair test, zodiac signs, idea wheel, and more.
-
-Results are **for entertainment only** — not scientific advice.
-
-## Data safety (кратко)
-
-См. `assets/legal/data_collection.html` и форму в Play Console. Имена обрабатываются на устройстве; реклама и покупки — по политикам Google.
-
-Privacy URL: `lovetest.privacy.policy.url` в `gradle.properties` (см. `STORE_UPLOAD.md`, `./scripts/export_privacy_for_hosting.sh`).
-
-## Скриншоты (готовы ✅)
-
-После `./scripts/pack_store_upload.sh`:
-
-```
-build/store-upload/listing-screenshots/ru/   # 7 PNG для листинга
-build/store-upload/listing-screenshots/en/
+```bash
+./scripts/capture_store_local.sh both priority
+# или
+./gradlew capturePriorityScreensLoveTest
+./gradlew -Plocale=en capturePriorityScreensLoveTest
+./gradlew verifyLoveTestBeforeStore
+./scripts/pack_store_upload.sh
 ```
 
-Полный каталог: **67** PNG в `docs/screenshots/` ( `./gradlew verifyLoveTestBeforeStore` ✅ ).
+## Feature graphic
+
+См. [FEATURE_GRAPHIC.md](./FEATURE_GRAPHIC.md) — дисклеймер «For entertainment only» на макете.
+
+## Privacy & монетизация
+
+- Privacy URL: `gradle.properties` → GitHub Pages  
+- v1: **без рекламы**; IAP `remove_ads` optional — [PLAY_FORMS_FILLED.md](./PLAY_FORMS_FILLED.md)
+
+## Gate перед Store
+
+```bash
+python3 scripts/verify_ui_inventory.py --require-screenshots --fail-on-placeholders
+./gradlew verifyLoveTestBeforeStore   # + verifyLoveTest
+```
+
+Ожидаемо: **67/67** реальных PNG, **0** placeholder.

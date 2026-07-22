@@ -1,6 +1,7 @@
 package dev.lovetest.app.ui.hub
 
 import androidx.lifecycle.ViewModel
+import dev.lovetest.app.BuildConfig
 import dev.lovetest.app.debug.DebugUiPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,8 +25,8 @@ class HubViewModel : ViewModel() {
     }
 
     private fun resolveInitialState(): HubDisplayState = when {
-        DebugUiPreview.matches("hub_loading") -> HubDisplayState.Loading
-        DebugUiPreview.matches("error_network") -> HubDisplayState.ErrorNetwork
+        BuildConfig.DEBUG && DebugUiPreview.matches("hub_loading") -> HubDisplayState.Loading
+        BuildConfig.DEBUG && DebugUiPreview.matches("error_network") -> HubDisplayState.ErrorNetwork
         else -> HubDisplayState.Main
     }
 }

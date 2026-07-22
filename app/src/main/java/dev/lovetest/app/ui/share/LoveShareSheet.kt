@@ -58,7 +58,8 @@ fun LoveShareResultOverlay(
     name2: String,
     harmonyTag: String,
     shareText: String,
-    onShare: () -> Unit,
+    high: Boolean,
+    onShareFallback: () -> Unit = {},
 ) {
     AnimatedVisibility(
         visible = sheet.visible,
@@ -71,8 +72,9 @@ fun LoveShareResultOverlay(
             name2 = name2,
             harmonyTag = harmonyTag,
             shareText = shareText,
+            high = high,
             onDismiss = sheet.close,
-            onShare = onShare,
+            onShareFallback = onShareFallback,
         )
     }
 }
@@ -93,7 +95,7 @@ fun LoveWheelShareOverlay(
             prize = prize,
             shareText = shareText,
             onDismiss = sheet.close,
-            onShare = onShare,
+            onShareFallback = onShare,
         )
     }
 }

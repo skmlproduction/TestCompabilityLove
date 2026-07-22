@@ -8,10 +8,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -27,11 +25,9 @@ import androidx.compose.material.icons.filled.Replay
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.DeleteOutline
 import androidx.compose.material.icons.outlined.Description
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -46,12 +42,15 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.lovetest.app.BuildConfig
 import dev.lovetest.app.R
 import dev.lovetest.app.legal.LegalDocuments
+import dev.lovetest.app.ui.common.LoveScreenBackButton
 import dev.lovetest.app.util.decorativeForAccessibility
 import dev.lovetest.app.prefs.AppPreferences
 import org.koin.compose.koinInject
@@ -59,6 +58,7 @@ import dev.lovetest.core.ui.components.LoveCardShadowElevation
 import dev.lovetest.core.ui.components.LoveShadowCard
 import dev.lovetest.core.ui.components.LoveGradientBackground
 import dev.lovetest.core.ui.components.LoveHubBackgroundBlobs
+import dev.lovetest.core.ui.components.loveEdgeToEdgeScreenPadding
 import dev.lovetest.core.ui.theme.LoveOnPrimaryContainer
 import dev.lovetest.core.ui.theme.LoveOnSurface
 import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
@@ -66,6 +66,7 @@ import dev.lovetest.core.ui.theme.LoveOutlineVariant
 import dev.lovetest.core.ui.theme.LovePrimary
 import dev.lovetest.core.ui.theme.LovePrimaryContainer
 import dev.lovetest.core.ui.theme.LoveSurface
+import dev.lovetest.core.ui.theme.LoveTypographyTokens
 import java.util.Locale
 
 @Composable
@@ -104,33 +105,17 @@ fun SettingsScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .statusBarsPadding()
-                .verticalScroll(rememberScrollState())
-                .navigationBarsPadding()
-                .padding(horizontal = 24.dp),
+                .loveEdgeToEdgeScreenPadding()
+                .verticalScroll(rememberScrollState()),
         ) {
-            TextButton(
+            LoveScreenBackButton(
                 onClick = onBack,
                 modifier = Modifier.padding(top = 8.dp),
-            ) {
-                Icon(
-                    Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = null,
-                    tint = LovePrimary,
-                    modifier = Modifier.decorativeForAccessibility(),
-                )
-                Text(
-                    text = stringResource(R.string.nav_back),
-                    color = LovePrimary,
-                    fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier.padding(start = 4.dp),
-                )
-            }
+            )
 
             Text(
                 text = stringResource(R.string.settings_title),
-                style = MaterialTheme.typography.headlineLarge,
-                fontWeight = FontWeight.ExtraBold,
+                style = LoveTypographyTokens.ScreenHeadline,
                 color = LoveOnSurface,
                 modifier = Modifier.padding(top = 8.dp),
             )
@@ -158,16 +143,19 @@ fun SettingsScreen(
                     icon = Icons.Filled.Star,
                     title = stringResource(R.string.settings_premium_title),
                     subtitle = stringResource(
-                        if (isPremium) R.string.settings_premium_active
-                        else R.string.settings_premium_sub,
+                        when {
+                            isPremium -> R.string.settings_premium_active
+                            BuildConfig.ADS_ENABLED -> R.string.settings_premium_sub_ads
+                            else -> R.string.settings_premium_sub
+                        },
                     ),
                     showChevron = true,
                     onClick = onPremium,
                 )
                 SettingsDivider()
                 SettingsRow(
-                    iconBackground = Color(0xFFF3EDF7),
-                    iconTint = Color(0xFF6750A4),
+                    iconBackground = LovePrimaryContainer,
+                    iconTint = LovePrimary,
                     icon = Icons.Filled.Refresh,
                     title = stringResource(R.string.settings_restore_purchases),
                     showChevron = true,
@@ -201,7 +189,7 @@ fun SettingsScreen(
                 )
                 SettingsDivider()
                 SettingsRow(
-                    iconBackground = Color(0xFFF3EDF7),
+                    iconBackground = LoveOutlineVariant,
                     iconTint = LoveOnSurfaceVariant,
                     icon = Icons.Filled.Info,
                     title = stringResource(R.string.settings_about_title),
@@ -217,8 +205,8 @@ fun SettingsScreen(
             )
             SettingsItemsCard(modifier = Modifier.padding(top = 8.dp)) {
                 SettingsRow(
-                    iconBackground = Color(0xFFE8EAF6),
-                    iconTint = Color(0xFF512DA8),
+                    iconBackground = LovePrimaryContainer,
+                    iconTint = LovePrimary,
                     icon = Icons.Filled.Policy,
                     title = stringResource(R.string.settings_privacy_open),
                     subtitle = privacySubtitle,
@@ -227,8 +215,8 @@ fun SettingsScreen(
                 )
                 SettingsDivider()
                 SettingsRow(
-                    iconBackground = Color(0xFFE8EAF6),
-                    iconTint = Color(0xFF512DA8),
+                    iconBackground = LovePrimaryContainer,
+                    iconTint = LovePrimary,
                     icon = Icons.Outlined.Description,
                     title = stringResource(R.string.settings_data_collection),
                     subtitle = stringResource(R.string.settings_data_collection_sub),
@@ -237,8 +225,8 @@ fun SettingsScreen(
                 )
                 SettingsDivider()
                 SettingsRow(
-                    iconBackground = Color(0xFFFFEBEE),
-                    iconTint = Color(0xFFC2185B),
+                    iconBackground = LovePrimaryContainer,
+                    iconTint = LovePrimary,
                     icon = Icons.Outlined.DeleteOutline,
                     title = stringResource(R.string.settings_clear_saved_names),
                     subtitle = stringResource(R.string.settings_clear_saved_names_sub),
@@ -258,12 +246,12 @@ fun SettingsScreen(
                 Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 20.dp)) {
                     Text(
                         text = stringResource(R.string.settings_disclaimer_line1),
-                        style = MaterialTheme.typography.bodyLarge,
+                        style = LoveTypographyTokens.HeroBody,
                         color = LoveOnPrimaryContainer,
                     )
                     Text(
                         text = stringResource(R.string.settings_disclaimer_line2),
-                        style = MaterialTheme.typography.bodyMedium,
+                        style = LoveTypographyTokens.CardCaption,
                         color = LoveOnPrimaryContainer.copy(alpha = 0.85f),
                         modifier = Modifier.padding(top = 8.dp),
                     )
@@ -272,7 +260,7 @@ fun SettingsScreen(
 
             Text(
                 text = stringResource(R.string.settings_build_footer),
-                style = MaterialTheme.typography.bodySmall,
+                style = LoveTypographyTokens.CardCaption,
                 color = LoveOnSurfaceVariant,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
@@ -281,7 +269,7 @@ fun SettingsScreen(
             )
             Text(
                 text = stringResource(R.string.settings_support_footer),
-                style = MaterialTheme.typography.bodySmall,
+                style = LoveTypographyTokens.CardCaption,
                 color = LoveOnSurfaceVariant,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
@@ -300,10 +288,9 @@ fun SettingsScreen(
 private fun SettingsGroupLabel(text: String, modifier: Modifier = Modifier) {
     Text(
         text = text,
-        style = MaterialTheme.typography.labelLarge,
+        style = LoveTypographyTokens.SectionKicker,
         fontWeight = FontWeight.Bold,
         color = LovePrimary,
-        letterSpacing = MaterialTheme.typography.labelLarge.letterSpacing,
         modifier = modifier,
     )
 }
@@ -347,9 +334,17 @@ private fun SettingsRow(
     trailingValue: String? = null,
     showChevron: Boolean = true,
 ) {
+    val rowDescription = buildString {
+        append(title)
+        subtitle?.let { append(", $it") }
+        trailingValue?.let { append(", $it") }
+    }
     Row(
         modifier = modifier
             .fillMaxWidth()
+            .semantics(mergeDescendants = true) {
+                contentDescription = rowDescription
+            }
             .clickable(onClick = onClick)
             .padding(horizontal = 20.dp, vertical = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -365,7 +360,7 @@ private fun SettingsRow(
                 iconBadge != null -> {
                     Text(
                         text = iconBadge,
-                        style = MaterialTheme.typography.titleMedium,
+                        style = LoveTypographyTokens.CardTitle,
                         fontWeight = FontWeight.ExtraBold,
                         color = iconTint,
                     )
@@ -389,25 +384,30 @@ private fun SettingsRow(
         ) {
             Text(
                 text = title,
-                style = MaterialTheme.typography.titleMedium,
+                style = LoveTypographyTokens.CardTitle,
                 fontWeight = FontWeight.SemiBold,
                 color = LoveOnSurface,
+                modifier = Modifier.decorativeForAccessibility(),
             )
             subtitle?.let {
                 Text(
                     text = it,
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = LoveTypographyTokens.CardCaption,
                     color = LoveOnSurfaceVariant,
-                    modifier = Modifier.padding(top = 4.dp),
+                    modifier = Modifier
+                        .padding(top = 4.dp)
+                        .decorativeForAccessibility(),
                 )
             }
         }
         trailingValue?.let {
             Text(
                 text = it,
-                style = MaterialTheme.typography.bodyLarge,
+                style = LoveTypographyTokens.HeroBody,
                 color = LoveOnSurfaceVariant,
-                modifier = Modifier.padding(end = 4.dp),
+                modifier = Modifier
+                    .padding(end = 4.dp)
+                    .decorativeForAccessibility(),
             )
         }
         if (showChevron) {

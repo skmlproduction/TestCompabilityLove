@@ -9,24 +9,31 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dev.lovetest.app.R
-import dev.lovetest.app.prefs.AppPreferences
+import dev.lovetest.app.navigation.navHostTestModule
 import dev.lovetest.core.ui.theme.LoveTestTheme
-import io.mockk.every
-import io.mockk.mockk
-import kotlinx.coroutines.flow.flowOf
 import org.junit.Assert.assertTrue
+import org.junit.Before
+import dev.lovetest.app.testing.LoveInstrumentedCleanup
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.compose.KoinApplication
-import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.dsl.module
+import org.koin.core.context.stopKoin
 
 @RunWith(AndroidJUnit4::class)
 class HubScreenComposeTest {
 
+
+    @get:Rule
+    val cleanup = LoveInstrumentedCleanup()
+
     @get:Rule
     val composeRule = createAndroidComposeRule<ComponentActivity>()
+
+    @Before
+    fun stopPreviousKoin() {
+        stopKoin()
+    }
 
     @Test
     fun hub_showsLoveTestCard() {
@@ -54,15 +61,27 @@ class HubScreenComposeTest {
 
     @Test
     fun hub_settings_invokesCallback() {
-        val settingsCd = composeRule.activity.getString(R.string.hub_settings_cd)
+        val settingsLabel = composeRule.activity.getString(R.string.hub_nav_settings)
         var opened = false
 
         composeRule.setContent {
             hubTestContent(onOpenSettings = { opened = true })
         }
 
-        composeRule.onNodeWithContentDescription(settingsCd).performClick()
+        composeRule.onNodeWithText(settingsLabel).performClick()
         assertTrue(opened)
+    }
+
+    @Test
+    fun hub_bottomNav_selectedTests_hasAccessibilityLabel() {
+        val tests = composeRule.activity.getString(R.string.hub_nav_tests)
+        val selected = composeRule.activity.getString(R.string.hub_nav_item_selected, tests)
+
+        composeRule.setContent {
+            hubTestContent()
+        }
+
+        composeRule.onNodeWithContentDescription(selected).assertIsDisplayed()
     }
 
     @Composable
@@ -70,18 +89,8 @@ class HubScreenComposeTest {
         onOpenLoveTest: () -> Unit = {},
         onOpenSettings: () -> Unit = {},
     ) {
-        val prefs = mockk<AppPreferences>(relaxed = true) {
-            every { isPremiumFlow } returns flowOf(false)
-        }
         KoinApplication(
-            application = {
-                modules(
-                    module {
-                        viewModel { HubViewModel() }
-                        single { prefs }
-                    },
-                )
-            },
+            application = { modules(navHostTestModule()) },
         ) {
             LoveTestTheme {
                 HubScreen(

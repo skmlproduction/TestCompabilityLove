@@ -29,11 +29,14 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.lovetest.app.BuildConfig
 import dev.lovetest.app.R
 import dev.lovetest.core.ui.components.LoveGradientBackground
+import dev.lovetest.core.ui.components.LoveLayout
+import dev.lovetest.core.ui.components.loveEdgeToEdgeScreenPadding
 import dev.lovetest.core.ui.components.LoveHeartIcon
 import dev.lovetest.core.ui.components.LoveSplashBackground
 import dev.lovetest.core.ui.components.LoveSplashHeroPanel
@@ -42,6 +45,7 @@ import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
 import dev.lovetest.core.ui.theme.LoveOutlineVariant
 import dev.lovetest.core.ui.theme.LovePrimary
 import dev.lovetest.core.ui.theme.LovePrimaryContainer
+import dev.lovetest.core.ui.theme.LoveTypographyTokens
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -70,40 +74,26 @@ fun SplashScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 24.dp),
+                .loveEdgeToEdgeScreenPadding(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Spacer(Modifier.height(48.dp))
-
             LoveSplashHeroPanel(
                 kicker = stringResource(R.string.splash_brand_kicker),
                 line1 = stringResource(R.string.splash_hero_line1),
                 line2 = stringResource(R.string.splash_hero_line2),
+                modifier = Modifier.padding(top = 8.dp),
             )
 
             Text(
-                text = stringResource(R.string.splash_headline_line1),
-                style = MaterialTheme.typography.headlineLarge,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(top = 28.dp),
-            )
-            Text(
-                text = stringResource(R.string.splash_headline_line2),
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-            )
-            Text(
                 text = stringResource(R.string.splash_body_line1),
-                style = MaterialTheme.typography.bodyLarge,
+                style = LoveTypographyTokens.HeroBody,
                 color = LoveOnSurfaceVariant,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(top = 12.dp),
+                modifier = Modifier.padding(top = 20.dp),
             )
             Text(
                 text = stringResource(R.string.splash_body_line2),
-                style = MaterialTheme.typography.bodyLarge,
+                style = LoveTypographyTokens.HeroBody,
                 color = LoveOnSurfaceVariant,
                 textAlign = TextAlign.Center,
             )
@@ -112,7 +102,7 @@ fun SplashScreen(
 
             Text(
                 text = stringResource(R.string.splash_loading_label),
-                style = MaterialTheme.typography.titleSmall,
+                style = LoveTypographyTokens.HeroBody,
                 fontWeight = FontWeight.SemiBold,
                 color = LoveOnPrimaryContainer,
             )
@@ -120,15 +110,17 @@ fun SplashScreen(
                 progress = { progress },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 32.dp, vertical = 12.dp)
-                    .height(6.dp)
-                    .clip(RoundedCornerShape(3.dp)),
+                    .padding(top = 12.dp)
+                    .height(10.dp)
+                    .clip(RoundedCornerShape(5.dp)),
                 color = LovePrimary,
                 trackColor = LoveOutlineVariant,
                 strokeCap = StrokeCap.Round,
             )
             CircularProgressIndicator(
-                modifier = Modifier.size(56.dp),
+                modifier = Modifier
+                    .padding(top = 16.dp)
+                    .size(56.dp),
                 color = LovePrimary,
                 trackColor = LovePrimaryContainer,
                 strokeWidth = 5.dp,
@@ -138,20 +130,23 @@ fun SplashScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 24.dp, bottom = 8.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterHorizontally),
+                    .padding(top = 20.dp, bottom = 8.dp),
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
             ) {
                 SplashFeatureChip(
                     label = stringResource(R.string.splash_chip_test),
                     icon = { LoveHeartIcon(modifier = Modifier.size(18.dp), color = LovePrimary) },
+                    modifier = Modifier.weight(1f),
                 )
                 SplashFeatureChip(
                     label = stringResource(R.string.splash_chip_zodiac),
                     icon = { SplashRingIcon() },
+                    modifier = Modifier.weight(1f),
                 )
                 SplashFeatureChip(
                     label = stringResource(R.string.splash_chip_wheel),
                     icon = { SplashRingIcon() },
+                    modifier = Modifier.weight(1f),
                 )
             }
 
@@ -187,21 +182,26 @@ private fun SplashRingIcon() {
 private fun SplashFeatureChip(
     label: String,
     icon: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
+            .height(LoveLayout.SplashFeatureChipHeight)
             .clip(RoundedCornerShape(26.dp))
             .background(LovePrimaryContainer)
-            .padding(horizontal = 16.dp, vertical = 10.dp),
+            .padding(horizontal = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterHorizontally),
     ) {
         icon()
         Text(
             text = label,
-            style = MaterialTheme.typography.labelLarge,
+            style = LoveTypographyTokens.HubHeroChip,
             fontWeight = FontWeight.SemiBold,
             color = LoveOnPrimaryContainer,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            textAlign = TextAlign.Center,
         )
     }
 }

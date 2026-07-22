@@ -12,8 +12,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.lovetest.core.ui.theme.LovePrimary
 
-private val DefaultSpotTint = Color(0xFFC2185B)
+private val DefaultSpotTint = LovePrimary
 
 @Composable
 fun LoveShadowCard(

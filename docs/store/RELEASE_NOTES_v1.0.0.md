@@ -1,4 +1,6 @@
-# Release notes — 1.0.0 (черновик)
+# Release notes — 1.0.0
+
+Production / staged rollout: [PRODUCTION_ROLLOUT.md](./PRODUCTION_ROLLOUT.md) (короткие версии для Console).
 
 ## RU (Play Console → Release notes)
 

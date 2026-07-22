@@ -7,7 +7,6 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -21,11 +20,10 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
+import dev.lovetest.core.ui.theme.LoveTypographyTokens
 import kotlin.math.roundToInt
 
 @Composable
@@ -36,8 +34,10 @@ fun LoveHeroPercentRing(
     contentDescription: String,
     modifier: Modifier = Modifier,
     ringSize: Dp = 260.dp,
+    ringStroke: Dp? = null,
 ) {
     val target = percent.coerceIn(0, 100)
+    val resolvedStroke = ringStroke ?: Dp(ringSize.value * 20f / 300f)
     val animatedPercent = remember { Animatable(0f) }
     LaunchedEffect(target) {
         animatedPercent.snapTo(0f)
@@ -56,7 +56,7 @@ fun LoveHeroPercentRing(
         contentAlignment = Alignment.Center,
     ) {
         Canvas(Modifier.size(ringSize)) {
-            val stroke = 20.dp.toPx()
+            val stroke = resolvedStroke.toPx()
             val diameter = size.minDimension - stroke
             val topLeft = Offset(
                 (size.width - diameter) / 2f,
@@ -90,14 +90,12 @@ fun LoveHeroPercentRing(
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
                 text = "$displayPercent%",
-                fontSize = 72.sp,
-                fontWeight = FontWeight.ExtraBold,
+                style = LoveTypographyTokens.percentForRing(ringSize),
                 color = if (high) Color.White else LoveOnSurfaceVariant,
             )
             Text(
                 text = label,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
+                style = LoveTypographyTokens.PercentLabel,
                 color = if (high) {
                     Color.White.copy(0.95f)
                 } else {

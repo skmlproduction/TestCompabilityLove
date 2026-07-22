@@ -5,18 +5,24 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollTo
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dev.lovetest.app.R
 import dev.lovetest.app.session.LoveTestSession
 import dev.lovetest.core.ui.theme.LoveTestTheme
 import org.junit.After
 import org.junit.Assert.assertTrue
+import dev.lovetest.app.testing.LoveInstrumentedCleanup
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class ZodiacResultScreenComposeTest {
+
+
+    @get:Rule
+    val cleanup = LoveInstrumentedCleanup()
 
     @get:Rule
     val composeRule = createAndroidComposeRule<ComponentActivity>()
@@ -39,9 +45,23 @@ class ZodiacResultScreenComposeTest {
             }
         }
 
-        composeRule.onNodeWithText(harmony).assertIsDisplayed()
-        composeRule.onNodeWithText(tryAnother).assertIsDisplayed()
-        composeRule.onNodeWithText(share).assertIsDisplayed()
+        composeRule.onNodeWithText(harmony).performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithText(tryAnother).performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithText(share).performScrollTo().assertIsDisplayed()
+    }
+
+    @Test
+    fun zodiacResult_lowScore_showsWarningCard() {
+        LoveTestSession.storeLoveResult("Лев", "Рыбы", 23)
+        val warning = composeRule.activity.getString(R.string.love_test_result_low_message)
+
+        composeRule.setContent {
+            LoveTestTheme {
+                ZodiacResultScreen(onShare = {}, onTryAnother = {}, onHome = {})
+            }
+        }
+
+        composeRule.onNodeWithText(warning).performScrollTo().assertIsDisplayed()
     }
 
     @Test
@@ -60,7 +80,7 @@ class ZodiacResultScreenComposeTest {
             }
         }
 
-        composeRule.onNodeWithText(tryAnother).performClick()
+        composeRule.onNodeWithText(tryAnother).performScrollTo().performClick()
         assertTrue(retried)
     }
 }

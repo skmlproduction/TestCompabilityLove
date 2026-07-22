@@ -1,31 +1,26 @@
 package dev.lovetest.app.ui.features
 
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Card
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
+import dev.lovetest.app.ui.common.LoveFeatureTopBar
+import dev.lovetest.core.ui.components.loveEdgeToEdgeScreenPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -33,7 +28,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
@@ -44,6 +38,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.lovetest.app.R
 import dev.lovetest.app.session.LoveTestSession
@@ -52,34 +47,27 @@ import dev.lovetest.app.ui.share.LoveShareResultOverlay
 import dev.lovetest.app.ui.share.rememberLoveShareSheet
 import dev.lovetest.app.util.buildLoveShareText
 import dev.lovetest.core.domain.LoveScoreCalculator
+import dev.lovetest.app.ui.common.FeatureLowTipCard
+import dev.lovetest.app.ui.common.FeatureLowWarningCard
+import dev.lovetest.app.ui.common.LoveFeatureResultActions
 import dev.lovetest.core.ui.components.LoveCardShadowElevation
+import dev.lovetest.core.ui.components.LoveLayout
 import dev.lovetest.core.ui.components.LoveShadowCard
 import dev.lovetest.core.ui.components.LoveGradientBackground
 import dev.lovetest.core.ui.components.LoveHeartIcon
 import dev.lovetest.core.ui.components.LoveHubBackgroundBlobs
-import dev.lovetest.core.ui.components.LoveOutlinedButton
-import dev.lovetest.core.ui.components.LovePrimaryButton
-import dev.lovetest.core.ui.theme.LoveOnPrimaryContainer
 import dev.lovetest.core.ui.theme.LoveOnSurface
 import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
-import dev.lovetest.core.ui.theme.LovePrimary
-import dev.lovetest.core.ui.theme.LovePrimaryContainer
 import dev.lovetest.core.ui.theme.LoveResultMutedHeroBrush
 import dev.lovetest.core.ui.theme.LoveSurface
+import dev.lovetest.core.ui.theme.LoveWheelBadgeContainer
+import dev.lovetest.core.ui.theme.LoveWheelBadgeText
+import dev.lovetest.core.ui.theme.LoveZodiacAccentPink
+import dev.lovetest.core.ui.theme.LoveZodiacResultHeroBrush
+import dev.lovetest.core.ui.theme.LoveZodiacShareBorder
+import dev.lovetest.core.ui.theme.LoveTypographyTokens
+import dev.lovetest.core.ui.theme.LoveZodiacViolet
 
-private val ZodiacResultHeroBrush = Brush.linearGradient(
-    colors = listOf(
-        Color(0xFF1A237E),
-        Color(0xFF512DA8),
-        Color(0xFFC2185B),
-        Color(0xFFF48FB1),
-    ),
-)
-
-private val ZodiacAccent = Color(0xFF512DA8)
-private val ZodiacSlot1Color = Color(0xFF512DA8)
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ZodiacResultScreen(
     onShare: () -> Unit,
@@ -108,33 +96,17 @@ fun ZodiacResultScreen(
         LoveGradientBackground(Modifier.fillMaxSize())
         LoveHubBackgroundBlobs(Modifier.fillMaxSize())
 
-        Scaffold(
-            containerColor = Color.Transparent,
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(
-                            text = stringResource(R.string.zodiac_result_title),
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.fillMaxWidth(),
-                            textAlign = TextAlign.Center,
-                        )
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = LoveSurface.copy(alpha = 0.85f),
-                    ),
-                )
-            },
-        ) { padding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-                    .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 24.dp),
-            ) {
-                ZodiacResultHeroCard(
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .loveEdgeToEdgeScreenPadding(includeNavigationBar = false)
+                .navigationBarsPadding()
+                .verticalScroll(rememberScrollState()),
+        ) {
+            LoveFeatureTopBar(
+                title = stringResource(R.string.zodiac_result_title),
+            )
+            ZodiacResultHeroCard(
                     initial1 = initial1,
                     initial2 = initial2,
                     signsLine = signsLine,
@@ -143,6 +115,17 @@ fun ZodiacResultScreen(
                     high = high,
                     modifier = Modifier.padding(top = 8.dp),
                 )
+                if (!high) {
+                    FeatureLowWarningCard(modifier = Modifier.padding(top = 20.dp))
+                    FeatureLowTipCard(modifier = Modifier.padding(top = 16.dp))
+                }
+                // CTAs before forecast so Share stays above the fold.
+                LoveFeatureResultActions(
+                    tryAgainLabel = stringResource(R.string.zodiac_try_another),
+                    onShare = shareSheet.open,
+                    onTryAgain = onTryAnother,
+                    onHome = onHome,
+                )
                 ZodiacForecastCard(
                     sign1 = sign1,
                     sign2 = sign2,
@@ -150,38 +133,17 @@ fun ZodiacResultScreen(
                     element2 = element2,
                     modifier = Modifier.padding(top = 20.dp),
                 )
-                LovePrimaryButton(
-                    text = stringResource(R.string.love_test_share_cta),
-                    onClick = shareSheet.open,
-                    modifier = Modifier.padding(top = 24.dp),
-                )
-                LoveOutlinedButton(
-                    text = stringResource(R.string.zodiac_try_another),
-                    onClick = onTryAnother,
-                    modifier = Modifier.padding(top = 12.dp),
-                )
-                ZodiacResultHomeButton(
-                    text = stringResource(R.string.love_test_back_home),
-                    onClick = onHome,
-                    modifier = Modifier.padding(top = 12.dp),
-                )
-                Text(
-                    text = stringResource(R.string.result_entertainment_only),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = LoveOnSurfaceVariant,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp),
-                )
-                ZodiacSharePreviewCard(
-                    percent = percent,
-                    signsLine = signsLine,
-                    initial1 = initial1,
-                    initial2 = initial2,
-                    modifier = Modifier.padding(top = 16.dp, bottom = 32.dp),
-                )
-            }
+                if (high) {
+                    ZodiacSharePreviewCard(
+                        percent = percent,
+                        signsLine = signsLine,
+                        initial1 = initial1,
+                        initial2 = initial2,
+                        modifier = Modifier.padding(top = 16.dp, bottom = 32.dp),
+                    )
+                } else {
+                    Box(modifier = Modifier.padding(bottom = 32.dp))
+                }
         }
         LoveShareResultOverlay(
             sheet = shareSheet,
@@ -190,7 +152,8 @@ fun ZodiacResultScreen(
             name2 = sign2,
             harmonyTag = harmonyTag,
             shareText = shareText,
-            onShare = onShare,
+            high = high,
+            onShareFallback = onShare,
         )
     }
 }
@@ -207,14 +170,14 @@ private fun ZodiacResultHeroCard(
 ) {
     LoveShadowCard(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(48.dp),
+        shape = LoveLayout.ResultHeroShape,
         shadowElevation = LoveCardShadowElevation.Hero,
         colors = CardDefaults.cardColors(containerColor = Color.Transparent),
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(if (high) ZodiacResultHeroBrush else LoveResultMutedHeroBrush)
+                .background(if (high) LoveZodiacResultHeroBrush else LoveResultMutedHeroBrush)
                 .padding(horizontal = 20.dp, vertical = 24.dp),
         ) {
             Column(
@@ -225,7 +188,7 @@ private fun ZodiacResultHeroCard(
                     horizontalArrangement = Arrangement.spacedBy(32.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    ZodiacSignBadge(initial1, ZodiacSlot1Color)
+                    ZodiacSignBadge(initial1, LoveZodiacViolet)
                     Box(
                         modifier = Modifier
                             .size(40.dp)
@@ -233,22 +196,27 @@ private fun ZodiacResultHeroCard(
                             .background(Color.White),
                         contentAlignment = Alignment.Center,
                     ) {
-                        LoveHeartIcon(Modifier.size(22.dp), color = LovePrimary)
+                        LoveHeartIcon(Modifier.size(22.dp), color = LoveZodiacViolet)
                     }
-                    ZodiacSignBadge(initial2, LovePrimary)
+                    ZodiacSignBadge(initial2, LoveZodiacAccentPink)
                 }
                 Text(
                     text = signsLine,
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
+                    style = LoveTypographyTokens.CardTitleLight,
                     color = Color.White,
-                    modifier = Modifier.padding(top = 16.dp),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp),
                 )
                 LoveHeroPercentRing(
                     percent = percent,
                     label = stringResource(R.string.zodiac_result_percent_label),
                     high = high,
                     contentDescription = percentCd,
+                    ringSize = LoveLayout.LoveTestResultRingSize,
                     modifier = Modifier.padding(top = 20.dp),
                 )
                 Box(
@@ -262,8 +230,7 @@ private fun ZodiacResultHeroCard(
                 ) {
                     Text(
                         text = stringResource(R.string.zodiac_harmony_tag),
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold,
+                        style = LoveTypographyTokens.CardTitleLight,
                         color = Color.White,
                         textAlign = TextAlign.Center,
                     )
@@ -277,8 +244,7 @@ private fun ZodiacResultHeroCard(
                 ) {
                     Text(
                         text = stringResource(R.string.zodiac_test_badge),
-                        style = MaterialTheme.typography.labelLarge,
-                        fontWeight = FontWeight.Bold,
+                        style = LoveTypographyTokens.HubHeroChip,
                         color = Color.White,
                     )
                 }
@@ -322,8 +288,7 @@ private fun ZodiacForecastCard(
         Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 24.dp)) {
             Text(
                 text = stringResource(R.string.zodiac_message_title),
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
+                style = LoveTypographyTokens.ScreenHeadline,
                 color = LoveOnSurface,
             )
             Row(
@@ -335,30 +300,30 @@ private fun ZodiacForecastCard(
                     text = "+",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
-                    color = ZodiacAccent,
+                    color = LoveZodiacViolet,
                     modifier = Modifier.align(Alignment.CenterVertically),
                 )
                 ZodiacElementChip(element2)
             }
             Text(
                 text = stringResource(R.string.zodiac_message_body1, sign1, sign2),
-                style = MaterialTheme.typography.bodyLarge,
+                style = LoveTypographyTokens.HeroBody,
                 color = LoveOnSurface,
                 modifier = Modifier.padding(top = 16.dp),
             )
             Text(
                 text = stringResource(R.string.zodiac_message_body2),
-                style = MaterialTheme.typography.bodyLarge,
+                style = LoveTypographyTokens.HeroBody,
                 color = LoveOnSurface,
             )
             Text(
                 text = stringResource(R.string.zodiac_message_body3),
-                style = MaterialTheme.typography.bodyLarge,
+                style = LoveTypographyTokens.HeroBody,
                 color = LoveOnSurface,
             )
             Text(
                 text = stringResource(R.string.zodiac_message_body4),
-                style = MaterialTheme.typography.bodyLarge,
+                style = LoveTypographyTokens.HeroBody,
                 color = LoveOnSurface,
             )
         }
@@ -409,7 +374,7 @@ private fun ZodiacSharePreviewCard(
         shape = RoundedCornerShape(32.dp),
         shadowElevation = LoveCardShadowElevation.Subtle,
         colors = CardDefaults.cardColors(containerColor = LoveSurface),
-        border = BorderStroke(2.dp, LovePrimaryContainer),
+        border = BorderStroke(2.dp, LoveZodiacShareBorder),
     ) {
         Row(
             modifier = Modifier.padding(16.dp),
@@ -420,65 +385,40 @@ private fun ZodiacSharePreviewCard(
                     modifier = Modifier
                         .size(48.dp)
                         .clip(CircleShape)
-                        .background(ZodiacSlot1Color.copy(alpha = 0.2f)),
+                        .background(LoveZodiacViolet.copy(alpha = 0.2f)),
                     contentAlignment = Alignment.Center,
                 ) {
-                    Text(initial1, fontWeight = FontWeight.ExtraBold, color = ZodiacAccent)
+                    Text(initial1, fontWeight = FontWeight.ExtraBold, color = LoveZodiacViolet)
                 }
                 Box(
                     modifier = Modifier
                         .size(48.dp)
                         .clip(CircleShape)
-                        .background(Color(0xFFF8BBD0)),
+                        .background(LoveWheelBadgeContainer),
                     contentAlignment = Alignment.Center,
                 ) {
-                    Text(initial2, fontWeight = FontWeight.ExtraBold, color = Color(0xFF880E4F))
+                    Text(initial2, fontWeight = FontWeight.ExtraBold, color = LoveWheelBadgeText)
                 }
             }
             Column(modifier = Modifier.padding(start = 16.dp)) {
                 Text(
                     text = "$percent% — $signsLine",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
+                    style = LoveTypographyTokens.CardTitle,
                     color = LoveOnSurface,
                 )
                 Text(
                     text = stringResource(R.string.zodiac_share_preview_subtitle),
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = LoveTypographyTokens.HeroBody,
                     color = LoveOnSurfaceVariant,
                     modifier = Modifier.padding(top = 4.dp),
                 )
                 Text(
                     text = stringResource(R.string.zodiac_share_preview_hint),
-                    style = MaterialTheme.typography.bodySmall,
+                    style = LoveTypographyTokens.CardCaption,
                     color = LoveOnSurfaceVariant,
                     modifier = Modifier.padding(top = 4.dp),
                 )
             }
         }
-    }
-}
-
-@Composable
-private fun ZodiacResultHomeButton(
-    text: String,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(52.dp)
-            .clip(RoundedCornerShape(44.dp))
-            .background(LovePrimaryContainer)
-            .clickable(onClick = onClick),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(
-            text = text,
-            style = MaterialTheme.typography.labelLarge,
-            fontWeight = FontWeight.SemiBold,
-            color = LoveOnPrimaryContainer,
-        )
     }
 }

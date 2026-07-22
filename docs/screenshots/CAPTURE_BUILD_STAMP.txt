@@ -1,0 +1,8 @@
+Love Tester — screenshot catalog stamp
+Date: 2026-07-18
+Store RU: 34/34 @1080×1920 (LoveTester_Capture AVD)
+Store EN: 34/34 @1080×1920 (full recapture LoveTester_Capture, exclusive port 5554)
+AVD archive: docs/screenshots/qa/emulator/ru 34/34 · qa/emulator/en 34/34
+Capture: scripts/_run_en_catalog_exclusive.sh + capture_screenshot_catalog.sh (</dev/null per screen)
+Gates: verifyLoveTestBeforeStore ✅ (2026-07-18 evening)
+Legal URLs: still 404 (user git push)

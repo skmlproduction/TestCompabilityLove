@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,15 +24,19 @@ import androidx.compose.ui.unit.dp
 import dev.lovetest.app.R
 import dev.lovetest.core.ui.components.LoveCardShadowElevation
 import dev.lovetest.core.ui.components.LoveShadowCard
+import dev.lovetest.core.ui.theme.LoveHeroEnd
 import dev.lovetest.core.ui.theme.LoveOnSurface
 import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
+import dev.lovetest.core.ui.theme.LovePrimary
+import dev.lovetest.core.ui.theme.LoveSecondary
 import dev.lovetest.core.ui.theme.LoveSurface
+import dev.lovetest.core.ui.theme.LoveTypographyTokens
 
 private val WheelShareHeroBrush = Brush.linearGradient(
     colors = listOf(
-        Color(0xFFC2185B),
-        Color(0xFFE91E63),
-        Color(0xFFF8BBD0),
+        LovePrimary,
+        LoveSecondary,
+        LoveHeroEnd,
     ),
 )
 
@@ -64,7 +67,7 @@ fun WheelShareCard(
             ) {
                 Text(
                     text = prize,
-                    style = MaterialTheme.typography.labelLarge,
+                    style = LoveTypographyTokens.HubHeroChip,
                     fontWeight = FontWeight.ExtraBold,
                     color = Color.White,
                     modifier = Modifier.padding(8.dp),
@@ -73,19 +76,19 @@ fun WheelShareCard(
             Column(modifier = Modifier.padding(start = 16.dp)) {
                 Text(
                     text = stringResource(R.string.wheel_share_preview_title),
-                    style = MaterialTheme.typography.titleMedium,
+                    style = LoveTypographyTokens.CardTitle,
                     fontWeight = FontWeight.Bold,
                     color = LoveOnSurface,
                 )
                 Text(
                     text = stringResource(R.string.wheel_share_preview_body, prize),
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = LoveTypographyTokens.HeroBody,
                     color = LoveOnSurfaceVariant,
                     modifier = Modifier.padding(top = 4.dp),
                 )
                 Text(
                     text = stringResource(R.string.wheel_share_preview_hint),
-                    style = MaterialTheme.typography.bodySmall,
+                    style = LoveTypographyTokens.CardCaption,
                     color = LoveOnSurfaceVariant,
                     modifier = Modifier.padding(top = 4.dp),
                 )

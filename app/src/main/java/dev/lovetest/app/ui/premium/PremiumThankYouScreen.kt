@@ -17,10 +17,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.EmojiEvents
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,25 +30,32 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import dev.lovetest.app.BuildConfig
 import dev.lovetest.app.R
 import dev.lovetest.app.util.decorativeForAccessibility
 import dev.lovetest.core.ui.components.LoveCardShadowElevation
 import dev.lovetest.core.ui.components.LoveShadowCard
 import dev.lovetest.core.ui.components.LoveGradientBackground
 import dev.lovetest.core.ui.components.LoveHubBackgroundBlobs
+import dev.lovetest.core.ui.components.LoveLayout
 import dev.lovetest.core.ui.components.LovePrimaryButton
+import dev.lovetest.core.ui.components.LoveTonalButton
+import dev.lovetest.core.ui.components.loveEdgeToEdgeScreenPadding
 import dev.lovetest.core.ui.theme.LoveOnPrimaryContainer
 import dev.lovetest.core.ui.theme.LoveOnSurface
 import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
+import dev.lovetest.core.ui.theme.LovePrimary
 import dev.lovetest.core.ui.theme.LovePrimaryContainer
+import dev.lovetest.core.ui.theme.LoveSecondary
 import dev.lovetest.core.ui.theme.LoveSurface
+import dev.lovetest.core.ui.theme.LoveTypographyTokens
 
 private val ThankYouHeroBrush = Brush.linearGradient(
     colors = listOf(
-        Color(0xFF2E7D32),
-        Color(0xFFC2185B),
-        Color(0xFFE91E63),
-        Color(0xFFFFB74D),
+        Color(0xFF1B5E4A),
+        LovePrimary,
+        LoveSecondary,
+        Color(0xFFE8C547),
     ),
 )
 
@@ -71,14 +76,13 @@ fun PremiumThankYouScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = 24.dp),
+                .loveEdgeToEdgeScreenPadding(),
         ) {
-            PremiumThankYouHero(modifier = Modifier.padding(top = 24.dp))
+            PremiumThankYouHero(modifier = Modifier.padding(top = 8.dp))
 
             Text(
                 text = stringResource(R.string.premium_thank_you_headline),
-                style = MaterialTheme.typography.displaySmall,
-                fontWeight = FontWeight.ExtraBold,
+                style = LoveTypographyTokens.ScreenHeadline,
                 color = LoveOnSurface,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
@@ -87,7 +91,7 @@ fun PremiumThankYouScreen(
             )
             Text(
                 text = stringResource(R.string.premium_thank_you_body),
-                style = MaterialTheme.typography.bodyLarge,
+                style = LoveTypographyTokens.HeroBody,
                 color = LoveOnSurfaceVariant,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
@@ -106,24 +110,41 @@ fun PremiumThankYouScreen(
                 Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 24.dp)) {
                     Text(
                         text = stringResource(R.string.premium_whats_next_title),
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold,
+                        style = LoveTypographyTokens.ScreenHeadline,
                         color = LoveOnSurface,
                     )
                     Text(
-                        text = stringResource(R.string.premium_whats_next_body1),
-                        style = MaterialTheme.typography.bodyLarge,
+                        text = stringResource(
+                            if (BuildConfig.ADS_ENABLED) {
+                                R.string.premium_whats_next_body1
+                            } else {
+                                R.string.premium_whats_next_body1_support
+                            },
+                        ),
+                        style = LoveTypographyTokens.HeroBody,
                         color = LoveOnSurfaceVariant,
                         modifier = Modifier.padding(top = 12.dp),
                     )
                     Text(
-                        text = stringResource(R.string.premium_whats_next_body2),
-                        style = MaterialTheme.typography.bodyLarge,
+                        text = stringResource(
+                            if (BuildConfig.ADS_ENABLED) {
+                                R.string.premium_whats_next_body2
+                            } else {
+                                R.string.premium_whats_next_body2_support
+                            },
+                        ),
+                        style = LoveTypographyTokens.HeroBody,
                         color = LoveOnSurfaceVariant,
                     )
                     Text(
-                        text = stringResource(R.string.premium_whats_next_body3),
-                        style = MaterialTheme.typography.bodyLarge,
+                        text = stringResource(
+                            if (BuildConfig.ADS_ENABLED) {
+                                R.string.premium_whats_next_body3
+                            } else {
+                                R.string.premium_whats_next_body3_support
+                            },
+                        ),
+                        style = LoveTypographyTokens.HeroBody,
                         color = LoveOnSurfaceVariant,
                     )
                     Box(
@@ -135,7 +156,7 @@ fun PremiumThankYouScreen(
                     ) {
                         Text(
                             text = stringResource(R.string.premium_active_badge),
-                            style = MaterialTheme.typography.labelLarge,
+                            style = LoveTypographyTokens.HubHeroChip,
                             fontWeight = FontWeight.ExtraBold,
                             color = Color(0xFF2E7D32),
                         )
@@ -146,32 +167,20 @@ fun PremiumThankYouScreen(
             LovePrimaryButton(
                 text = stringResource(R.string.premium_thank_you_home),
                 onClick = onHome,
-                modifier = Modifier
-                    .padding(top = 24.dp)
-                    .height(52.dp),
+                modifier = Modifier.padding(top = 24.dp),
             )
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 12.dp)
-                    .height(52.dp)
-                    .clip(RoundedCornerShape(44.dp))
-                    .background(LovePrimaryContainer)
-                    .clickable(onClick = onLoveTest),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(
-                    text = stringResource(R.string.premium_try_love_test),
-                    style = MaterialTheme.typography.labelLarge,
-                    fontWeight = FontWeight.SemiBold,
-                    color = LoveOnPrimaryContainer,
-                )
-            }
+            LoveTonalButton(
+                text = stringResource(R.string.premium_try_love_test),
+                onClick = onLoveTest,
+                containerColor = LovePrimaryContainer,
+                contentColor = LoveOnPrimaryContainer,
+                modifier = Modifier.padding(top = 12.dp),
+            )
 
             Text(
                 text = stringResource(R.string.premium_support_footer),
-                style = MaterialTheme.typography.bodyLarge,
+                style = LoveTypographyTokens.HeroBody,
                 color = LoveOnSurfaceVariant,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
@@ -180,7 +189,7 @@ fun PremiumThankYouScreen(
             )
             Text(
                 text = stringResource(R.string.premium_account_footer),
-                style = MaterialTheme.typography.bodySmall,
+                style = LoveTypographyTokens.CardCaption,
                 color = LoveOnSurfaceVariant,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
@@ -195,7 +204,7 @@ fun PremiumThankYouScreen(
 private fun PremiumThankYouHero(modifier: Modifier = Modifier) {
     LoveShadowCard(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(48.dp),
+        shape = LoveLayout.ResultHeroShape,
         shadowElevation = LoveCardShadowElevation.Hero,
         colors = CardDefaults.cardColors(containerColor = Color.Transparent),
     ) {
@@ -246,14 +255,13 @@ private fun PremiumThankYouHero(modifier: Modifier = Modifier) {
                 }
                 Text(
                     text = stringResource(R.string.premium_thank_you_title),
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontWeight = FontWeight.ExtraBold,
+                    style = LoveTypographyTokens.HeroTitleOnGradient,
                     color = Color.White,
                     modifier = Modifier.padding(top = 20.dp),
                 )
                 Text(
                     text = stringResource(R.string.premium_thank_you_hero_sub),
-                    style = MaterialTheme.typography.titleMedium,
+                    style = LoveTypographyTokens.HeroBody,
                     color = Color.White.copy(0.95f),
                     modifier = Modifier.padding(top = 8.dp),
                 )
@@ -266,7 +274,7 @@ private fun PremiumThankYouHero(modifier: Modifier = Modifier) {
                 ) {
                     Text(
                         text = stringResource(R.string.premium_thank_you_badge),
-                        style = MaterialTheme.typography.labelLarge,
+                        style = LoveTypographyTokens.HubHeroChip,
                         fontWeight = FontWeight.Bold,
                         color = Color.White,
                     )

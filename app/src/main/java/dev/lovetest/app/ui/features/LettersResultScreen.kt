@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -20,10 +21,10 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.foundation.layout.navigationBarsPadding
+import dev.lovetest.app.ui.common.LoveFeatureTopBar
+import dev.lovetest.core.ui.components.loveEdgeToEdgeScreenPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -38,6 +39,7 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.lovetest.app.R
@@ -46,32 +48,35 @@ import dev.lovetest.app.ui.share.LoveShareResultOverlay
 import dev.lovetest.app.ui.share.rememberLoveShareSheet
 import dev.lovetest.app.util.buildLoveShareText
 import dev.lovetest.core.domain.LoveScoreCalculator
+import dev.lovetest.app.ui.common.FeatureLowTipCard
+import dev.lovetest.app.ui.common.FeatureLowWarningCard
+import dev.lovetest.app.ui.common.LoveFeatureResultActions
 import dev.lovetest.core.ui.components.LoveCardShadowElevation
+import dev.lovetest.core.ui.components.LoveLayout
 import dev.lovetest.core.ui.components.LoveShadowCard
 import dev.lovetest.core.ui.components.LoveGradientBackground
 import dev.lovetest.core.ui.components.LoveHubBackgroundBlobs
-import dev.lovetest.core.ui.components.LoveOutlinedButton
-import dev.lovetest.core.ui.components.LovePrimaryButton
+import dev.lovetest.core.ui.theme.LoveHeroEnd
 import dev.lovetest.core.ui.theme.LoveOnPrimaryContainer
 import dev.lovetest.core.ui.theme.LoveOnSurface
 import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
 import dev.lovetest.core.ui.theme.LovePrimary
 import dev.lovetest.core.ui.theme.LovePrimaryContainer
 import dev.lovetest.core.ui.theme.LoveResultMutedHeroBrush
+import dev.lovetest.core.ui.theme.LoveSecondary
 import dev.lovetest.core.ui.theme.LoveSurface
 
 private val LettersResultHeroBrush = Brush.linearGradient(
     colors = listOf(
-        Color(0xFF4A148C),
-        Color(0xFF6750A4),
-        Color(0xFFC2185B),
-        Color(0xFFE8DEF8),
+        Color(0xFF5C1228),
+        LovePrimary,
+        LoveSecondary,
+        LoveHeroEnd,
     ),
 )
 
-private val LettersAccent = Color(0xFF6750A4)
+private val LettersAccent = LovePrimary
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LettersResultScreen(
     onShare: () -> Unit,
@@ -95,35 +100,17 @@ fun LettersResultScreen(
         LoveGradientBackground(Modifier.fillMaxSize())
         LoveHubBackgroundBlobs(Modifier.fillMaxSize())
 
-        Scaffold(
-            containerColor = Color.Transparent,
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(
-                            text = stringResource(R.string.letters_result_title),
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .semantics { heading() },
-                            textAlign = TextAlign.Center,
-                        )
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = LoveSurface.copy(alpha = 0.85f),
-                    ),
-                )
-            },
-        ) { padding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-                    .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 24.dp),
-            ) {
-                LettersResultHeroCard(
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .loveEdgeToEdgeScreenPadding(includeNavigationBar = false)
+                .navigationBarsPadding()
+                .verticalScroll(rememberScrollState()),
+        ) {
+            LoveFeatureTopBar(
+                title = stringResource(R.string.letters_result_title),
+            )
+            LettersResultHeroCard(
                     wordsLine = wordsLine,
                     word1 = word1,
                     word2 = word2,
@@ -131,40 +118,32 @@ fun LettersResultScreen(
                     high = high,
                     modifier = Modifier.padding(top = 8.dp),
                 )
+                if (!high) {
+                    FeatureLowWarningCard(modifier = Modifier.padding(top = 20.dp))
+                    FeatureLowTipCard(modifier = Modifier.padding(top = 16.dp))
+                }
+                // CTAs before message card so Share stays above the fold.
+                LoveFeatureResultActions(
+                    tryAgainLabel = stringResource(R.string.letters_try_another),
+                    onShare = shareSheet.open,
+                    onTryAgain = onTryAnother,
+                    onHome = onHome,
+                )
                 LettersMessageCard(
+                    word1 = word1,
+                    word2 = word2,
                     secretCode = secretCode,
                     modifier = Modifier.padding(top = 20.dp),
                 )
-                LovePrimaryButton(
-                    text = stringResource(R.string.love_test_share_cta),
-                    onClick = shareSheet.open,
-                    modifier = Modifier.padding(top = 24.dp),
-                )
-                LoveOutlinedButton(
-                    text = stringResource(R.string.letters_try_another),
-                    onClick = onTryAnother,
-                    modifier = Modifier.padding(top = 12.dp),
-                )
-                LettersResultHomeButton(
-                    text = stringResource(R.string.love_test_back_home),
-                    onClick = onHome,
-                    modifier = Modifier.padding(top = 12.dp),
-                )
-                Text(
-                    text = stringResource(R.string.result_entertainment_only),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = LoveOnSurfaceVariant,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp),
-                )
-                LettersSharePreviewCard(
-                    wordsLine = wordsLine,
-                    secretCode = secretCode,
-                    modifier = Modifier.padding(top = 16.dp, bottom = 32.dp),
-                )
-            }
+                if (high) {
+                    LettersSharePreviewCard(
+                        wordsLine = wordsLine,
+                        secretCode = secretCode,
+                        modifier = Modifier.padding(top = 16.dp, bottom = 32.dp),
+                    )
+                } else {
+                    Box(modifier = Modifier.padding(bottom = 32.dp))
+                }
         }
         LoveShareResultOverlay(
             sheet = shareSheet,
@@ -173,7 +152,8 @@ fun LettersResultScreen(
             name2 = word2,
             harmonyTag = harmonyTag,
             shareText = shareText,
-            onShare = onShare,
+            high = high,
+            onShareFallback = onShare,
         )
     }
 }
@@ -190,7 +170,7 @@ private fun LettersResultHeroCard(
     val secretCd = stringResource(R.string.letters_secret_cd, secretCode)
     LoveShadowCard(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(48.dp),
+        shape = LoveLayout.ResultHeroShape,
         shadowElevation = LoveCardShadowElevation.Hero,
         colors = CardDefaults.cardColors(containerColor = Color.Transparent),
     ) {
@@ -206,6 +186,10 @@ private fun LettersResultHeroCard(
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = Color.White,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth(),
             )
             LettersWordTilesRow(
                 word = word1,
@@ -260,18 +244,20 @@ private fun LettersWordTilesRow(word: String, modifier: Modifier = Modifier) {
     val letters = word.filter { it.isLetter() }.map { it.uppercaseChar() }
     val highlightIndex = lettersHighlightIndex(letters.size)
     Row(
-        modifier = modifier,
+        modifier = modifier.horizontalScroll(rememberScrollState()),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         letters.forEachIndexed { index, letter ->
             val highlight = index == highlightIndex
             Box(
                 modifier = Modifier
-                    .size(40.dp)
+                    .size(44.dp)
                     .clip(RoundedCornerShape(10.dp))
                     .background(
-                        if (highlight) LovePrimaryContainer.copy(0.9f)
-                        else Color.White.copy(if (highlight) 0.35f else 0.25f),
+                        when {
+                            highlight -> LovePrimaryContainer.copy(alpha = 0.9f)
+                            else -> Color.White.copy(0.25f)
+                        },
                     ),
                 contentAlignment = Alignment.Center,
             ) {
@@ -286,7 +272,12 @@ private fun LettersWordTilesRow(word: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun LettersMessageCard(secretCode: Int, modifier: Modifier = Modifier) {
+private fun LettersMessageCard(
+    word1: String,
+    word2: String,
+    secretCode: Int,
+    modifier: Modifier = Modifier,
+) {
     LoveShadowCard(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(38.dp),
@@ -299,7 +290,7 @@ private fun LettersMessageCard(secretCode: Int, modifier: Modifier = Modifier) {
                     modifier = Modifier
                         .size(56.dp)
                         .clip(RoundedCornerShape(18.dp))
-                        .background(Color(0xFFE8DEF8)),
+                        .background(LovePrimaryContainer),
                     contentAlignment = Alignment.Center,
                 ) {
                     Text(
@@ -317,6 +308,11 @@ private fun LettersMessageCard(secretCode: Int, modifier: Modifier = Modifier) {
                     modifier = Modifier.padding(start = 16.dp),
                 )
             }
+            LettersCombinedStream(
+                word1 = word1,
+                word2 = word2,
+                modifier = Modifier.padding(top = 16.dp),
+            )
             Text(
                 text = stringResource(R.string.letters_message_body1),
                 style = MaterialTheme.typography.bodyLarge,
@@ -345,7 +341,7 @@ private fun LettersMessageCard(secretCode: Int, modifier: Modifier = Modifier) {
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(24.dp))
-                        .background(Color(0xFFE8DEF8))
+                        .background(LovePrimaryContainer)
                         .padding(horizontal = 20.dp, vertical = 10.dp),
                 ) {
                     Text(
@@ -374,6 +370,25 @@ private fun LettersMessageCard(secretCode: Int, modifier: Modifier = Modifier) {
 }
 
 @Composable
+private fun LettersCombinedStream(
+    word1: String,
+    word2: String,
+    modifier: Modifier = Modifier,
+) {
+    Column(modifier = modifier.fillMaxWidth()) {
+        LettersWordTilesRow(word = word1)
+        Text(
+            text = "+",
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold,
+            color = LoveOnSurfaceVariant,
+            modifier = Modifier.padding(vertical = 8.dp),
+        )
+        LettersWordTilesRow(word = word2)
+    }
+}
+
+@Composable
 private fun LettersSharePreviewCard(
     wordsLine: String,
     secretCode: Int,
@@ -384,7 +399,7 @@ private fun LettersSharePreviewCard(
         shape = RoundedCornerShape(32.dp),
         shadowElevation = LoveCardShadowElevation.Subtle,
         colors = CardDefaults.cardColors(containerColor = LoveSurface),
-        border = BorderStroke(2.dp, Color(0xFFE8DEF8)),
+        border = BorderStroke(2.dp, LovePrimaryContainer),
     ) {
         Row(
             modifier = Modifier.padding(16.dp),
@@ -392,7 +407,7 @@ private fun LettersSharePreviewCard(
         ) {
             Box(
                 modifier = Modifier
-                    .size(88.dp)
+                    .size(80.dp)
                     .clip(RoundedCornerShape(24.dp))
                     .background(LettersResultHeroBrush),
                 contentAlignment = Alignment.Center,
@@ -428,39 +443,10 @@ private fun LettersSharePreviewCard(
     }
 }
 
-@Composable
-private fun LettersResultHomeButton(
-    text: String,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(52.dp)
-            .clip(RoundedCornerShape(44.dp))
-            .background(LovePrimaryContainer)
-            .clickable(onClick = onClick),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(
-            text = text,
-            style = MaterialTheme.typography.labelLarge,
-            fontWeight = FontWeight.SemiBold,
-            color = LoveOnPrimaryContainer,
-        )
-    }
-}
-
 internal fun lettersSecretCode(word1: String, word2: String): Int {
     val combined = (word1 + word2).filter { it.isLetter() }
     if (combined.isEmpty()) return 7
     val sum = combined.sumOf { it.code }
     val mod = sum % 9
     return if (mod == 0) 9 else mod
-}
-
-private fun lettersHighlightIndex(length: Int): Int {
-    if (length <= 0) return -1
-    return (length / 2).coerceIn(0, length - 1)
 }

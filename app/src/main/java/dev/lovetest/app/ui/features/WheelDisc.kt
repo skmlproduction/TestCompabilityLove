@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -16,41 +17,27 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import dev.lovetest.core.ui.components.LoveHeartIcon
 import dev.lovetest.core.ui.theme.LovePrimary
+import dev.lovetest.core.ui.theme.LoveWheelPointerGold
+import dev.lovetest.core.ui.theme.LoveWheelSegmentColors
+import dev.lovetest.core.ui.theme.LoveWheelSegmentTextColors
 import kotlin.math.cos
 import kotlin.math.sin
 
 internal const val WHEEL_SEGMENT_COUNT = 8
-
-internal val wheelSegmentColors = listOf(
-    Color(0xFFC2185B),
-    Color(0xFFE91E63),
-    Color(0xFFF48FB1),
-    Color(0xFFFCE4EC),
-    Color(0xFFC2185B),
-    Color(0xFFAD1457),
-    Color(0xFFF8BBD0),
-    Color(0xFFE91E63),
-)
-
-internal val wheelSegmentTextColors = listOf(
-    Color.White,
-    Color.White,
-    Color.White,
-    Color(0xFF880E4F),
-    Color(0xFF880E4F),
-    Color.White,
-    Color.White,
-    Color.White,
-)
 
 @Composable
 internal fun WheelDisc(
@@ -59,11 +46,21 @@ internal fun WheelDisc(
     modifier: Modifier = Modifier,
     discSize: Dp = 280.dp,
     showHub: Boolean = true,
+    showSegmentLabels: Boolean = true,
+    contentDescription: String? = null,
 ) {
     val density = LocalDensity.current
+    val sweep = 360f / WHEEL_SEGMENT_COUNT
     Box(
         modifier = modifier
             .size(discSize)
+            .then(
+                if (contentDescription != null) {
+                    Modifier.semantics { this.contentDescription = contentDescription }
+                } else {
+                    Modifier
+                },
+            )
             .graphicsLayer { rotationZ = rotationDegrees },
         contentAlignment = Alignment.Center,
     ) {
@@ -72,8 +69,7 @@ internal fun WheelDisc(
             val outer = this.size.minDimension / 2f
             val arcSize = Size(outer * 2f, outer * 2f)
             val topLeft = Offset(center.x - outer, center.y - outer)
-            val sweep = 360f / WHEEL_SEGMENT_COUNT
-            wheelSegmentColors.forEachIndexed { index, color ->
+            LoveWheelSegmentColors.forEachIndexed { index, color ->
                 drawArc(
                     color = color,
                     startAngle = -90f + index * sweep,
@@ -96,21 +92,28 @@ internal fun WheelDisc(
                 style = Stroke(width = stroke),
             )
         }
-        segments.take(WHEEL_SEGMENT_COUNT).forEachIndexed { index, label ->
-            val angleRad = Math.toRadians((index * 45.0 - 67.5))
-            val radiusPx = with(density) { (discSize.value / 2f - 52f).dp.toPx() }
-            val dx = (cos(angleRad) * radiusPx).toFloat()
-            val dy = (sin(angleRad) * radiusPx).toFloat()
-            Text(
-                text = label,
-                style = MaterialTheme.typography.labelLarge,
-                fontWeight = FontWeight.ExtraBold,
-                color = wheelSegmentTextColors.getOrElse(index) { Color.White },
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .offset(x = with(density) { dx.toDp() }, y = with(density) { dy.toDp() }),
-            )
+        if (showSegmentLabels) {
+            segments.take(WHEEL_SEGMENT_COUNT).forEachIndexed { index, label ->
+                val centerAngleDeg = -90f + index * sweep + sweep / 2f
+                val angleRad = Math.toRadians(centerAngleDeg.toDouble())
+                val labelRadiusPx = with(density) { (discSize.value / 2f - labelRadiusInset(discSize)).dp.toPx() }
+                val dx = (cos(angleRad) * labelRadiusPx).toFloat()
+                val dy = (sin(angleRad) * labelRadiusPx).toFloat()
+                val fontSize = if (label.length > 9) 10.sp else 12.sp
+                Text(
+                    text = label,
+                    style = MaterialTheme.typography.labelLarge.copy(fontSize = fontSize),
+                    fontWeight = FontWeight.ExtraBold,
+                    color = LoveWheelSegmentTextColors.getOrElse(index) { Color.White },
+                    textAlign = TextAlign.Center,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .widthIn(max = 72.dp)
+                        .offset(x = with(density) { dx.toDp() }, y = with(density) { dy.toDp() }),
+                )
+            }
         }
         if (showHub) {
             WheelCenterHub(Modifier.align(Alignment.Center))
@@ -118,15 +121,35 @@ internal fun WheelDisc(
     }
 }
 
+/** Inset from disc edge to segment label center — scales with disc size (screen22 SVG). */
+private fun labelRadiusInset(discSize: Dp): Float = when {
+    discSize >= 280.dp -> 52f
+    discSize >= 200.dp -> 36f
+    else -> 28f
+}
+
 @Composable
 internal fun WheelPointer(modifier: Modifier = Modifier) {
-    Canvas(modifier.size(48.dp, 40.dp)) {
+    Canvas(modifier.size(40.dp, 36.dp)) {
         val w = size.width
-        val pathTop = Offset(w / 2f, 0f)
-        drawLine(Color(0xFF1C1B1F), pathTop, Offset(0f, size.height), strokeWidth = 4f)
-        drawLine(Color(0xFF1C1B1F), pathTop, Offset(w, size.height), strokeWidth = 4f)
-        drawLine(LovePrimary, Offset(w / 2f, 8f), Offset(12f, size.height - 4f), strokeWidth = 4f)
-        drawLine(LovePrimary, Offset(w / 2f, 8f), Offset(w - 12f, size.height - 4f), strokeWidth = 4f)
+        val h = size.height
+        val outer = Path().apply {
+            moveTo(w / 2f, 0f)
+            lineTo(0f, h)
+            lineTo(w, h)
+            close()
+        }
+        drawPath(outer, Color(0xFF1C1B1F))
+        val insetX = 12.dp.toPx()
+        val insetTop = 6.dp.toPx()
+        val insetBottom = 4.dp.toPx()
+        val inner = Path().apply {
+            moveTo(w / 2f, insetTop)
+            lineTo(insetX, h - insetBottom)
+            lineTo(w - insetX, h - insetBottom)
+            close()
+        }
+        drawPath(inner, LoveWheelPointerGold)
     }
 }
 

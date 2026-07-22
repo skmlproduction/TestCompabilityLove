@@ -3,7 +3,6 @@ package dev.lovetest.app.ui.features
 import androidx.compose.foundation.background
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,10 +22,10 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.foundation.layout.navigationBarsPadding
+import dev.lovetest.app.ui.common.LoveFeatureTopBar
+import dev.lovetest.core.ui.components.loveEdgeToEdgeScreenPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -41,6 +40,7 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.lovetest.app.R
@@ -50,30 +50,31 @@ import dev.lovetest.app.ui.share.rememberLoveShareSheet
 import dev.lovetest.app.util.buildLoveShareText
 import dev.lovetest.app.util.decorativeForAccessibility
 import dev.lovetest.core.domain.LoveScoreCalculator
+import dev.lovetest.app.ui.common.FeatureLowTipCard
+import dev.lovetest.app.ui.common.FeatureLowWarningCard
+import dev.lovetest.app.ui.common.LoveFeatureResultActions
 import dev.lovetest.core.ui.components.LoveCardShadowElevation
+import dev.lovetest.core.ui.components.LoveLayout
 import dev.lovetest.core.ui.components.LoveShadowCard
 import dev.lovetest.core.ui.components.LoveGradientBackground
 import dev.lovetest.core.ui.components.LoveHubBackgroundBlobs
-import dev.lovetest.core.ui.components.LoveOutlinedButton
-import dev.lovetest.core.ui.components.LovePrimaryButton
-import dev.lovetest.core.ui.theme.LoveOnPrimaryContainer
 import dev.lovetest.core.ui.theme.LoveOnSurface
 import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
 import dev.lovetest.core.ui.theme.LovePrimary
 import dev.lovetest.core.ui.theme.LovePrimaryContainer
 import dev.lovetest.core.ui.theme.LoveResultMutedHeroBrush
+import dev.lovetest.core.ui.theme.LoveSecondary
 import dev.lovetest.core.ui.theme.LoveSurface
 
 private val VictoryResultHeroBrush = Brush.linearGradient(
     colors = listOf(
-        Color(0xFF2E7D32),
-        Color(0xFFC2185B),
-        Color(0xFFE91E63),
-        Color(0xFFFFB74D),
+        Color(0xFF1B5E4A),
+        LovePrimary,
+        LoveSecondary,
+        Color(0xFFE8C547),
     ),
 )
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VictoryResultScreen(
     onShare: () -> Unit,
@@ -99,38 +100,35 @@ fun VictoryResultScreen(
         LoveGradientBackground(Modifier.fillMaxSize())
         LoveHubBackgroundBlobs(Modifier.fillMaxSize())
 
-        Scaffold(
-            containerColor = Color.Transparent,
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(
-                            text = stringResource(R.string.victory_result_title),
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .semantics { heading() },
-                            textAlign = TextAlign.Center,
-                        )
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = LoveSurface.copy(alpha = 0.85f),
-                    ),
-                )
-            },
-        ) { padding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-                    .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 24.dp),
-            ) {
-                VictoryResultHeroCard(
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .loveEdgeToEdgeScreenPadding(includeNavigationBar = false)
+                .navigationBarsPadding()
+                .verticalScroll(rememberScrollState()),
+        ) {
+            LoveFeatureTopBar(
+                title = stringResource(R.string.victory_result_title),
+            )
+            VictoryResultHeroCard(
                     name = name,
                     victory = victory,
                     modifier = Modifier.padding(top = 8.dp),
+                )
+                if (!victory) {
+                    FeatureLowWarningCard(modifier = Modifier.padding(top = 20.dp))
+                    FeatureLowTipCard(modifier = Modifier.padding(top = 16.dp))
+                }
+                // CTAs before outcome/message so Share stays above the fold.
+                LoveFeatureResultActions(
+                    tryAgainLabel = stringResource(R.string.victory_try_another),
+                    onShare = shareSheet.open,
+                    onTryAgain = onTryAnother,
+                    onHome = onHome,
+                )
+                VictoryResultOutcomeChips(
+                    victory = victory,
+                    modifier = Modifier.padding(top = 20.dp),
                 )
                 VictoryMessageCard(
                     name = name,
@@ -138,36 +136,15 @@ fun VictoryResultScreen(
                     outcomeLabel = outcomeLabel,
                     modifier = Modifier.padding(top = 20.dp),
                 )
-                LovePrimaryButton(
-                    text = stringResource(R.string.love_test_share_cta),
-                    onClick = shareSheet.open,
-                    modifier = Modifier.padding(top = 24.dp),
-                )
-                LoveOutlinedButton(
-                    text = stringResource(R.string.victory_try_another),
-                    onClick = onTryAnother,
-                    modifier = Modifier.padding(top = 12.dp),
-                )
-                VictoryResultHomeButton(
-                    text = stringResource(R.string.love_test_back_home),
-                    onClick = onHome,
-                    modifier = Modifier.padding(top = 12.dp),
-                )
-                Text(
-                    text = stringResource(R.string.result_entertainment_only),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = LoveOnSurfaceVariant,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp),
-                )
-                VictorySharePreviewCard(
-                    name = name,
-                    victory = victory,
-                    modifier = Modifier.padding(top = 16.dp, bottom = 32.dp),
-                )
-            }
+                if (victory) {
+                    VictorySharePreviewCard(
+                        name = name,
+                        victory = victory,
+                        modifier = Modifier.padding(top = 16.dp, bottom = 32.dp),
+                    )
+                } else {
+                    Box(modifier = Modifier.padding(bottom = 32.dp))
+                }
         }
         LoveShareResultOverlay(
             sheet = shareSheet,
@@ -176,7 +153,8 @@ fun VictoryResultScreen(
             name2 = name,
             harmonyTag = harmonyTag,
             shareText = shareText,
-            onShare = onShare,
+            high = victory,
+            onShareFallback = onShare,
         )
     }
 }
@@ -193,7 +171,7 @@ private fun VictoryResultHeroCard(
     val verdictCd = stringResource(R.string.victory_verdict_cd, verdictText)
     LoveShadowCard(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(48.dp),
+        shape = LoveLayout.ResultHeroShape,
         shadowElevation = LoveCardShadowElevation.Hero,
         colors = CardDefaults.cardColors(containerColor = Color.Transparent),
     ) {
@@ -211,7 +189,12 @@ private fun VictoryResultHeroCard(
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
-                    modifier = Modifier.padding(top = 16.dp),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp),
                 )
                 Text(
                     text = verdictText,
@@ -255,6 +238,71 @@ private fun VictoryResultHeroCard(
 }
 
 @Composable
+private fun VictoryResultOutcomeChips(
+    victory: Boolean,
+    modifier: Modifier = Modifier,
+) {
+    LoveShadowCard(
+        modifier = modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(32.dp),
+        shadowElevation = LoveCardShadowElevation.Subtle,
+        colors = CardDefaults.cardColors(containerColor = LoveSurface),
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            VictoryOutcomeChip(
+                text = stringResource(R.string.victory_outcome_yes),
+                background = if (victory) Color(0xFFE8F5E9) else LovePrimaryContainer,
+                foreground = if (victory) Color(0xFF2E7D32) else LoveOnSurfaceVariant,
+                selected = victory,
+            )
+            VictoryOutcomeChip(
+                text = stringResource(R.string.victory_outcome_maybe),
+                background = if (!victory) Color(0xFFFFF8E1) else LovePrimaryContainer,
+                foreground = if (!victory) Color(0xFFF57F17) else LoveOnSurfaceVariant,
+                selected = !victory,
+            )
+        }
+    }
+}
+
+@Composable
+private fun VictoryOutcomeChip(
+    text: String,
+    background: Color,
+    foreground: Color,
+    selected: Boolean,
+) {
+    Box(
+        modifier = Modifier
+            .height(48.dp)
+            .clip(RoundedCornerShape(16.dp))
+            .background(background)
+            .then(
+                if (selected) {
+                    Modifier.border(2.dp, foreground.copy(alpha = 0.35f), RoundedCornerShape(16.dp))
+                } else {
+                    Modifier
+                },
+            )
+            .padding(horizontal = 20.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.titleSmall,
+            fontWeight = if (selected) FontWeight.ExtraBold else FontWeight.SemiBold,
+            color = foreground,
+        )
+    }
+}
+
+@Composable
 private fun VictoryMessageCard(
     name: String,
     victory: Boolean,
@@ -273,10 +321,21 @@ private fun VictoryMessageCard(
                     modifier = Modifier
                         .size(56.dp)
                         .clip(RoundedCornerShape(20.dp))
-                        .background(Color(0xFFE8F5E9)),
+                        .background(
+                            if (victory) Color(0xFFE8F5E9) else Color(0xFFFFF8E1),
+                        ),
                     contentAlignment = Alignment.Center,
                 ) {
-                    Icon(Icons.Filled.Check, null, tint = Color(0xFF2E7D32), modifier = Modifier.size(32.dp))
+                    if (victory) {
+                        Icon(Icons.Filled.Check, null, tint = Color(0xFF2E7D32), modifier = Modifier.size(32.dp))
+                    } else {
+                        Text(
+                            text = stringResource(R.string.victory_outcome_maybe),
+                            style = MaterialTheme.typography.headlineSmall,
+                            fontWeight = FontWeight.ExtraBold,
+                            color = Color(0xFFF57F17),
+                        )
+                    }
                 }
                 Text(
                     text = stringResource(R.string.victory_message_title),
@@ -351,14 +410,16 @@ private fun VictoryMessageCard(
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(24.dp))
-                        .background(Color(0xFFE8F5E9))
+                        .background(
+                            if (victory) Color(0xFFE8F5E9) else Color(0xFFFFF8E1),
+                        )
                         .padding(horizontal = 20.dp, vertical = 10.dp),
                 ) {
                     Text(
                         text = stringResource(R.string.victory_outcome_label, outcomeLabel),
                         style = MaterialTheme.typography.labelLarge,
                         fontWeight = FontWeight.Bold,
-                        color = Color(0xFF2E7D32),
+                        color = if (victory) Color(0xFF2E7D32) else Color(0xFFF57F17),
                     )
                 }
             }
@@ -392,7 +453,7 @@ private fun VictorySharePreviewCard(
         ) {
             Box(
                 modifier = Modifier
-                    .size(88.dp)
+                    .size(80.dp)
                     .clip(RoundedCornerShape(24.dp))
                     .background(if (victory) VictoryResultHeroBrush else LoveResultMutedHeroBrush),
                 contentAlignment = Alignment.Center,
@@ -425,29 +486,5 @@ private fun VictorySharePreviewCard(
                 )
             }
         }
-    }
-}
-
-@Composable
-private fun VictoryResultHomeButton(
-    text: String,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(52.dp)
-            .clip(RoundedCornerShape(44.dp))
-            .background(LovePrimaryContainer)
-            .clickable(onClick = onClick),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(
-            text = text,
-            style = MaterialTheme.typography.labelLarge,
-            fontWeight = FontWeight.SemiBold,
-            color = LoveOnPrimaryContainer,
-        )
     }
 }

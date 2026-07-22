@@ -19,12 +19,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.foundation.layout.navigationBarsPadding
+import dev.lovetest.app.ui.common.LoveFeatureTopBar
+import dev.lovetest.core.ui.components.loveEdgeToEdgeScreenPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -42,39 +41,45 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.lovetest.app.R
 import dev.lovetest.app.session.LoveTestSession
+import dev.lovetest.app.ui.common.FeatureLowTipCard
+import dev.lovetest.app.ui.common.FeatureLowWarningCard
+import dev.lovetest.app.ui.common.LoveFeatureResultActions
 import dev.lovetest.app.ui.common.LoveHeroPercentRing
 import dev.lovetest.app.ui.share.LoveShareResultOverlay
 import dev.lovetest.app.ui.share.rememberLoveShareSheet
 import dev.lovetest.app.util.buildLoveShareText
 import dev.lovetest.core.domain.LoveScoreCalculator
 import dev.lovetest.core.ui.components.LoveCardShadowElevation
+import dev.lovetest.core.ui.components.LoveLayout
 import dev.lovetest.core.ui.components.LoveShadowCard
 import dev.lovetest.core.ui.components.LoveGradientBackground
 import dev.lovetest.core.ui.components.LoveHubBackgroundBlobs
-import dev.lovetest.core.ui.components.LoveOutlinedButton
-import dev.lovetest.core.ui.components.LovePrimaryButton
 import dev.lovetest.core.ui.theme.LoveOnPrimaryContainer
 import dev.lovetest.core.ui.theme.LoveOnSurface
 import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
+import dev.lovetest.core.ui.theme.LoveHeroEnd
+import dev.lovetest.core.ui.theme.LoveOutlineVariant
 import dev.lovetest.core.ui.theme.LovePrimary
 import dev.lovetest.core.ui.theme.LovePrimaryContainer
 import dev.lovetest.core.ui.theme.LoveResultMutedHeroBrush
+import dev.lovetest.core.ui.theme.LoveSecondary
 import dev.lovetest.core.ui.theme.LoveSurface
+import dev.lovetest.core.ui.theme.LoveTypographyTokens
 
 private val CalculatorResultHeroBrush = Brush.linearGradient(
     colors = listOf(
-        Color(0xFF880E4F),
-        Color(0xFFC2185B),
-        Color(0xFFE91E63),
-        Color(0xFFE8DEF8),
+        Color(0xFF5C1228),
+        LovePrimary,
+        LoveSecondary,
+        LoveHeroEnd,
     ),
 )
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CalculatorResultScreen(
     onShare: () -> Unit,
@@ -101,38 +106,33 @@ fun CalculatorResultScreen(
         LoveGradientBackground(Modifier.fillMaxSize())
         LoveHubBackgroundBlobs(Modifier.fillMaxSize())
 
-        Scaffold(
-            containerColor = Color.Transparent,
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(
-                            text = stringResource(R.string.calculator_result_title),
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.fillMaxWidth(),
-                            textAlign = TextAlign.Center,
-                        )
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = LoveSurface.copy(alpha = 0.85f),
-                    ),
-                )
-            },
-        ) { padding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-                    .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 24.dp),
-            ) {
-                CalculatorResultHeroCard(
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .loveEdgeToEdgeScreenPadding(includeNavigationBar = false)
+                .navigationBarsPadding()
+                .verticalScroll(rememberScrollState()),
+        ) {
+            LoveFeatureTopBar(
+                title = stringResource(R.string.calculator_result_title),
+            )
+            CalculatorResultHeroCard(
                     namesLine = namesLine,
                     percent = percent,
                     percentCd = percentCd,
                     high = high,
                     modifier = Modifier.padding(top = 8.dp),
+                )
+                if (!high) {
+                    FeatureLowWarningCard(modifier = Modifier.padding(top = 20.dp))
+                    FeatureLowTipCard(modifier = Modifier.padding(top = 16.dp))
+                }
+                // CTAs before breakdown so Share stays above the fold.
+                LoveFeatureResultActions(
+                    tryAgainLabel = stringResource(R.string.calculator_try_another),
+                    onShare = shareSheet.open,
+                    onTryAgain = onTryAnother,
+                    onHome = onHome,
                 )
                 CalculatorBreakdownCard(
                     letterChips = letterChips,
@@ -140,36 +140,15 @@ fun CalculatorResultScreen(
                     commonLettersLabel = commonLettersLabel,
                     modifier = Modifier.padding(top = 20.dp),
                 )
-                LovePrimaryButton(
-                    text = stringResource(R.string.love_test_share_cta),
-                    onClick = shareSheet.open,
-                    modifier = Modifier.padding(top = 24.dp),
-                )
-                LoveOutlinedButton(
-                    text = stringResource(R.string.calculator_try_another),
-                    onClick = onTryAnother,
-                    modifier = Modifier.padding(top = 12.dp),
-                )
-                CalculatorResultHomeButton(
-                    text = stringResource(R.string.love_test_back_home),
-                    onClick = onHome,
-                    modifier = Modifier.padding(top = 12.dp),
-                )
-                Text(
-                    text = stringResource(R.string.result_entertainment_only),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = LoveOnSurfaceVariant,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp),
-                )
-                CalculatorSharePreviewCard(
-                    percent = percent,
-                    namesLine = namesLine,
-                    modifier = Modifier.padding(top = 16.dp, bottom = 32.dp),
-                )
-            }
+                if (high) {
+                    CalculatorSharePreviewCard(
+                        percent = percent,
+                        namesLine = namesLine,
+                        modifier = Modifier.padding(top = 16.dp, bottom = 32.dp),
+                    )
+                } else {
+                    Box(modifier = Modifier.padding(bottom = 32.dp))
+                }
         }
         LoveShareResultOverlay(
             sheet = shareSheet,
@@ -178,7 +157,8 @@ fun CalculatorResultScreen(
             name2 = name2,
             harmonyTag = harmonyTag,
             shareText = shareText,
-            onShare = onShare,
+            high = high,
+            onShareFallback = onShare,
         )
     }
 }
@@ -193,7 +173,7 @@ private fun CalculatorResultHeroCard(
 ) {
     LoveShadowCard(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(48.dp),
+        shape = LoveLayout.ResultHeroShape,
         shadowElevation = LoveCardShadowElevation.Hero,
         colors = CardDefaults.cardColors(containerColor = Color.Transparent),
     ) {
@@ -219,12 +199,17 @@ private fun CalculatorResultHeroCard(
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                     color = Color.White,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth(),
                 )
                 LoveHeroPercentRing(
                     percent = percent,
                     label = stringResource(R.string.calculator_result_percent_label),
                     high = high,
                     contentDescription = percentCd,
+                    ringSize = LoveLayout.LoveTestResultRingSize,
                     modifier = Modifier.padding(top = 20.dp),
                 )
                 Box(
@@ -318,14 +303,14 @@ private fun CalculatorBreakdownCard(
                 modifier = Modifier
                     .padding(top = 16.dp)
                     .clip(RoundedCornerShape(24.dp))
-                    .background(Color(0xFFE8DEF8))
+                    .background(LovePrimaryContainer)
                     .padding(horizontal = 20.dp, vertical = 10.dp),
             ) {
                 Text(
                     text = stringResource(R.string.calculator_test_badge),
                     style = MaterialTheme.typography.labelLarge,
                     fontWeight = FontWeight.Bold,
-                    color = Color(0xFF6750A4),
+                    color = LoveOnPrimaryContainer,
                 )
             }
         }
@@ -339,14 +324,14 @@ private fun CalculatorLetterChip(
     isOperator: Boolean = false,
 ) {
     val bg = when {
-        isOperator -> Color(0xFFF3EDF7)
+        isOperator -> LoveOutlineVariant
         primaryStyle -> LovePrimaryContainer
-        else -> Color(0xFFE8DEF8)
+        else -> LoveHeroEnd.copy(alpha = 0.55f)
     }
     val fg = when {
-        isOperator -> Color(0xFF49454F)
+        isOperator -> LoveOnSurfaceVariant
         primaryStyle -> LovePrimary
-        else -> Color(0xFF6750A4)
+        else -> LoveOnPrimaryContainer
     }
     Box(
         modifier = Modifier
@@ -370,12 +355,13 @@ private fun CalculatorSharePreviewCard(
     namesLine: String,
     modifier: Modifier = Modifier,
 ) {
+    val previewRingSize = 80.dp
     LoveShadowCard(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(32.dp),
         shadowElevation = LoveCardShadowElevation.Subtle,
         colors = CardDefaults.cardColors(containerColor = LoveSurface),
-        border = BorderStroke(2.dp, Color(0xFFE8DEF8)),
+        border = BorderStroke(2.dp, LovePrimaryContainer),
     ) {
         Row(
             modifier = Modifier.padding(16.dp),
@@ -383,15 +369,14 @@ private fun CalculatorSharePreviewCard(
         ) {
             Box(
                 modifier = Modifier
-                    .size(88.dp)
+                    .size(80.dp)
                     .clip(RoundedCornerShape(24.dp))
                     .background(CalculatorResultHeroBrush),
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
                     text = "${percent.coerceIn(0, 100)}%",
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontWeight = FontWeight.ExtraBold,
+                    style = LoveTypographyTokens.percentForRing(previewRingSize),
                     color = Color.White,
                 )
             }
@@ -417,49 +402,4 @@ private fun CalculatorSharePreviewCard(
             }
         }
     }
-}
-
-@Composable
-private fun CalculatorResultHomeButton(
-    text: String,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(52.dp)
-            .clip(RoundedCornerShape(44.dp))
-            .background(LovePrimaryContainer)
-            .clickable(onClick = onClick),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(
-            text = text,
-            style = MaterialTheme.typography.labelLarge,
-            fontWeight = FontWeight.SemiBold,
-            color = LoveOnPrimaryContainer,
-        )
-    }
-}
-
-private fun calculatorLetterChips(name1: String, name2: String): List<Char> {
-    val combined = (name1 + name2).filter { it.isLetter() }
-    return combined
-        .map { it.uppercaseChar() }
-        .distinct()
-        .take(4)
-        .ifEmpty { listOf('?') }
-}
-
-private fun calculatorCommonLetters(name1: String, name2: String): List<Char> {
-    val a = name1.filter { it.isLetter() }.lowercase().toSet()
-    if (a.isEmpty()) return emptyList()
-    return name2
-        .filter { it.isLetter() }
-        .map { it.lowercaseChar() }
-        .distinct()
-        .filter { it in a }
-        .map { it.uppercaseChar() }
-        .take(5)
 }

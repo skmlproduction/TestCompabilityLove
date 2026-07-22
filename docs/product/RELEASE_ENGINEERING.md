@@ -84,6 +84,12 @@
 - `WRITE_EXTERNAL_STORAGE` (использовать Share cache / MediaStore API 29+)
 - `POST_NOTIFICATIONS` — пока нет push
 
+## Production rollout
+
+- [PRODUCTION_ROLLOUT.md](../store/PRODUCTION_ROLLOUT.md) — staged 10→50→100%, go/no-go
+- [POST_RELEASE_PLAN.md](../store/POST_RELEASE_PLAN.md) — vitals 72 ч, отзывы, hotfix
+- [V2_BACKLOG.md](./V2_BACKLOG.md) — roadmap после v1.0
+
 ## Связанные документы
 
 - `GOOGLE_PLAY_RELEASE_CHECKLIST.md`

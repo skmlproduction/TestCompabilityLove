@@ -1,6 +1,5 @@
 package dev.lovetest.core.ui.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
@@ -38,7 +37,8 @@ private val DarkColors = darkColorScheme(
 
 @Composable
 fun LoveTestTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    /** v2 editorial romance ships light-only; pass true only for experiments. */
+    darkTheme: Boolean = false,
     content: @Composable () -> Unit,
 ) {
     MaterialTheme(

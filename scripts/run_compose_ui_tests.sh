@@ -21,7 +21,7 @@ fi
 
 echo "Tests: $(bash scripts/count_tests.sh | grep '^summary=' | cut -d= -f2-)"
 echo ""
-./gradlew :app:connectedDebugAndroidTest --no-daemon "$@"
+./gradlew :app:connectedDebugAndroidTest "$@"
 
 echo ""
 echo "OK: Compose UI tests"

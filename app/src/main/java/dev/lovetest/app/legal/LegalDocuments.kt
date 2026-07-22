@@ -8,6 +8,7 @@ import dev.lovetest.app.R
 
 object LegalDocuments {
     const val PRIVACY_ASSET = "legal/privacy_policy.html"
+    const val TERMS_ASSET = "legal/terms_of_use.html"
     const val DATA_COLLECTION_ASSET = "legal/data_collection.html"
     const val PLACEHOLDER_PRIVACY_URL = "https://example.com/privacy"
 
@@ -22,6 +23,25 @@ object LegalDocuments {
 
     fun hasExternalPrivacyPolicy(): Boolean =
         resolveExternalPrivacyUrl(BuildConfig.PRIVACY_POLICY_URL) != null
+
+    /** HTTPS terms page on same host as privacy (…/terms.html). */
+    fun resolveExternalTermsUrl(privacyRaw: String = BuildConfig.PRIVACY_POLICY_URL): String? =
+        resolveExternalPrivacyUrl(privacyRaw)?.trimEnd('/')?.plus("/terms.html")
+
+    fun Context.openTermsOfUse() {
+        val external = resolveExternalTermsUrl()
+        if (external != null) {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(external)))
+        } else {
+            startActivity(
+                LegalDocumentActivity.intent(
+                    context = this,
+                    assetPath = TERMS_ASSET,
+                    title = getString(R.string.premium_terms_link),
+                ),
+            )
+        }
+    }
 
     fun Context.openPrivacyPolicy() {
         val external = resolveExternalPrivacyUrl(BuildConfig.PRIVACY_POLICY_URL)

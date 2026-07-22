@@ -3,42 +3,79 @@ package dev.lovetest.app.monetization
 import dev.lovetest.app.prefs.AppPreferences
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class PremiumRestoreTest {
 
     @Test
-    fun restorePremiumAccess_whenAlreadyPremium_returnsTrue() = runTest {
+    fun restorePremiumAccess_whenAlreadyPremium_returnsRestored() = runTest {
         val prefs = mockk<AppPreferences>()
-        val billing = mockk<PremiumBillingManager>()
         coEvery { prefs.isPremium() } returns true
+        val billing = mockk<PremiumBillingManager>(relaxed = true)
 
-        assertTrue(restorePremiumAccess(prefs, billing))
+        assertEquals(
+            PremiumRestoreOutcome.Restored,
+            restorePremiumAccess(prefs, billing),
+        )
     }
 
     @Test
-    fun restorePremiumAccess_whenBillingNotConfigured_returnsFalse() = runTest {
+    fun restorePremiumAccess_whenBillingNotConfigured_returnsUnavailable() = runTest {
         val prefs = mockk<AppPreferences>()
-        val billing = mockk<PremiumBillingManager>()
         coEvery { prefs.isPremium() } returns false
-        coEvery { billing.isConfigured() } returns false
+        val billing = mockk<PremiumBillingManager>()
+        every { billing.isConfigured() } returns false
 
-        assertFalse(restorePremiumAccess(prefs, billing))
+        assertEquals(
+            PremiumRestoreOutcome.Unavailable,
+            restorePremiumAccess(prefs, billing),
+        )
     }
 
     @Test
-    fun restorePremiumAccess_delegatesToBillingWhenConfigured() = runTest {
+    fun restorePremiumAccess_whenOwned_returnsRestored() = runTest {
         val prefs = mockk<AppPreferences>()
-        val billing = mockk<PremiumBillingManager>()
         coEvery { prefs.isPremium() } returns false
-        coEvery { billing.isConfigured() } returns true
-        coEvery { billing.restorePurchases() } returns true
+        val billing = mockk<PremiumBillingManager>()
+        every { billing.isConfigured() } returns true
+        coEvery { billing.queryPremiumOwnership() } returns true
 
-        assertTrue(restorePremiumAccess(prefs, billing))
+        assertEquals(
+            PremiumRestoreOutcome.Restored,
+            restorePremiumAccess(prefs, billing),
+        )
+    }
+
+    @Test
+    fun restorePremiumAccess_whenNotOwned_returnsNotFound() = runTest {
+        val prefs = mockk<AppPreferences>()
+        coEvery { prefs.isPremium() } returns false
+        val billing = mockk<PremiumBillingManager>()
+        every { billing.isConfigured() } returns true
+        coEvery { billing.queryPremiumOwnership() } returns false
+
+        assertEquals(
+            PremiumRestoreOutcome.NotFound,
+            restorePremiumAccess(prefs, billing),
+        )
+    }
+
+    @Test
+    fun restorePremiumAccess_whenQueryFails_returnsUnavailable() = runTest {
+        val prefs = mockk<AppPreferences>()
+        coEvery { prefs.isPremium() } returns false
+        val billing = mockk<PremiumBillingManager>()
+        every { billing.isConfigured() } returns true
+        coEvery { billing.queryPremiumOwnership() } returns null
+
+        assertEquals(
+            PremiumRestoreOutcome.Unavailable,
+            restorePremiumAccess(prefs, billing),
+        )
     }
 
     @Test

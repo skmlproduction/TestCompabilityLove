@@ -5,18 +5,24 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollTo
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dev.lovetest.app.R
 import dev.lovetest.app.session.LoveTestSession
 import dev.lovetest.core.ui.theme.LoveTestTheme
 import org.junit.After
 import org.junit.Assert.assertTrue
+import dev.lovetest.app.testing.LoveInstrumentedCleanup
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class WheelResultScreenComposeTest {
+
+
+    @get:Rule
+    val cleanup = LoveInstrumentedCleanup()
 
     @get:Rule
     val composeRule = createAndroidComposeRule<ComponentActivity>()
@@ -40,10 +46,10 @@ class WheelResultScreenComposeTest {
             }
         }
 
-        composeRule.onNodeWithText(segments[2]).assertIsDisplayed()
-        composeRule.onNodeWithText(prizeTag).assertIsDisplayed()
-        composeRule.onNodeWithText(spinAgain).assertIsDisplayed()
-        composeRule.onNodeWithText(share).assertIsDisplayed()
+        composeRule.onNodeWithText(segments[2]).performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithText(prizeTag).performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithText(spinAgain).performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithText(share).performScrollTo().assertIsDisplayed()
     }
 
     @Test
@@ -63,7 +69,7 @@ class WheelResultScreenComposeTest {
             }
         }
 
-        composeRule.onNodeWithText(spinAgain).performClick()
+        composeRule.onNodeWithText(spinAgain).performScrollTo().performClick()
         assertTrue(spunAgain)
     }
 }

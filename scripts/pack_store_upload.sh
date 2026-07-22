@@ -42,6 +42,8 @@ copy_if_exists "docs/store/DATA_SAFETY_FORM.md" "${OUT}/DATA_SAFETY_FORM.md"
 copy_if_exists "docs/store/PRIVACY_HOSTING.md" "${OUT}/PRIVACY_HOSTING.md"
 copy_if_exists "docs/store/INTERNAL_TESTING.md" "${OUT}/INTERNAL_TESTING.md"
 copy_if_exists "docs/store/PLAY_READY.md" "${OUT}/PLAY_READY.md"
+copy_if_exists "docs/store/PLAY_FORMS_FILLED.md" "${OUT}/PLAY_FORMS_FILLED.md"
+copy_if_exists "docs/store/INTERNAL_TESTING_RUNBOOK.md" "${OUT}/INTERNAL_TESTING_RUNBOOK.md"
 
 LISTING=(
   hub_main

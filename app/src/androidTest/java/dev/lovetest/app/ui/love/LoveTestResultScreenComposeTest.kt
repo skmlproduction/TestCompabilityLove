@@ -5,12 +5,14 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollTo
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import dev.lovetest.app.R
 import dev.lovetest.app.session.LoveTestSession
 import dev.lovetest.core.ui.theme.LoveTestTheme
 import org.junit.After
 import org.junit.Assert.assertTrue
+import dev.lovetest.app.testing.LoveInstrumentedCleanup
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -18,12 +20,30 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class LoveTestResultScreenComposeTest {
 
+
+    @get:Rule
+    val cleanup = LoveInstrumentedCleanup()
+
     @get:Rule
     val composeRule = createAndroidComposeRule<ComponentActivity>()
 
     @After
     fun tearDown() {
         LoveTestSession.clear()
+    }
+
+    @Test
+    fun loveTestResult_highScore_showsLongDisclaimer() {
+        LoveTestSession.storeLoveResult("Anna", "Max", 87)
+        val disclaimer = composeRule.activity.getString(R.string.love_test_result_disclaimer_long)
+
+        composeRule.setContent {
+            LoveTestTheme {
+                LoveTestResultScreen(onShare = {}, onTryAgain = {}, onHome = {})
+            }
+        }
+
+        composeRule.onNodeWithText(disclaimer).performScrollTo().assertIsDisplayed()
     }
 
     @Test
@@ -39,9 +59,9 @@ class LoveTestResultScreenComposeTest {
             }
         }
 
-        composeRule.onNodeWithText(highTag).assertIsDisplayed()
-        composeRule.onNodeWithText(share).assertIsDisplayed()
-        composeRule.onNodeWithText(tryAgain).assertIsDisplayed()
+        composeRule.onNodeWithText(highTag).performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithText(share).performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithText(tryAgain).performScrollTo().assertIsDisplayed()
     }
 
     @Test
@@ -56,8 +76,8 @@ class LoveTestResultScreenComposeTest {
             }
         }
 
-        composeRule.onNodeWithText(lowTag).assertIsDisplayed()
-        composeRule.onNodeWithText(tipTitle).assertIsDisplayed()
+        composeRule.onNodeWithText(lowTag).performScrollTo().assertIsDisplayed()
+        composeRule.onNodeWithText(tipTitle).performScrollTo().assertIsDisplayed()
     }
 
     @Test
@@ -76,7 +96,7 @@ class LoveTestResultScreenComposeTest {
             }
         }
 
-        composeRule.onNodeWithText(tryAgain).performClick()
+        composeRule.onNodeWithText(tryAgain).performScrollTo().performClick()
         assertTrue(retried)
     }
 }

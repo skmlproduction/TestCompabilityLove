@@ -58,14 +58,35 @@ PY
 fi
 
 echo "capture_screenshot_catalog: locale=${LOCALE} out=${OUT_DIR} screens=${#IDS[@]}"
+
+if [[ "${LOVETEST_USE_EMULATOR:-}" == "1" ]]; then
+  if ! adb -e get-state >/dev/null 2>&1; then
+    echo "ERROR: эмулятор не подключён — LOVETEST_FORCE_EMULATOR=1 ./scripts/start_capture_emulator.sh" >&2
+    exit 1
+  fi
+  export ANDROID_SERIAL="$(adb -e get-serialno 2>/dev/null | tr -d '\r')"
+  if [[ -z "${ANDROID_SERIAL}" ]]; then
+    echo "ERROR: не удалось получить serial эмулятора (adb -e get-serialno)" >&2
+    exit 1
+  fi
+  echo "Target emulator: ${ANDROID_SERIAL}"
+fi
+
 echo "Installing debug APK…"
+# Prefer explicit serial so Gradle does not install onto a random sibling AVD.
+if [[ -n "${LOVETEST_ADB_SERIAL:-}" ]]; then
+  export ANDROID_SERIAL="${LOVETEST_ADB_SERIAL}"
+elif [[ "${LOVETEST_USE_EMULATOR:-}" == "1" && -n "${ANDROID_SERIAL:-}" ]]; then
+  :
+fi
 (cd "${ROOT}" && ./gradlew :app:installDebug -q)
 
 COUNT=0
 FAIL=0
 for sid in "${IDS[@]}"; do
   [[ -z "$sid" ]] && continue
-  if bash "${ROOT}/scripts/adb_screenshot_preview.sh" "$sid" "$LOCALE"; then
+  # </dev/null — иначе am/adb съедают stdin цикла и каталог обрывается после 1 экрана
+  if bash "${ROOT}/scripts/adb_screenshot_preview.sh" "$sid" "$LOCALE" </dev/null; then
     COUNT=$((COUNT + 1))
     rel_path="$(python3 - "$ROOT" "$sid" "$LOCALE" <<'PY'
 import csv, sys
@@ -93,7 +114,7 @@ PY
 done
 
 if [[ "${LOCALE}" == "en" ]]; then
-  adb shell cmd locale set-app-locales "${PKG}" --locales ru-RU 2>/dev/null || true
+  lovetest_adb shell cmd locale set-app-locales "${PKG}" --locales ru-RU 2>/dev/null || true
 fi
 
 REAL="$(python3 - <<'PY'

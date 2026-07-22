@@ -14,17 +14,29 @@ import dev.lovetest.core.ui.theme.LoveTestTheme
 import io.mockk.coEvery
 import io.mockk.mockk
 import org.junit.Assert.assertEquals
+import dev.lovetest.app.testing.LoveInstrumentedCleanup
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.junit.Before
 import org.koin.compose.KoinApplication
+import org.koin.core.context.stopKoin
 import org.koin.dsl.module
 
 @RunWith(AndroidJUnit4::class)
 class CalculatorInputScreenComposeTest {
 
+
+    @get:Rule
+    val cleanup = LoveInstrumentedCleanup()
+
     @get:Rule
     val composeRule = createAndroidComposeRule<ComponentActivity>()
+
+    @Before
+    fun stopPreviousKoin() {
+        stopKoin()
+    }
 
     @Test
     fun calculatorInput_showsHeroAndCta() {

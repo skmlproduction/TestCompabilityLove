@@ -51,4 +51,59 @@ class LoveTestFlowViewModelTest {
         assertEquals(1, doneCount)
         assertTrue(LoveTestSession.hasLoveResult())
     }
+
+    @Test
+    fun runLoveTest_invalidDigits_doesNotStartOrPersist() = runTest(testDispatcher) {
+        val prefs = mockk<AppPreferences>(relaxed = true)
+        val viewModel = LoveTestFlowViewModel(DefaultLoveScoreCalculator(), prefs)
+        var done = false
+
+        assertFalse(viewModel.runLoveTest("123", "456") { done = true })
+        advanceUntilIdle()
+
+        assertFalse(done)
+        assertFalse(LoveTestSession.hasLoveResult())
+        assertFalse(viewModel.calculating.value)
+    }
+
+    @Test
+    fun runPairTest_blankNames_doesNotStart() = runTest(testDispatcher) {
+        val prefs = mockk<AppPreferences>(relaxed = true)
+        val viewModel = LoveTestFlowViewModel(DefaultLoveScoreCalculator(), prefs)
+        var done = false
+
+        assertFalse(viewModel.runPairTest("   ", "Anna") { done = true })
+        advanceUntilIdle()
+
+        assertFalse(done)
+        assertFalse(LoveTestSession.hasPairResult())
+    }
+
+    @Test
+    fun runSingleNameTest_emojiOnly_doesNotStart() = runTest(testDispatcher) {
+        val prefs = mockk<AppPreferences>(relaxed = true)
+        val viewModel = LoveTestFlowViewModel(DefaultLoveScoreCalculator(), prefs)
+        var done = false
+
+        assertFalse(viewModel.runSingleNameTest("❤️🔥") { done = true })
+        advanceUntilIdle()
+
+        assertFalse(done)
+        assertFalse(LoveTestSession.hasLoveResult())
+    }
+
+    @Test
+    fun runProtocolTest_validNames_persistsResult() = runTest(testDispatcher) {
+        val prefs = mockk<AppPreferences>()
+        coEvery { prefs.saveLastNames(any(), any()) } returns Unit
+        coEvery { prefs.saveSessionSnapshot(any()) } returns Unit
+        val viewModel = LoveTestFlowViewModel(DefaultLoveScoreCalculator(), prefs)
+        var done = false
+
+        assertTrue(viewModel.runProtocolTest("Anna", "Max") { done = true })
+        advanceUntilIdle()
+
+        assertTrue(done)
+        assertTrue(LoveTestSession.hasProtocolResult())
+    }
 }

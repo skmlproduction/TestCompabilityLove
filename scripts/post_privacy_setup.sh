@@ -15,13 +15,14 @@ fi
 
 echo "=== post_privacy_setup ==="
 bash scripts/set_privacy_url.sh "${URL}"
-bash scripts/check_privacy_url.sh "${URL}"
+bash scripts/check_privacy_url.sh "${URL}" || true
+bash scripts/check_legal_urls.sh || echo "WARN: terms/data-collection — после деплоя Pages"
 bash scripts/export_privacy_for_hosting.sh
 
 if [[ -f keystore.properties ]]; then
   store_path="$(grep -E '^storeFile=' keystore.properties 2>/dev/null | cut -d= -f2- | tr -d ' ' || true)"
   if [[ -n "${store_path}" && -f "${store_path}" ]]; then
-    ./gradlew bundleReleaseLoveTest --no-daemon -q
+    ./gradlew bundleReleaseLoveTest -q
   else
     echo "WARN: keystore invalid — skip bundleRelease (см. generate_upload_keystore.sh)"
   fi

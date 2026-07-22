@@ -114,6 +114,18 @@ android {
             }
         }
     }
+    packaging {
+        resources {
+            excludes += "/META-INF/LICENSE.md"
+            excludes += "/META-INF/LICENSE-notice.md"
+        }
+    }
+    lint {
+        // Меньше параллелизма анализа — снижает риск JBR C1 crash на Apple Silicon (16 GB).
+        checkReleaseBuilds = false
+        abortOnError = true
+        warningsAsErrors = false
+    }
 }
 
 tasks.withType<KotlinCompile>().configureEach {

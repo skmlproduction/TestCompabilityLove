@@ -29,6 +29,17 @@ if SDK_ROOT="$(_android_sdk_root)"; then
   export PATH="${SDK_ROOT}/platform-tools:${SDK_ROOT}/emulator:${SDK_ROOT}/cmdline-tools/latest/bin:${PATH}"
 fi
 
+# LOVETEST_ADB_SERIAL=… → adb -s (wins); LOVETEST_USE_EMULATOR=1 → adb -e
+lovetest_adb() {
+  if [[ -n "${LOVETEST_ADB_SERIAL:-}" ]]; then
+    command adb -s "${LOVETEST_ADB_SERIAL}" "$@"
+  elif [[ "${LOVETEST_USE_EMULATOR:-}" == "1" ]]; then
+    command adb -e "$@"
+  else
+    command adb "$@"
+  fi
+}
+
 android_sdk_adb() {
   if command -v adb >/dev/null 2>&1; then
     command adb "$@"

@@ -14,7 +14,7 @@ warn() { echo "  [WARN] $1"; }
 fail() { echo "  [FAIL] $1"; FAIL=1; }
 
 echo "1. Код и инвентарь"
-if ./gradlew verifyLoveTest --no-daemon -q; then
+if ./gradlew verifyLoveTest -q; then
   pass "verifyLoveTest"
 else
   fail "verifyLoveTest"

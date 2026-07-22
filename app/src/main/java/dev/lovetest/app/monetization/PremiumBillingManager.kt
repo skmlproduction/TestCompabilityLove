@@ -81,6 +81,13 @@ class PremiumBillingManager(
         }
     }
 
+    suspend fun queryFormattedPrice(): String? {
+        if (destroyed || !isConfigured()) return null
+        if (!connect()) return null
+        val productId = productIds.first()
+        return queryProductDetails(productId)?.oneTimePurchaseOfferDetails?.formattedPrice
+    }
+
     suspend fun purchase(activity: Activity): PremiumPurchaseOutcome {
         if (destroyed) return PremiumPurchaseOutcome.Error("billing_destroyed")
         if (!isConfigured()) return PremiumPurchaseOutcome.NotConfigured
@@ -106,13 +113,8 @@ class PremiumBillingManager(
         }
     }
 
-    suspend fun restorePurchases(): Boolean {
-        when (val ownership = queryPremiumOwnership()) {
-            true -> return true
-            false -> return false
-            null -> return false
-        }
-    }
+    suspend fun restorePurchases(): Boolean =
+        queryPremiumOwnership() == true
 
     /**
      * @return true if premium is owned, false if not, null if billing could not be queried.

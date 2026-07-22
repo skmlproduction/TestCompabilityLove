@@ -9,23 +9,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -52,13 +43,22 @@ import dev.lovetest.core.ui.components.LoveShadowCard
 import dev.lovetest.core.ui.components.LoveGradientBackground
 import dev.lovetest.core.ui.components.LoveHubBackgroundBlobs
 import dev.lovetest.core.ui.components.LovePrimaryButton
-import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
+import dev.lovetest.app.ui.common.LoveFeatureTopBar
+import dev.lovetest.app.util.loveInputContentPadding
+import dev.lovetest.core.ui.components.loveEdgeToEdgeScreenPadding
 import dev.lovetest.core.ui.theme.LovePrimary
+import dev.lovetest.core.ui.theme.LoveTypographyTokens
+import dev.lovetest.core.ui.theme.LoveOnPrimaryContainer
+import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
 import dev.lovetest.core.ui.theme.LoveSurface
+import dev.lovetest.core.ui.theme.LoveWheelBadgeContainer
+import dev.lovetest.core.ui.theme.LoveWheelBadgeText
+import dev.lovetest.core.ui.theme.LoveWheelHintCardText
+import dev.lovetest.core.ui.theme.LoveWheelPointerGold
+import dev.lovetest.core.ui.theme.LoveZodiacSlotUnselected
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WheelSpinScreen(
     onBack: () -> Unit,
@@ -69,6 +69,7 @@ fun WheelSpinScreen(
     val rotation = remember { Animatable(0f) }
     var isSpinning by remember { mutableStateOf(false) }
     val spinningCd = stringResource(R.string.wheel_spinning_cd)
+    val segmentsCd = stringResource(R.string.wheel_segments_cd, segments.joinToString())
 
     LaunchedEffect(Unit) {
         if (DebugUiPreview.matches("wheel_spin")) {
@@ -81,76 +82,51 @@ fun WheelSpinScreen(
         LoveHubBackgroundBlobs(Modifier.fillMaxSize())
         Canvas(Modifier.fillMaxSize()) {
             drawCircle(
-                color = Color(0xFFFFD54F).copy(0.5f),
+                color = LoveWheelPointerGold.copy(0.5f),
                 radius = 12.dp.toPx(),
                 center = Offset(size.width * 0.15f, size.height * 0.38f),
             )
             drawCircle(
-                color = Color(0xFFFFD54F).copy(0.4f),
+                color = LoveWheelPointerGold.copy(0.4f),
                 radius = 10.dp.toPx(),
                 center = Offset(size.width * 0.88f, size.height * 0.55f),
             )
         }
 
-        Scaffold(
-            containerColor = Color.Transparent,
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(
-                            text = stringResource(R.string.wheel_title),
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.fillMaxWidth(),
-                            textAlign = TextAlign.Center,
-                        )
-                    },
-                    navigationIcon = {
-                        TextButton(onClick = onBack, enabled = !isSpinning) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowBack, null, tint = LovePrimary)
-                            Text(
-                                stringResource(R.string.nav_back),
-                                color = LovePrimary,
-                                fontWeight = FontWeight.SemiBold,
-                                modifier = Modifier.padding(start = 4.dp),
-                            )
-                        }
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = LoveSurface.copy(alpha = 0.85f),
-                    ),
-                )
-            },
-        ) { padding ->
-            Column(
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .loveEdgeToEdgeScreenPadding(includeNavigationBar = false)
+                .loveInputContentPadding()
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            LoveFeatureTopBar(
+                title = stringResource(R.string.wheel_title),
+                onBack = onBack,
+                backEnabled = !isSpinning,
+                backContentColor = LovePrimary,
+            )
+            Text(
+                text = stringResource(R.string.wheel_hero_body),
+                style = LoveTypographyTokens.HeroBody,
+                color = LoveOnSurfaceVariant,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(top = 8.dp),
+            )
+            Box(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-                    .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 24.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
+                    .padding(top = 12.dp)
+                    .clip(RoundedCornerShape(22.dp))
+                    .background(LoveWheelBadgeContainer)
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
             ) {
                 Text(
-                    text = stringResource(R.string.wheel_hero_body),
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = LoveOnSurfaceVariant,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(top = 8.dp),
+                    text = stringResource(R.string.wheel_test_badge),
+                    style = LoveTypographyTokens.HubHeroChip,
+                    color = LoveWheelBadgeText,
                 )
-                Box(
-                    modifier = Modifier
-                        .padding(top = 12.dp)
-                        .clip(RoundedCornerShape(22.dp))
-                        .background(Color(0xFFFCE4EC))
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
-                ) {
-                    Text(
-                        text = stringResource(R.string.wheel_test_badge),
-                        style = MaterialTheme.typography.labelLarge,
-                        fontWeight = FontWeight.Bold,
-                        color = Color(0xFF880E4F),
-                    )
-                }
+            }
                 WheelPointer(modifier = Modifier.padding(top = 16.dp))
                 Box(
                     modifier = Modifier
@@ -164,6 +140,7 @@ fun WheelSpinScreen(
                         segments = segments,
                         rotationDegrees = rotation.value,
                         discSize = 300.dp,
+                        contentDescription = segmentsCd,
                     )
                 }
                 LoveShadowCard(
@@ -178,9 +155,9 @@ fun WheelSpinScreen(
                         text = stringResource(
                             if (isSpinning) R.string.wheel_spinning_hint else R.string.wheel_ready_hint,
                         ),
-                        style = MaterialTheme.typography.bodyLarge,
+                        style = LoveTypographyTokens.HeroBody,
                         fontWeight = FontWeight.SemiBold,
-                        color = Color(0xFF880E4F),
+                        color = LoveWheelHintCardText,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -206,36 +183,50 @@ fun WheelSpinScreen(
                         }
                     },
                     enabled = !isSpinning,
-                    modifier = Modifier
-                        .padding(top = 24.dp)
-                        .height(52.dp),
+                    modifier = Modifier.padding(top = 24.dp),
                 )
-                Text(
-                    text = stringResource(R.string.wheel_spin_note1),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = LoveOnSurfaceVariant,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp),
-                )
-                Text(
-                    text = stringResource(R.string.wheel_spin_note2),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = LoveOnSurfaceVariant,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth(),
-                )
-                Text(
-                    text = stringResource(R.string.wheel_spin_note3),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = LoveOnSurfaceVariant,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 4.dp, bottom = 32.dp),
-                )
-            }
+            Text(
+                text = stringResource(R.string.wheel_spin_note1),
+                style = LoveTypographyTokens.CardCaption,
+                color = LoveOnSurfaceVariant,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp),
+            )
+            Text(
+                text = stringResource(R.string.wheel_spin_note2),
+                style = LoveTypographyTokens.CardCaption,
+                color = LoveOnSurfaceVariant,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth(),
+            )
+            WheelNotBetFooter(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 12.dp, bottom = 16.dp)
+                    .navigationBarsPadding()
+                    .padding(bottom = 24.dp),
+            )
         }
+    }
+}
+
+@Composable
+private fun WheelNotBetFooter(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .clip(RoundedCornerShape(24.dp))
+            .background(LoveZodiacSlotUnselected)
+            .padding(horizontal = 16.dp, vertical = 12.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            text = stringResource(R.string.wheel_spin_note3),
+            style = LoveTypographyTokens.CardCaption,
+            fontWeight = FontWeight.SemiBold,
+            color = LoveOnPrimaryContainer,
+            textAlign = TextAlign.Center,
+        )
     }
 }

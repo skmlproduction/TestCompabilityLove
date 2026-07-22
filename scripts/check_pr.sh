@@ -21,4 +21,4 @@ python3 -m py_compile scripts/audit_screens_matrix.py scripts/verify_ui_inventor
 python3 scripts/audit_screens_matrix.py --write docs/product/AUDIT_REPORT.md
 bash scripts/validate_git_staging_cached.sh
 echo "Tests: $(bash scripts/count_tests.sh | grep '^summary=' | cut -d= -f2-)"
-./gradlew verifyLoveTest --no-daemon
+./gradlew verifyLoveTest

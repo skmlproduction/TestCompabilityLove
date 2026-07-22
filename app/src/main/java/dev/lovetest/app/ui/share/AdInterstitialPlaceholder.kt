@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -44,7 +45,10 @@ import dev.lovetest.app.R
 import dev.lovetest.app.util.decorativeForAccessibility
 import dev.lovetest.core.ui.components.LoveCardShadowElevation
 import dev.lovetest.core.ui.components.LoveHeartIcon
+import dev.lovetest.core.ui.components.LoveLayout
 import dev.lovetest.core.ui.components.loveCardShadow
+import dev.lovetest.core.ui.theme.LoveOutline
+import dev.lovetest.core.ui.theme.LoveOutlineVariant
 import dev.lovetest.core.ui.theme.LovePrimary
 import kotlinx.coroutines.delay
 
@@ -93,10 +97,15 @@ fun AdInterstitialPlaceholder(
                 }
                 Box(
                     modifier = Modifier
+                        .defaultMinSize(
+                            minWidth = LoveLayout.MinTouchTarget,
+                            minHeight = LoveLayout.MinTouchTarget,
+                        )
                         .clip(RoundedCornerShape(28.dp))
                         .background(Color(0xFF49454F).copy(alpha = 0.9f))
                         .clickable(enabled = secondsLeft == 0, onClick = onClose)
                         .padding(horizontal = 20.dp, vertical = 12.dp),
+                    contentAlignment = Alignment.Center,
                 ) {
                     Text(
                         text = if (secondsLeft > 0) {
@@ -123,17 +132,17 @@ fun AdInterstitialPlaceholder(
                         .fillMaxSize()
                         .loveCardShadow(RoundedCornerShape(16.dp), elevation = LoveCardShadowElevation.Card)
                         .clip(RoundedCornerShape(16.dp))
-                        .background(Color(0xFFE7E0EC))
+                        .background(LoveOutlineVariant)
                         .border(
                             width = 3.dp,
-                            color = Color(0xFFCAC4D0),
+                            color = LoveOutline,
                             shape = RoundedCornerShape(16.dp),
                         ),
                     contentAlignment = Alignment.Center,
                 ) {
                     Canvas(Modifier.fillMaxSize()) {
                         drawRoundRect(
-                            color = Color(0xFFCAC4D0),
+                            color = LoveOutline,
                             topLeft = Offset(24f, 24f),
                             size = Size(size.width - 48f, size.height - 48f),
                             cornerRadius = CornerRadius(16.dp.toPx()),
@@ -240,7 +249,7 @@ private fun AdCreativeMock() {
         modifier = Modifier
             .size(200.dp, 120.dp)
             .clip(RoundedCornerShape(24.dp))
-            .background(Color(0xFFCAC4D0)),
+            .background(LoveOutline),
         contentAlignment = Alignment.Center,
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -248,7 +257,7 @@ private fun AdCreativeMock() {
                 modifier = Modifier
                     .size(80.dp)
                     .clip(RoundedCornerShape(16.dp))
-                    .background(Color(0xFFE7E0EC)),
+                    .background(LoveOutlineVariant),
             )
             Row(
                 modifier = Modifier.padding(top = 12.dp),
@@ -259,7 +268,7 @@ private fun AdCreativeMock() {
                         modifier = Modifier
                             .size(width = 56.dp, height = 12.dp)
                             .clip(RoundedCornerShape(8.dp))
-                            .background(Color(0xFFE7E0EC)),
+                            .background(LoveOutlineVariant),
                     )
                 }
             }

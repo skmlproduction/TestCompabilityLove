@@ -411,7 +411,7 @@ tasks.register<Exec>("connectedComposeUiTestLoveTest") {
     group = "verification"
     description = "Compose UI tests на подключённом устройстве/эмуляторе."
     workingDir(rootDir)
-    commandLine("./gradlew", ":app:connectedDebugAndroidTest", "--no-daemon")
+    commandLine("./gradlew", ":app:connectedDebugAndroidTest")
 }
 
 tasks.register<Exec>("prepareGitPushLoveTest") {

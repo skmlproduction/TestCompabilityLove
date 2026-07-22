@@ -5,6 +5,11 @@ import android.net.Uri
 import android.provider.Settings
 import android.widget.Toast
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import dev.lovetest.app.BuildConfig
@@ -48,6 +53,7 @@ import dev.lovetest.app.monetization.AdsInterstitialController
 import dev.lovetest.app.monetization.bootstrapAdsIfAllowed
 import dev.lovetest.app.monetization.PremiumBillingManager
 import dev.lovetest.app.monetization.PremiumPurchaseOutcome
+import dev.lovetest.app.monetization.PremiumRestoreOutcome
 import dev.lovetest.app.monetization.restorePremiumAccess
 import dev.lovetest.app.util.findActivity
 import dev.lovetest.app.ui.session.RequireLoveResult
@@ -430,7 +436,12 @@ fun LoveTestNavHost(
             }
         }
         composable(Routes.PremiumPaywall) {
+            var displayPrice by remember { mutableStateOf<String?>(null) }
+            LaunchedEffect(billingManager) {
+                displayPrice = billingManager.queryFormattedPrice()
+            }
             PremiumPaywallScreen(
+                displayPrice = displayPrice,
                 onClose = { navController.navigateUp() },
                 onPurchase = {
                     appScope.launch {
@@ -476,22 +487,31 @@ fun LoveTestNavHost(
                 },
                 onRestore = {
                     appScope.launch {
-                        val restored = restorePremiumAccess(preferences, billingManager)
-                        if (restored) {
-                            preferences.setPremium(true)
-                            AdsInterstitialController.consume()
-                            Toast.makeText(
-                                context,
-                                context.getString(R.string.premium_restore_success),
-                                Toast.LENGTH_SHORT,
-                            ).show()
-                            navController.navigateUp()
-                        } else {
-                            Toast.makeText(
-                                context,
-                                context.getString(R.string.premium_restore_not_found),
-                                Toast.LENGTH_SHORT,
-                            ).show()
+                        when (restorePremiumAccess(preferences, billingManager)) {
+                            PremiumRestoreOutcome.Restored -> {
+                                preferences.setPremium(true)
+                                AdsInterstitialController.consume()
+                                Toast.makeText(
+                                    context,
+                                    context.getString(R.string.premium_restore_success),
+                                    Toast.LENGTH_SHORT,
+                                ).show()
+                                navController.navigateUp()
+                            }
+                            PremiumRestoreOutcome.NotFound -> {
+                                Toast.makeText(
+                                    context,
+                                    context.getString(R.string.premium_restore_not_found),
+                                    Toast.LENGTH_SHORT,
+                                ).show()
+                            }
+                            PremiumRestoreOutcome.Unavailable -> {
+                                Toast.makeText(
+                                    context,
+                                    context.getString(R.string.premium_restore_unavailable),
+                                    Toast.LENGTH_SHORT,
+                                ).show()
+                            }
                         }
                     }
                 },
@@ -516,21 +536,30 @@ fun LoveTestNavHost(
                 onPremium = { navController.navigateSingleTop(Routes.PremiumPaywall) },
                 onRestorePurchases = {
                     appScope.launch {
-                        val restored = restorePremiumAccess(preferences, billingManager)
-                        if (restored) {
-                            preferences.setPremium(true)
-                            AdsInterstitialController.consume()
-                            Toast.makeText(
-                                context,
-                                context.getString(R.string.premium_restore_success),
-                                Toast.LENGTH_SHORT,
-                            ).show()
-                        } else {
-                            Toast.makeText(
-                                context,
-                                context.getString(R.string.premium_restore_not_found),
-                                Toast.LENGTH_SHORT,
-                            ).show()
+                        when (restorePremiumAccess(preferences, billingManager)) {
+                            PremiumRestoreOutcome.Restored -> {
+                                preferences.setPremium(true)
+                                AdsInterstitialController.consume()
+                                Toast.makeText(
+                                    context,
+                                    context.getString(R.string.premium_restore_success),
+                                    Toast.LENGTH_SHORT,
+                                ).show()
+                            }
+                            PremiumRestoreOutcome.NotFound -> {
+                                Toast.makeText(
+                                    context,
+                                    context.getString(R.string.premium_restore_not_found),
+                                    Toast.LENGTH_SHORT,
+                                ).show()
+                            }
+                            PremiumRestoreOutcome.Unavailable -> {
+                                Toast.makeText(
+                                    context,
+                                    context.getString(R.string.premium_restore_unavailable),
+                                    Toast.LENGTH_SHORT,
+                                ).show()
+                            }
                         }
                     }
                 },
