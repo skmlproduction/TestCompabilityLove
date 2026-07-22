@@ -26,6 +26,7 @@ out.write_text("\n".join(filtered) + "\n", encoding="utf-8")
 print(f"  cleaned {out.relative_to(root)}")
 PY
 cp "${SRC}/data_collection.html" "${OUT}/data-collection.html"
+cp "${SRC}/terms_of_use.html" "${OUT}/terms.html"
 touch "${OUT}/.nojekyll"
 
 # Canonical path /privacy → index.html (GitHub Pages)
@@ -57,7 +58,7 @@ See docs/store/PRIVACY_HOSTING.md
 EOF
 
 echo "export_privacy_for_hosting: wrote ${OUT}/"
-echo "  index.html, privacy.html, .nojekyll"
-echo "  data-collection.html → optional Data safety link"
+echo "  index.html, privacy.html, terms.html, .nojekyll"
+echo "  data-collection.html → Data safety / in-app summary"
 echo "  suggest URL: ./scripts/suggest_privacy_url.sh USER REPO"
 ls -la "${OUT}"
