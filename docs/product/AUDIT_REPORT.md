@@ -10,7 +10,7 @@
 | P1 | 0 |
 | P2 | 0 |
 
-Design: light editorial romance — tokens in `DESIGN_SYSTEM.md`, SVG refs `docs/design/v2/` (34). **Quality pass 2026-07-18 (phases 0–8 closed):** Unicode validation + inline hints; tonal CTA; wheel PNG share; hub merged semantics; E2E Calculator/Zodiac/Love + route smoke 20; `verifyLoveTestBeforeStore` ✅. Tests: **63 unit · 110 instrumented**. Store PNG RU+EN **34/34 @1080×1920**; Xiaomi QA RU **34/34**. Legal HTTPS всё ещё 404 (внешний блокер).
+Design: light editorial romance — tokens in `DESIGN_SYSTEM.md`, SVG refs `docs/design/v2/` (34). **Quality pass 2026-07-18 (phases 0–8 closed):** Unicode validation + inline hints; tonal CTA; wheel PNG share; hub merged semantics; E2E Calculator/Zodiac/Love + route smoke 20; `verifyLoveTestBeforeStore` ✅. Tests: **63 unit · 110 instrumented**. Store PNG RU+EN **34/34 @1080×1920**; Xiaomi QA RU **34/34**. Legal HTTPS ✅ HTTP 200 ×3 (`skmlproduction.github.io/TestCompabilityLove`, 2026-07-22).
 
 ## Матрица экранов
 

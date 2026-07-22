@@ -20,7 +20,7 @@ pbcopy < ~/.ssh/id_ed25519.pub
 Проверка: `ssh -T git@github.com` → «Hi USER!…»
 
 
-> **Проверка (2026-07-19):** `https://github.com/skmlproduction/TestCompabilityLove` → **HTTP 404** (репо ещё нет или private без доступа). Pages тоже 404. Без создания repo + first push legal URL не заработает.
+> **Статус (2026-07-22):** repo `skmlproduction/TestCompabilityLove` live · Pages **HTTP 200 ×3**. Документ ниже — архив процедуры first push.
 
 1. https://github.com/new  
 2. **Repository name:** `TestCompabilityLove`  

@@ -2,7 +2,7 @@
 
 Обновлено: 2026-05-24 (Store PNG ✅, session persist, Compose UI tests)
 
-## Готово к Play (кроме privacy + prod keystore)
+## Готово к Play (privacy + keystore + AAB ✅ — 2026-07-22)
 
 См. **[docs/store/PLAY_READY.md](../store/PLAY_READY.md)**
 
@@ -61,11 +61,11 @@ Store: `docs/store/README.md` · `docs/store/STORE_UPLOAD.md`
 
 ## До Play Console
 
-1. **Privacy URL** — `./scripts/post_privacy_setup.sh https://…`
-2. **Скриншоты** — ✅ **67/67** реальных PNG
-3. **Подпись** — production upload key → `bundleReleaseLoveTest`
-4. **Git** — init ✅, нужен remote + push для CI/Pages
-5. **Console** — Data safety, IARC, SKU `remove_ads` — см. [BILLING_SETUP.md](../store/BILLING_SETUP.md)
+1. ~~Privacy URL~~ ✅ `https://skmlproduction.github.io/TestCompabilityLove/`
+2. ~~Скриншоты~~ ✅ **67/67** реальных PNG
+3. ~~Подпись / AAB~~ ✅ upload key + `build/store-upload/`
+4. ~~Git / Pages~~ ✅ `skmlproduction/TestCompabilityLove`
+5. **Console** — создать app, listing, Data safety, IARC, SKU `remove_ads`, Internal upload — см. [INTERNAL_UPLOAD_NOW.md](../store/INTERNAL_UPLOAD_NOW.md) · [BILLING_SETUP.md](../store/BILLING_SETUP.md)
 
 ## Аудит (типично)
 

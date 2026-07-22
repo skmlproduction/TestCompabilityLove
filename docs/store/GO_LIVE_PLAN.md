@@ -69,12 +69,12 @@
 
 ---
 
-## Автопроверки (эталон на дату аудита)
+## Автопроверки (эталон 2026-07-22)
 
 ```bash
-./scripts/project_health.sh          # OK, кроме privacy/keystore/git/AAB/pack
-./scripts/print_store_checklist.sh   # 3 блокера Play (см. ниже)
-./scripts/play_console_next.sh       # шаг 1/5: git push
+./scripts/print_store_checklist.sh   # блокеров нет
+./scripts/play_console_next.sh       # Internal upload (INTERNAL_UPLOAD_NOW.md)
+./scripts/check_legal_urls.sh        # HTTP 200 ×3
 ./gradlew verifyLoveTest storeReadyLoveTest   # OK (повтор при OOM daemon — без --no-daemon)
 ```
 

@@ -2,7 +2,7 @@
 
 Обновлено: **2026-07-19** · Основа: [PRD.md](./PRD.md) §7, [PRODUCT_DECISIONS.md](./PRODUCT_DECISIONS.md), [PROJECT_STATUS.md](./PROJECT_STATUS.md), [RELEASE_ENGINEERING.md](./RELEASE_ENGINEERING.md).
 
-**Статус v1:** не начинать V2 (AdMob/history/deeplinks) до **Production GO**. Сейчас блокеры: legal Pages HTTP 200 + Closed IAP smoke.
+**Статус v1:** не начинать V2 (AdMob/history/deeplinks) до **Production GO**. Legal Pages ✅ 200×3. Осталось: Internal upload (user) → Closed IAP smoke.
 
 **Легенда приоритета:** P0 = критично для дохода/стабильности · P1 = высокий эффект · P2 = рост/полировка · P3 = nice-to-have.
 

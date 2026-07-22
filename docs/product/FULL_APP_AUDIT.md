@@ -197,7 +197,7 @@
 ## F. Cross-cutting backlog (приоритет)
 
 ### P0 — Store / trust
-1. `git push` → Pages → `check_legal_urls.sh` 200
+1. ~~`git push` → Pages → `check_legal_urls.sh` 200~~ ✅ 2026-07-22
 2. `recapture_store_screenshots.sh` на эмуляторе 1080×1920
 3. IAP repositioning (SKU name / benefits / «support dev»)
 4. Device smoke: все 8 тестов + settings privacy + premium continue free
@@ -237,7 +237,7 @@
 | Zero visual bugs | Много 🟡 | adb pass all flows |
 | Production polish | Internal-ready | Closed-tested + fresh assets |
 
-**Итог:** сильный **v1 scaffold + release pipeline**, но до «идеального» нужна **системная UI-полировка 1:1**, **честная монетизация**, **свежие скриншоты**, **live legal**.
+**Итог:** v1 scaffold + release pipeline + **live legal** + store pack готовы. Дальше — Play Internal upload и Closed IAP (пользователь). V2 UI 1:1 — после Production GO.
 
 ---
 
