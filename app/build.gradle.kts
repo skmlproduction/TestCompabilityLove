@@ -112,6 +112,8 @@ android {
             if (project.lovetestAdsEnabled()) {
                 manifest.srcFile("src/ads/AndroidManifest.xml")
             }
+            // Реклама выкл: рекламные разрешения и автозапуск AdMob убираются
+            // в src/release/AndroidManifest.xml (tools:node="remove").
         }
     }
     packaging {
