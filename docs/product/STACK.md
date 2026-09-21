@@ -9,7 +9,7 @@
 | Язык | Kotlin 2.x |
 | UI | Jetpack Compose + Material 3 (**light**, dynamic color **off** — фиксированная романтическая палитра) |
 | Навигация | Navigation Compose, type-safe routes (`Routes` object) |
-| Min/Target SDK | 26 / 35 |
+| Min/Target SDK | 26 / 36 |
 | Тема | `core:ui` — `LoveTestTheme`, цвета из `docs/design/DESIGN_SYSTEM.md` (после F2) |
 
 **Primary seed:** `#C2185B` → M3 `ColorScheme` через `ColorScheme.fromSeed` или явные токены.

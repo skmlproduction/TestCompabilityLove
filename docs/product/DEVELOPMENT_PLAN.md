@@ -3,7 +3,7 @@
 **Продукт (RU):** Тест на совместимость и любовь  
 **Продукт (EN):** Love Tester  
 **Пакет:** `dev.lovetest.app`  
-**Стек:** Kotlin · Jetpack Compose · Material 3 · minSdk 26 · targetSdk 35  
+**Стек:** Kotlin · Jetpack Compose · Material 3 · minSdk 26 · targetSdk 36
 **Метод:** LockDraw (`../NEWlockscreen`) — документы → SVG → scaffold → UI 1:1  
 
 **Экраны:** см. [SCREENS_MASTER_PLAN.md](./SCREENS_MASTER_PLAN.md) (**№1–№30**).

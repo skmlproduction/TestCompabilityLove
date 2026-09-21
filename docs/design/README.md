@@ -124,7 +124,7 @@ SVG-макеты **Material 3 light**, primary `#C2185B`, surface `#FFFBFE`.
 
 **F5 Store PNG (инфраструктура):** `materializeScreenshotPlaceholders` · `captureScreenshotCatalogRu|En` · `verifyLoveTestBeforeStore` · `docs/screenshots/WORKFLOW.md`.
 
-**F5 монетизация / шаринг / legal:** `PremiumBillingManager` (Play Billing 8 + acknowledge) · share-sheet на result-экранах · `assets/legal/*.html` + `LegalDocumentActivity` · `keystore.properties.example` · см. `MONETIZATION.md`, `ONBOARDING_AND_LEGAL.md`.
+**F5 монетизация / шаринг / legal:** `PremiumBillingManager` (Play Billing 9.1 + acknowledge) · share-sheet на result-экранах · `assets/legal/*.html` + `LegalDocumentActivity` · `keystore.properties.example` · см. `MONETIZATION.md`, `ONBOARDING_AND_LEGAL.md`.
 
 **F5 (код):** ✅ инфраструктура съёмки, billing, legal, store-доки. **Осталось локально:** `captureScreenshotCatalogRu|En` → `verifyLoveTestBeforeStore`.
 

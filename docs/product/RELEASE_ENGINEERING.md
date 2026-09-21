@@ -41,7 +41,7 @@
 
 ```bash
 ./gradlew verifyLoveTest              # PR-цикл: inventory + compile + lint
-./gradlew verifyLoveTestRelease       # + assembleRelease + bundleRelease
+./gradlew verifyLoveTestRelease       # + Store PNG gate + assembleRelease + bundleRelease + AAB sanity
 ./gradlew verifyLoveTestBeforeStore   # + проверка реальных PNG Store (F5)
 ```
 
@@ -52,7 +52,7 @@
 | Workflow | Триггер | Действие |
 |----------|---------|----------|
 | `ci.yml` | push/PR | JVM inventory + Android `verifyLoveTest` |
-| `release-assemble.yml` | manual | `verifyLoveTestRelease` + AAB/APK artifacts |
+| `release-assemble.yml` | manual | `verifyLoveTestRelease` + AAB sanity + AAB/APK artifacts |
 | `emulator-screenshots.yml` | manual | Черновик PNG (F5) |
 
 `permissions`: `contents: read`; для artifacts — `actions: write`.

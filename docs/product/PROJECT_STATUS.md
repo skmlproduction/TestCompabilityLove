@@ -6,7 +6,7 @@
 
 См. **[docs/store/PLAY_READY.md](../store/PLAY_READY.md)**
 
-**Качество:** 36 unit tests · 56 instrumented (49 Compose UI + 7 route smoke) · session snapshot restore
+**Качество:** 69 unit tests · 115 instrumented (95 Compose UI + 20 route smoke) · session snapshot restore
 
 ## Готово
 
@@ -28,9 +28,9 @@
 ./scripts/init_store_config.sh     # gradle.properties + debug keystore если placeholder
 ./scripts/generate_debug_upload_keystore.sh  # локальный upload key (smoke-test)
 ./scripts/setup_android_sdk.sh     # подсказка по adb PATH
-./gradlew bundleReleaseLoveTest    # verify + bundleRelease
+./gradlew verifyReleaseArtifact    # bundleRelease + AAB sanity
 ./gradlew verifyLoveTest           # compile, lint, unit tests
-./gradlew verifyLoveTestRelease    # + release AAB/APK
+./gradlew verifyLoveTestRelease    # + Store PNG gate + release AAB/APK + AAB sanity
 ./gradlew -PscreenId=protocol_input openLoveTestDebugScreen
 ./gradlew printStoreChecklistLoveTest   # статус Play Console
 ./gradlew finalizeStoreReleaseLoveTest  # финальный gate Play

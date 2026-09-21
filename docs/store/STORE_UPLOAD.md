@@ -48,7 +48,7 @@ cp keystore.properties.example keystore.properties
 ## 3. AAB
 
 ```bash
-./gradlew bundleRelease
+./gradlew verifyReleaseArtifact
 ```
 
 Файл: `app/build/outputs/bundle/release/app-release.aab`

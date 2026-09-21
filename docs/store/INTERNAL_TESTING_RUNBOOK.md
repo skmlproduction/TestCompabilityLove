@@ -12,7 +12,7 @@ cd /path/to/TestCompabilityLove
 
 # 1. Gate (без --no-daemon)
 ./gradlew verifyLoveTestBeforeStore
-./gradlew bundleRelease                    # или bundleReleaseLoveTest
+./gradlew verifyReleaseArtifact            # bundleRelease + AAB sanity
 
 # 2. Финальный pack
 ./scripts/pack_store_upload.sh

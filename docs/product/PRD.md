@@ -79,7 +79,7 @@ flowchart TD
 
 | Область | Требование |
 |---------|------------|
-| **Платформа** | `minSdk` 26, `targetSdk` 35, Jetpack Compose, Material 3 light. |
+| **Платформа** | `minSdk` 26, `targetSdk` 36, Jetpack Compose, Material 3 light. |
 | **Офлайн** | Все расчёты и UI работают без сети; сеть — только реклама, billing, Firebase (если включены). |
 | **Приватность** | Имена не отправляются на сервер в MVP; при добавлении аналитики — обновить Data safety. |
 | **Локализация** | RU + EN; парность ключей — `verifyUiInventory`. |

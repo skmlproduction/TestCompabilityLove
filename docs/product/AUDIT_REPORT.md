@@ -10,7 +10,7 @@
 | P1 | 0 |
 | P2 | 0 |
 
-Design: light editorial romance — tokens in `DESIGN_SYSTEM.md`, SVG refs `docs/design/v2/` (34). **Quality pass 2026-07-18 (phases 0–8 closed):** Unicode validation + inline hints; tonal CTA; wheel PNG share; hub merged semantics; E2E Calculator/Zodiac/Love + route smoke 20; `verifyLoveTestBeforeStore` ✅. Tests: **63 unit · 110 instrumented**. Store PNG RU+EN **34/34 @1080×1920**; Xiaomi QA RU **34/34**. Legal HTTPS ✅ HTTP 200 ×3 (`skmlproduction.github.io/TestCompabilityLove`, 2026-07-22).
+Design: light editorial romance — tokens in `DESIGN_SYSTEM.md`, SVG refs `docs/design/v2/` (34). **Quality pass 2026-09-06:** Unicode validation + inline hints; adaptive tonal/outlined/primary CTA and text-bearing heroes/chips; wheel PNG share; hub merged semantics; API 36; Billing 9.1; E2E Calculator/Zodiac/Love + route smoke 20; `verifyLoveTestBeforeStore` ✅. Tests: **69 unit · 115 instrumented**. Store PNG RU+EN **34/34 @1080×1920**; Xiaomi QA RU **34/34**. Legal HTTPS ✅ HTTP 200 ×3 (`skmlproduction.github.io/TestCompabilityLove`, 2026-09-06).
 
 ## Матрица экранов
 
@@ -68,5 +68,5 @@ _Нет._
 1. `./gradlew captureScreenshotCatalogRu` и `En` на эмуляторе 1080×1920
 2. `./gradlew verifyLoveTestBeforeStore`
 3. Задать `lovetest.privacy.policy.url` в `gradle.properties` (`./scripts/init_store_config.sh`)
-4. `./gradlew releaseGateLoveTest` → `bundleRelease`
+4. `./gradlew releaseGateLoveTest` → `verifyReleaseArtifact`
 5. Internal track → Closed testing → Production

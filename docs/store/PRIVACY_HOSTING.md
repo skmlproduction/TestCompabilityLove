@@ -45,7 +45,7 @@ git push -u origin main
 ./scripts/post_privacy_setup.sh https://YOUR_USER.github.io/TestCompabilityLove/
 ```
 
-Скрипт: `set_privacy_url` → `gradle.properties` → `check_privacy_url` (curl) → `exportPrivacyForHosting` → при наличии keystore — `bundleRelease`.
+Скрипт: `set_privacy_url` → `gradle.properties` → `check_privacy_url` (curl) → `exportPrivacyForHosting` → при наличии keystore — `verifyReleaseArtifact`.
 
 Тот же URL → Play Console → **Store listing** → **Privacy policy**.
 
@@ -63,7 +63,7 @@ https://<USER>.github.io/<REPO>/
 
 ```bash
 ./scripts/set_privacy_url.sh https://YOUR_USER.github.io/TestCompabilityLove/
-./gradlew bundleReleaseLoveTest
+./gradlew verifyLoveTestRelease
 ```
 
 Тот же URL → Play Console → **Store listing** → **Privacy policy**.

@@ -98,7 +98,7 @@ lovetest.privacy.policy.url=https://skmlproduction.github.io/TestCompabilityLove
 
 ```bash
 ./scripts/set_privacy_url.sh https://skmlproduction.github.io/TestCompabilityLove/
-./gradlew :app:bundleRelease
+./gradlew verifyReleaseArtifact
 ```
 
 Полный чеклист после push: `./scripts/post_push.sh`

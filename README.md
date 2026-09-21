@@ -9,7 +9,7 @@ Kotlin · Jetpack Compose · Material 3 · `dev.lovetest.app`
 ```bash
 ./gradlew :app:installDebug
 ./gradlew verifyLoveTest          # unit + lint + UI/test inventory
-./gradlew countTestsLoveTest      # 36 unit · 56 instrumented (49+7)
+./gradlew countTestsLoveTest      # 69 unit · 115 instrumented
 ./scripts/project_health.sh       # быстрая сводка без полной сборки
 ```
 
@@ -40,7 +40,7 @@ Debug-превью экрана:
 | Блок | Статус |
 |------|--------|
 | UI 34 экрана, RU+EN | ✅ |
-| Тесты 36 unit · 49 Compose UI + 7 route | ✅ |
+| Тесты 69 unit · 115 instrumented (95 Compose UI + 20 route smoke) | ✅ |
 | Store PNG 67/67 | ✅ |
 | AAB + mapping | ✅ |
 | Privacy HTTPS URL | ⏳ |

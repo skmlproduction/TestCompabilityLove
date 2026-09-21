@@ -14,7 +14,7 @@
 
 | Блок | Статус |
 |------|--------|
-| Код, тесты | ✅ 63 unit · 115 instrumented |
+| Код, тесты | ✅ 69 unit · 115 instrumented |
 | Store PNG 67/67 (1080×1920) | ✅ |
 | AAB + R8 mapping | ✅ `build/store-upload/app-release.aab` |
 | Feature graphic 1024×500 | ✅ |

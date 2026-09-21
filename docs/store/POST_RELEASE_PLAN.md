@@ -86,7 +86,7 @@ Thanks for your feedback. Love Tester is for entertainment only — results are 
 |-----|----------|
 | 1 | Воспроизвести на device/API level из Vitals |
 | 2 | Fix + `versionCode` 2, `versionName` 1.0.1 |
-| 3 | `./gradlew verifyLoveTest` → `bundleRelease` → `pack_store_upload.sh` |
+| 3 | `./gradlew verifyLoveTest` → `verifyReleaseArtifact` → `pack_store_upload.sh` |
 | 4 | Upload **Production** (не Internal) с **full rollout 100%** после быстрого Internal smoke |
 | 5 | Release notes: «Исправлена стабильность / Fixed crash on …» |
 | 6 | Обновить `AGENT_STATUS.md` |

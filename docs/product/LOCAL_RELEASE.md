@@ -24,7 +24,7 @@
 ./gradlew exportPrivacyForHosting
 ./scripts/suggest_privacy_url.sh USER REPO --apply
 ./scripts/check_privacy_url.sh
-./gradlew bundleReleaseLoveTest
+./gradlew verifyReleaseArtifact
 ```
 
 ## Подпись upload key
@@ -35,7 +35,7 @@
 
 # Production (Play)
 LOVETEST_KEYSTORE_PASS='***' LOVETEST_KEY_PASS='***' ./scripts/generate_upload_keystore.sh
-./gradlew bundleReleaseLoveTest
+./gradlew verifyLoveTestRelease
 ```
 
 ## Store checklist

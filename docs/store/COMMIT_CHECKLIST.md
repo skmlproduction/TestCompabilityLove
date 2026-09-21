@@ -16,7 +16,7 @@ CI проверяет PNG gate: `.github/workflows/ci.yml`, `store-png-gate.yml`
 
 | Команда | Что |
 |---------|-----|
-| `./gradlew verifyLoveTest` | 36 unit + inventory (CI) |
+| `./gradlew verifyLoveTest` | 69 unit + inventory (CI) |
 | `./scripts/run_route_smoke_tests.sh` | 7 route smoke (~1 мин) |
 | `./scripts/run_compose_ui_tests.sh` | 49 Compose UI |
 
@@ -56,7 +56,7 @@ git push -u origin main
 ```bash
 ./scripts/post_privacy_setup.sh https://USER.github.io/REPO/
 git add gradle.properties   # только если URL не секрет
-./gradlew bundleReleaseLoveTest
+./gradlew verifyLoveTestRelease
 ```
 
 ## Рекомендуемый commit перед upload

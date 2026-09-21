@@ -38,10 +38,10 @@
 ./gradlew verifyLoveTest              # unit + lint + UI/test inventory
 ./gradlew countTestsLoveTest          # inventory: unit + Compose UI + route smoke
 ./scripts/run_compose_ui_tests.sh     # Compose UI на эмуляторе (adb)
-./gradlew verifyLoveTestRelease       # AAB с R8
+./gradlew verifyLoveTestRelease       # Store PNG gate + AAB с R8 + artifact sanity
 ```
 
-**Качество (2026-05):** 36 unit · 56 instrumented (49 Compose UI + 7 route smoke).
+**Качество (2026-09):** 69 unit · 115 instrumented (95 Compose UI + 20 route smoke).
 
 ## 5. Data safety (черновик MVP)
 
@@ -67,7 +67,7 @@
 
 ## 7. Технический релиз
 
-- [ ] `targetSdk` 35
+- [x] `targetSdk` 36
 - [ ] Play App Signing
 - [ ] R8 mapping uploaded
 - [ ] Нет лишних permissions (storage legacy — избегать)
@@ -94,7 +94,7 @@ git add . && git commit -m "Love Tester — store ready" && git push -u origin m
 ./scripts/post_push.sh                       # Pages → privacy → keystore
 ./scripts/post_privacy_setup.sh https://USER.github.io/REPO/
 LOVETEST_KEYSTORE_PASS='***' ./scripts/generate_upload_keystore.sh
-./gradlew bundleReleaseLoveTest
+./gradlew verifyLoveTestRelease
 ./gradlew finalizeStoreReleaseLoveTest
 ```
 

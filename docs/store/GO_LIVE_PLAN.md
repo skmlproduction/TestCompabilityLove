@@ -40,7 +40,7 @@
 | # | Шаг | Тип | Команда / артефакт |
 |---|-----|-----|-------------------|
 | B1 | Production upload keystore | **код** + **календарь** | ✅ `build/keystore/lovetest-upload.jks` |
-| B2 | Release AAB + mapping | **код** | ✅ `bundleRelease` / `build/store-upload/app-release.aab` |
+| B2 | Release AAB + mapping | **код** | ✅ `verifyReleaseArtifact` / `build/store-upload/app-release.aab` |
 | B3 | Upload-пакет | **код** | ✅ `build/store-upload/` + `build/love-tester-store-upload.zip` |
 
 *Фаза B закрыта (2026-07-22). См. [INTERNAL_UPLOAD_NOW.md](./INTERNAL_UPLOAD_NOW.md).*
