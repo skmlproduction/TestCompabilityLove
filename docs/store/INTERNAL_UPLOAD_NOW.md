@@ -4,11 +4,16 @@
 
 Локальный чеклист `./scripts/print_store_checklist.sh` → **блокеров нет**.
 
+> Пакет пересобран **2026-09-21** из одной сборки (LT-01 закрыт): AAB SHA-256
+> `fe86e8b5ddacb67e2c97af9b9b33fdb5485d7aefca88b5d02d60f8a25dd6f54e`,
+> versionCode 1 / 1.0.0, target 36. Старый пакет — `build/store-upload-ARCHIVED-20260921/`, не использовать.
+> ⚠️ Listing-скриншоты в пакете от 2026-07-18 (до adaptive/accessibility pass) — планируется пересъёмка; для старта Internal допустимы, перед Closed заменить.
+
 ## Файлы для загрузки
 
 | Что | Путь |
 |-----|------|
-| AAB | `build/store-upload/app-release.aab` (~8.4 MB, собран 2026-07-22) |
+| AAB | `build/store-upload/app-release.aab` (~9.0 MB, собран 2026-09-21) |
 | ZIP всего пакета | `build/love-tester-store-upload.zip` |
 | mapping (R8) | `build/store-upload/mapping.txt` |
 | Listing 7×RU / 7×EN | `build/store-upload/listing-screenshots/{ru,en}/` |

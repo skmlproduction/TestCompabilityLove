@@ -1,24 +1,18 @@
 # AGENT_STATUS — TestCompabilityLove (Love Test, dev.lovetest.app)
 
-## Актуальная очередь — 2026-09-09
+## Актуальная очередь — 2026-09-21
 
-[Подробный план дальнейшей работы](docs/NEXT_DEVELOPMENT_PLAN_2026-09-09.md). Приоритет актуального плана выше исторических процентов/очередей ниже; предыдущие результаты сохраняются как история.
-
-LT-01: пересобрать согласованный upload-пакет. Старый build/store-upload AAB отличается от текущего release AAB; инструкцию INTERNAL_UPLOAD_NOW пока не считать безопасным источником нового кандидата. Последний счёт unit: 79 суммарно (70 app + 9 core/domain).
-
-В этом блоке составлен план, код не изменялся и новые сборки не запускались. Внешние проверки не засчитаны выполненными.
-
-> Живой статус для центрального агента-оркестратора и пользователя.
-> Обновляй ПОСЛЕ каждого осмысленного изменения. Новые записи журнала — сверху.
+[План работы до Production](docs/WORK_PLAN_KIMI_2026-09-21.md) (Kimi). Перекрывает [план 2026-09-09](docs/NEXT_DEVELOPMENT_PLAN_2026-09-09.md): LT-01 закрыт, далее Фаза 2 — дизайн-фиксы D1–D6 (см. план), затем device QA и пересъёмка store-скриншотов.
 
 ## Снимок
 - **Стадия:** локальная инженерия API 36 и adaptive CTA завершена — **GO для device/Internal QA**.
 - **Next user:** Play Console Internal upload → `docs/store/INTERNAL_UPLOAD_NOW.md`
 - **Cert SHA-256:** `6D:27:9A:11:08:2C:C0:B5:DA:A4:9B:9B:3B:1C:CD:0B:1B:0D:F4:14:03:ED:C2:0A:B4:1B:7C:FF:22:5D:B3:19`
-- Checklist / legal 200×3 / Store PNG / fresh signed AAB+APK / docs synced. Подключённых ADB-устройств нет.
-- **Последний gate:** 2026-09-07 — 70 unit / 0 failures; lint 0 errors / 24 warnings; target 36; artifact gate PASS; AAB SHA `f063ca80…48073b`.
+- Checklist / legal 200×3 (перепроверено 2026-09-19) / fresh signed AAB / docs synced. Подключённых ADB-устройств нет.
+- **Последний gate:** 2026-09-21 — 70 unit / 0 failures; lint 0 errors / 24 warnings; target 36; artifact gate PASS; AAB SHA `fe86e8b5…f54e`.
 
 ## Журнал
+- 2026-09-21 — **LT-01 закрыт (Kimi).** Долгий git dirty (69 modified + 7 untracked, работа 06–09.09) разобран на 5 атомарных коммитов (`9211f8f`…`2833b38`): chore gitignore/crash-logs, feat API 36 + a11y/adaptive pass + новые unit-тесты, core/ui components, docs, scripts. Дерево чистое, 5 коммитов впереди origin (push — за владельцем). Полный `verifyLoveTestRelease` PASS: verify_test_inventory OK (70 unit · 115 instrumented), verify_ui_inventory OK, lint 0 errors, verify_release_artifact OK (AAB 8,967,681 bytes, 8 native libs, 0 bad entries), AAB SHA-256 `fe86e8b5ddacb67e2c97af9b9b33fdb5485d7aefca88b5d02d60f8a25dd6f54e`. Старый upload-пакет (AAB `5fd68543…`) перемещён в `build/store-upload-ARCHIVED-20260921/`; новый согласованный пакет + ZIP сгенерированы `pack_store_upload.sh` (AAB+mapping+docs одной сборки, хеши совпадают). `INTERNAL_UPLOAD_NOW.md` обновлён: новый SHA, предупреждение о stale listing-скриншотах (18.07, пересъёмка в Фазе 3). Код приложения не изменялся.
 - 2026-09-07 — Завершено дополнение ролей кнопок закрытия рекламного preview и перехода в Premium. Повторный `verifyLoveTestRelease :app:compileDebugAndroidTestKotlin` завершился успешно: 158 tasks, 70 unit в inventory, lint 0 errors / 24 warnings, AAB artifact check PASS (8 native libs, no test entries). Актуальный AAB: 8,967,695 bytes, SHA-256 `f063ca804c43d76401ab635c2709c2cb52f3f8d9d1fbec94d296df8a3848073b`; APK SHA-256 `63069858e5f690daf05c3ba36afa490811e284daf061ae1d6a14ad65300582b1`. Проверка TalkBack на устройстве остаётся отдельным этапом.
 - 2026-09-07 — Accessibility semantics pass: нижняя навигация Hub объявляется как tabs и передаёт выбранное/невыбранное состояние; знаки Zodiac — как radio buttons с полным selected state; интерактивные строки Settings — как buttons. Добавлен source regression contract. Полный `verifyLoveTestRelease` + debug androidTest Kotlin compile PASS (158 tasks): **70 unit / 0 failures**, inventory 70 unit + 115 instrumented, lint **0 errors / 24 intentional warnings** (toolchain/dependency notices, test-only native alignment и mipmap qualifier), Store/R8/signed release/target 36/16KB зелёные. AAB: 8,967,562 bytes, SHA-256 `5a2c730c318430223bc9d5b76a64b14caf191f9fa4e447472f26be431d3eea5d`; APK: 5,093,359 bytes, SHA-256 `22a7c528f830a851d5be8db8397285a86c8a7bbdaadab36a010173a0a307230d`.
 - 2026-09-07 — Повторный Material/touch-target scan подтвердил завершённость локального UI: фиксированные 52/56dp относятся к полям и неинтерактивным preview-слотам, крупные display values — к процентам/результатам/иллюстрациям; рабочие CTA используют общий adaptive minimum contract и two-line labels. `verifyLoveTestRelease` + debug androidTest Kotlin compile повторно PASS (158 tasks): **69 unit / 0 failures**, lint **0 errors / 16 intentional warnings**, inventory 69 unit + 115 instrumented, Store/R8/signed release/target 36/16KB зелёные. AAB остаётся 8,967,564 bytes, SHA-256 `8c8196a5e9c2e319cbf007e1d12bcf61b7e0ef1a067f205f3aa0de78cd69747c`; исходный код не изменялся, ADB недоступен.
