@@ -10,11 +10,16 @@ import android.widget.FrameLayout
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
+import androidx.core.graphics.createBitmap
+import androidx.core.graphics.get
 import androidx.lifecycle.setViewTreeLifecycleOwner
 import androidx.lifecycle.setViewTreeViewModelStoreOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
@@ -23,6 +28,7 @@ import dev.lovetest.core.ui.theme.LoveTestTheme
 
 internal object ShareCardDimensions {
     /** screen27 share card at 3× (360dp × 387dp). */
+    const val DENSITY = 3f
     const val WIDTH_PX = 1080
     const val HEIGHT_PX = 1161
 }
@@ -79,7 +85,11 @@ internal object ShareCardImageExporter {
             setViewTreeViewModelStoreOwner(lifecycleOwner)
             setViewTreeSavedStateRegistryOwner(lifecycleOwner)
             setContent {
-                LoveTestTheme { content() }
+                LoveTestTheme {
+                    CompositionLocalProvider(LocalDensity provides Density(ShareCardDimensions.DENSITY)) {
+                        content()
+                    }
+                }
             }
         }
         host.addView(
@@ -114,10 +124,9 @@ internal object ShareCardImageExporter {
             // Flush pending layout/draw without posting (callers are often on main).
             composeView.invalidate()
             host.invalidate()
-            val bitmap = Bitmap.createBitmap(
+            val bitmap = createBitmap(
                 ShareCardDimensions.WIDTH_PX,
                 ShareCardDimensions.HEIGHT_PX,
-                Bitmap.Config.ARGB_8888,
             )
             composeView.draw(Canvas(bitmap))
             // Second pass after Compose has applied first measure.
@@ -150,7 +159,7 @@ internal object ShareCardImageExporter {
         )
         var opaque = 0
         for ((x, y) in points) {
-            val c = bitmap.getPixel(x, y)
+            val c = bitmap[x, y]
             val a = (c ushr 24) and 0xff
             val r = (c ushr 16) and 0xff
             val g = (c ushr 8) and 0xff

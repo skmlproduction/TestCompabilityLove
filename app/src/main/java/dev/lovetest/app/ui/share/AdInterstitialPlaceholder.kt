@@ -36,6 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -103,7 +104,11 @@ fun AdInterstitialPlaceholder(
                         )
                         .clip(RoundedCornerShape(28.dp))
                         .background(Color(0xFF49454F).copy(alpha = 0.9f))
-                        .clickable(enabled = secondsLeft == 0, onClick = onClose)
+                        .clickable(
+                            enabled = secondsLeft == 0,
+                            role = Role.Button,
+                            onClick = onClose,
+                        )
                         .padding(horizontal = 20.dp, vertical = 12.dp),
                     contentAlignment = Alignment.Center,
                 ) {
@@ -200,7 +205,7 @@ fun AdInterstitialPlaceholder(
                     .padding(horizontal = 24.dp, vertical = 16.dp)
                     .clip(RoundedCornerShape(24.dp))
                     .background(LovePrimary.copy(alpha = 0.85f))
-                    .clickable(onClick = onPremium)
+                    .clickable(role = Role.Button, onClick = onPremium)
                     .padding(horizontal = 20.dp, vertical = 18.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {

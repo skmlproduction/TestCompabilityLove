@@ -1,5 +1,8 @@
 package dev.lovetest.app.ui.share
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -8,7 +11,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -26,15 +29,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.lovetest.app.R
 import dev.lovetest.app.util.ShareTargetPackages
@@ -51,12 +54,12 @@ fun ShareActionsPanel(
     shareText: String,
     cardContent: ShareCardContent?,
     onDismiss: () -> Unit,
-    onShareFallback: () -> Unit = {},
     modifier: Modifier = Modifier,
+    onShareFallback: () -> Unit = {},
     wheelPrize: String? = null,
 ) {
     val context = LocalContext.current
-    val clipboard = LocalClipboardManager.current
+    val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 
     fun shareImage(targetPackage: String?) {
         val activity = context.findActivity()
@@ -119,7 +122,7 @@ fun ShareActionsPanel(
                 labelColor = LoveOnSurfaceVariant,
                 iconTint = LoveOnSurfaceVariant,
                 onClick = {
-                    clipboard.setText(AnnotatedString(shareText))
+                    clipboard.setPrimaryClip(ClipData.newPlainText(null, shareText))
                     Toast.makeText(
                         context,
                         context.getString(R.string.share_copied_toast),
@@ -143,7 +146,7 @@ fun ShareActionsPanel(
             modifier = Modifier
                 .padding(top = 28.dp)
                 .fillMaxWidth()
-                .height(52.dp)
+                .heightIn(min = 52.dp)
                 .clip(RoundedCornerShape(44.dp))
                 .background(Color(0xFF49454F))
                 .semantics {
@@ -158,6 +161,9 @@ fun ShareActionsPanel(
                 style = LoveTypographyTokens.CardTitle,
                 fontWeight = FontWeight.SemiBold,
                 color = Color.White,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                textAlign = TextAlign.Center,
             )
         }
     }

@@ -6,8 +6,6 @@
     <string name="splash_brand_kicker">LOVE TESTER</string>
     <string name="splash_hero_line1">Тест на совместимость</string>
     <string name="splash_hero_line2">и любовь</string>
-    <string name="splash_headline_line1">Тест на совместимость</string>
-    <string name="splash_headline_line2">и любовь</string>
     <string name="splash_body_line1">Развлекательные тесты по именам</string>
     <string name="splash_body_line2">для пары и друзей</string>
     <string name="splash_loading_cd">Загрузка</string>
@@ -19,12 +17,6 @@
     <string name="splash_footer_release"></string>
 
     <!-- Onboarding -->
-    <string name="onboarding_welcome_title">Добро пожаловать!</string>
-    <string name="onboarding_welcome_body">Узнайте процент совместимости по именам — весело и бесплатно.</string>
-    <string name="onboarding_tests_title">Много тестов</string>
-    <string name="onboarding_tests_body">Любовь, пара, знаки зодиака, колесо фортуны и другие режимы.</string>
-    <string name="onboarding_disclaimer_title">Только для развлечения</string>
-    <string name="onboarding_disclaimer_body">Результаты не являются научным прогнозом. Наслаждайтесь игрой!</string>
     <string name="onboarding_next">Далее</string>
     <string name="onboarding_skip">Пропустить</string>
     <string name="onboarding_start">Начать</string>
@@ -49,14 +41,13 @@
     <string name="onboarding_protocol_hint_love_cap">Популярный старт</string>
     <string name="onboarding_protocol_hint_calc_title">Калькулятор</string>
     <string name="onboarding_protocol_hint_calc_cap">+6 в хабе</string>
-    <string name="onboarding_protocol_hub_kicker">ПОСЛЕ ОНБОРДИНГА</string>
     <string name="onboarding_protocol_hub_title">Откроется из главного меню</string>
     <string name="onboarding_protocol_hub_body">Карточка с бейджем НОВОЕ</string>
     <string name="onboarding_protocol_go">GO</string>
     <string name="onboarding_protocol_after_title">После онбординга</string>
     <string name="onboarding_protocol_after_body">Протокол появится в хабе с бейджем НОВОЕ</string>
     <string name="onboarding_protocol_disclaimer_title">Протокол любви — тот же формат</string>
-    <string name="onboarding_protocol_disclaimer_body">Вердикт и % не заменяют разговор с близким.</string>
+    <string name="onboarding_protocol_disclaimer_body">Вердикт и %% не заменяют разговор с близким.</string>
     <string name="onboarding_welcome_kicker">ПРИВЕТСТВИЕ</string>
     <string name="onboarding_welcome_hero_line1">Проверьте</string>
     <string name="onboarding_welcome_hero_line2">свою любовь</string>
@@ -68,15 +59,12 @@
     <string name="onboarding_card_love_title">Тест любви</string>
     <string name="onboarding_card_love_cap1">Два имени,</string>
     <string name="onboarding_card_love_cap2">один %</string>
-    <string name="onboarding_card_love_cap">Два имени — один результат</string>
     <string name="onboarding_card_zodiac_title">Зодиак</string>
     <string name="onboarding_card_zodiac_cap1">Знаки и</string>
     <string name="onboarding_card_zodiac_cap2">пара</string>
-    <string name="onboarding_card_zodiac_cap">Знаки и совместимость</string>
     <string name="onboarding_card_wheel_title">Колесо</string>
     <string name="onboarding_card_wheel_cap1">Случайная</string>
     <string name="onboarding_card_wheel_cap2">фантазия.</string>
-    <string name="onboarding_card_wheel_cap">Случайный выбор</string>
     <string name="onboarding_no_reg_kicker">БЕЗ РЕГИСТРАЦИИ</string>
     <string name="onboarding_no_reg_title">Начните сразу</string>
     <string name="onboarding_no_reg_body">Имена остаются на устройстве. Аккаунт не нужен.</string>
@@ -118,8 +106,6 @@
     <string name="onboarding_agreement_body">с развлекательным характером всех тестов, включая протокол.</string>
 
     <!-- Consent -->
-    <string name="consent_title">Реклама и конфиденциальность</string>
-    <string name="consent_body">Мы можем показывать рекламу. Вы можете управлять согласием в настройках рекламного SDK.</string>
     <string name="consent_headline">Конфиденциальность</string>
     <string name="consent_intro_line1">Мы используем рекламу и идентификатор устройства</string>
     <string name="consent_intro_line2">(по вашему выбору).</string>
@@ -165,7 +151,6 @@
     <string name="hub_loading_cd">Загрузка хаба</string>
     <string name="hub_loading_overlay_status">Загрузка…</string>
     <string name="hub_loading_overlay_title">Загружаем тесты</string>
-    <string name="hub_loading_overlay_body">Совсем скоро всё будет готово</string>
     <string name="hub_loading_cancel_unavailable">Отмена недоступна</string>
     <string name="hub_test_love_title">Тест на любовь</string>
     <string name="hub_test_love_subtitle">Два имени → процент совместимости</string>
@@ -181,12 +166,10 @@
     <string name="hub_test_zodiac_subtitle">Два знака</string>
     <string name="hub_test_wheel_title">Колесо</string>
     <string name="hub_test_wheel_subtitle">Случайность</string>
-    <string name="hub_settings_cd">Настройки</string>
     <string name="hub_protocol_title">Протокол любви</string>
     <string name="hub_protocol_subtitle">3 шага → сигналы → персональный вердикт</string>
     <string name="hub_protocol_badge_novo">НОВОЕ</string>
     <string name="hub_protocol_test_label">Тест №8</string>
-    <string name="hub_protocol_soon_toast">Протокол любви — скоро в обновлении</string>
 
     <!-- Protocol test -->
     <string name="protocol_title">Протокол любви</string>
@@ -231,16 +214,6 @@
     <string name="protocol_share_preview_subtitle">Протокол любви</string>
     <string name="protocol_share_preview_hint">Превью карточки для Share</string>
     <string name="protocol_signals_fallback_note">Сигналы восстановлены локально.</string>
-    <string name="protocol_signals_title">Сигналы</string>
-    <string name="protocol_signal_harmony_0">Гармония имён совпадает</string>
-    <string name="protocol_signal_harmony_1">Ритм букв созвучен</string>
-    <string name="protocol_signal_harmony_2">Мягкий резонанс пары</string>
-    <string name="protocol_signal_resonance_0">Сильный эмоциональный отклик</string>
-    <string name="protocol_signal_resonance_1">Тёплая волна совместимости</string>
-    <string name="protocol_signal_resonance_2">Спокойное притяжение</string>
-    <string name="protocol_signal_spark_0">Искра узнавания</string>
-    <string name="protocol_signal_spark_1">Лёгкая искра интереса</string>
-    <string name="protocol_signal_spark_2">Тихая искра нежности</string>
     <string name="protocol_verdict_title_0">Осторожный прогноз</string>
     <string name="protocol_verdict_title_1">Сбалансированный прогноз</string>
     <string name="protocol_verdict_title_2">Яркий прогноз</string>
@@ -276,6 +249,8 @@
     <string name="love_test_percent_cd">Процент совместимости</string>
     <string name="love_test_share_cta">Поделиться</string>
     <string name="love_test_try_again">Ещё раз проверить</string>
+    <string name="hub_more_tests">Другие тесты</string>
+    <string name="hub_less_tests">Скрыть другие тесты</string>
     <string name="love_test_back_home">На главную</string>
     <string name="love_test_result_percent_label_love">любви</string>
     <string name="love_test_result_high_tag">Отличная пара!</string>
@@ -301,7 +276,6 @@
 
     <!-- Calculator -->
     <string name="calculator_title">Калькулятор любви</string>
-    <string name="calculator_name_label">Ваше имя</string>
     <string name="calculator_hero_title">По буквам имён</string>
     <string name="calculator_hero_body1">Алгоритм складывает буквы</string>
     <string name="calculator_hero_body2">и считает процент любви.</string>
@@ -395,7 +369,6 @@
     <string name="victory_share_preview_subtitle">Победа в любви — Love Tester</string>
     <string name="victory_share_preview_hint">Превью карточки для Share</string>
     <string name="victory_share_preview_title">%1$s — %2$s</string>
-    <string name="victory_message">Сердце на вашей стороне!</string>
     <string name="letters_title">Тест по буквам</string>
     <string name="letters_hero_title">Символы и буквы</string>
     <string name="letters_hero_body1">Введите два слова или имени —</string>
@@ -409,7 +382,6 @@
     <string name="letters_info_line2">Кириллица и латиница.</string>
     <string name="letters_chip_label">Готовые примеры:</string>
     <string name="letters_chip_1">ЛЮБОВЬ + СЧАСТЬ</string>
-    <string name="letters_hint">Введите имя</string>
     <string name="letters_cta">Расшифровать буквы</string>
     <string name="letters_result_title">Результат по буквам</string>
     <string name="letters_secret_label">секретный код букв</string>
@@ -424,7 +396,6 @@
     <string name="letters_try_another">Другие слова</string>
     <string name="letters_share_preview_subtitle">Тест по буквам — Love Tester</string>
     <string name="letters_share_preview_hint">Превью карточки для Share</string>
-    <string name="letters_message">В имени скрыта страсть и нежность.</string>
     <string name="zodiac_title">Зодиак</string>
     <string name="zodiac_hero_title">Выберите два знака</string>
     <string name="zodiac_hero_body">Совместимость по астрологии.</string>
@@ -450,7 +421,6 @@
     <string name="zodiac_try_another">Другие знаки</string>
     <string name="zodiac_share_preview_subtitle">Зодиак — Love Tester</string>
     <string name="zodiac_share_preview_hint">Превью карточки для Share</string>
-    <string name="zodiac_message">Звёзды благоволят вашей паре.</string>
     <string name="wheel_title">Колесо фантазий</string>
     <string name="wheel_hero_body">Случайная идея для пары — крутите!</string>
     <string name="wheel_test_badge">Тест №7</string>
@@ -471,13 +441,10 @@
     <string name="wheel_share_preview_title">Колесо фантазий</string>
     <string name="wheel_share_preview_body">Вам выпало %1$s</string>
     <string name="wheel_share_preview_hint">Превью карточки для Share</string>
-    <string name="wheel_message">Судьба выбрала вас!</string>
 
     <!-- Premium -->
-    <string name="premium_title">Premium</string>
     <string name="premium_hero_sub">Поддержите разработчиков</string>
     <string name="premium_hero_sub_ads">Без рекламы и с полным доступом</string>
-    <string name="premium_benefits">Поддержка разработки</string>
     <string name="premium_benefits_title">Что входит</string>
     <string name="premium_benefits_title_support">Ваша поддержка</string>
     <string name="premium_benefit_1_title">Все тесты</string>
@@ -502,7 +469,6 @@
     <string name="premium_billing_error">Не удалось завершить покупку</string>
     <string name="premium_billing_not_configured">Покупки не настроены (укажите lovetest.billing.product.ids)</string>
     <string name="premium_legal_1">Условия покупки — в Условиях использования</string>
-    <string name="premium_legal_2">Политика конфиденциальности · Условия подписки</string>
     <string name="premium_terms_link">Условия использования</string>
     <string name="premium_privacy_link">Политика конфиденциальности</string>
     <string name="premium_continue_free">Продолжить бесплатно</string>
@@ -529,7 +495,6 @@
     <!-- Settings -->
     <string name="settings_title">Настройки</string>
     <string name="settings_group_premium">ПРЕМИУМ</string>
-    <string name="settings_premium">Premium</string>
     <string name="settings_premium_title">Love Tester Premium</string>
     <string name="settings_premium_sub">Поддержать разработку</string>
     <string name="settings_premium_sub_ads">Без рекламы</string>
@@ -551,7 +516,6 @@
     <string name="settings_privacy_open">Политика конфиденциальности</string>
     <string name="settings_privacy_sub">Откроется в браузере</string>
     <string name="settings_privacy_unavailable">Встроенная политика в приложении</string>
-    <string name="settings_data_collection_unavailable">Сводка данных: укажите URL политики в gradle.properties</string>
     <string name="settings_data_collection">Сбор данных</string>
     <string name="settings_data_collection_sub">Кратко о данных (Play Console)</string>
     <string name="settings_clear_saved_names">Очистить сохранённые имена</string>
@@ -597,10 +561,8 @@
     <string name="error_network_continue_offline">Продолжить без сети</string>
     <string name="error_retry_cta">Повторить</string>
     <string name="ad_interstitial_placeholder_cd">Межстраничная реклама</string>
-    <string name="ad_interstitial_placeholder_title">Реклама</string>
 
     <!-- Common -->
     <string name="nav_back">Назад</string>
-    <string name="action_share">Поделиться</string>
     <string name="compatibility_label">совместимость</string>
 </resources>

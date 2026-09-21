@@ -40,7 +40,7 @@ class HubScreenComposeTest {
         val loveTitle = composeRule.activity.getString(R.string.hub_test_love_title)
 
         composeRule.setContent {
-            hubTestContent(onOpenLoveTest = {})
+            HubTestContent(onOpenLoveTest = {})
         }
 
         composeRule.onNodeWithText(loveTitle).assertIsDisplayed()
@@ -52,7 +52,7 @@ class HubScreenComposeTest {
         var opened = false
 
         composeRule.setContent {
-            hubTestContent(onOpenLoveTest = { opened = true })
+            HubTestContent(onOpenLoveTest = { opened = true })
         }
 
         composeRule.onNodeWithText(loveTitle).performClick()
@@ -65,7 +65,7 @@ class HubScreenComposeTest {
         var opened = false
 
         composeRule.setContent {
-            hubTestContent(onOpenSettings = { opened = true })
+            HubTestContent(onOpenSettings = { opened = true })
         }
 
         composeRule.onNodeWithText(settingsLabel).performClick()
@@ -78,14 +78,14 @@ class HubScreenComposeTest {
         val selected = composeRule.activity.getString(R.string.hub_nav_item_selected, tests)
 
         composeRule.setContent {
-            hubTestContent()
+            HubTestContent()
         }
 
         composeRule.onNodeWithContentDescription(selected).assertIsDisplayed()
     }
 
     @Composable
-    private fun hubTestContent(
+    private fun HubTestContent(
         onOpenLoveTest: () -> Unit = {},
         onOpenSettings: () -> Unit = {},
     ) {

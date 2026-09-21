@@ -23,6 +23,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.lovetest.app.R
 import dev.lovetest.core.ui.components.LoveLayout
@@ -144,6 +145,8 @@ fun LoveShareCard(
                 style = LoveTypographyTokens.CardTitleLight,
                 color = primaryText,
                 textAlign = TextAlign.Center,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.padding(top = 8.dp),
             )
             Text(
@@ -166,6 +169,8 @@ fun LoveShareCard(
                     style = LoveTypographyTokens.CardTitleLight,
                     color = primaryText,
                     textAlign = TextAlign.Center,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
                 )
             }
             Text(

@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "dev.lovetest.core.ui"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 26

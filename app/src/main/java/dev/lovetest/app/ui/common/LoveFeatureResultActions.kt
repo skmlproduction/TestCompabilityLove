@@ -3,19 +3,24 @@ package dev.lovetest.app.ui.common
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.lovetest.app.R
 import dev.lovetest.core.ui.components.LoveOutlinedButton
 import dev.lovetest.core.ui.components.LovePrimaryButton
 import dev.lovetest.core.ui.components.LoveTonalButton
+import dev.lovetest.core.ui.components.LoveLayout
 import dev.lovetest.core.ui.theme.LoveOnPrimaryContainer
 import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
 import dev.lovetest.core.ui.theme.LovePrimaryContainer
@@ -51,7 +56,7 @@ fun LoveFeatureResultActions(
     primaryContainerColor: Color = MaterialTheme.colorScheme.primary,
     primaryContentColor: Color = MaterialTheme.colorScheme.onPrimary,
     outlinedContentColor: Color = MaterialTheme.colorScheme.primary,
-    homeBackgroundColor: Color = LovePrimaryContainer,
+    @Suppress("UNUSED_PARAMETER") homeBackgroundColor: Color = LovePrimaryContainer,
     homeContentColor: Color = LoveOnPrimaryContainer,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
@@ -69,13 +74,22 @@ fun LoveFeatureResultActions(
             borderColor = outlinedContentColor,
             modifier = Modifier.padding(top = 12.dp),
         )
-        LoveTonalButton(
-            text = stringResource(R.string.love_test_back_home),
+        TextButton(
             onClick = onHome,
-            containerColor = homeBackgroundColor,
-            contentColor = homeContentColor,
-            modifier = Modifier.padding(top = 12.dp),
-        )
+            colors = ButtonDefaults.textButtonColors(contentColor = homeContentColor),
+            modifier = Modifier
+                .padding(top = 8.dp)
+                .fillMaxWidth()
+                .heightIn(min = LoveLayout.SecondaryCtaHeight),
+        ) {
+            Text(
+                text = stringResource(R.string.love_test_back_home),
+                style = MaterialTheme.typography.labelLarge,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                textAlign = TextAlign.Center,
+            )
+        }
         Text(
             text = stringResource(disclaimerRes),
             style = MaterialTheme.typography.bodySmall,

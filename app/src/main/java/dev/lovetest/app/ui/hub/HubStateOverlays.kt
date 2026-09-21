@@ -45,7 +45,6 @@ import dev.lovetest.core.ui.components.LovePrimaryButton
 import dev.lovetest.core.ui.components.loveCardShadow
 import dev.lovetest.core.ui.theme.LoveErrorContainer
 import dev.lovetest.core.ui.theme.LoveOnErrorContainer
-import dev.lovetest.core.ui.theme.LoveOnPrimaryContainer
 import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
 import dev.lovetest.core.ui.theme.LoveOutlineVariant
 import dev.lovetest.core.ui.theme.LovePrimary
@@ -78,7 +77,9 @@ fun HubLoadingOverlay(modifier: Modifier = Modifier) {
                 .loveCardShadow(panelShape, elevation = LoveCardShadowElevation.Hero)
                 .border(2.dp, LovePrimaryContainer, panelShape),
             shape = panelShape,
-            colors = CardDefaults.cardColors(containerColor = LoveSurface.copy(alpha = 0.88f)),
+            // Loading must obscure the hub beneath it; translucent content makes the status hard
+            // to read and looks like the app remains interactive while it is busy.
+            colors = CardDefaults.cardColors(containerColor = LoveSurface),
             elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
         ) {
             Column(
@@ -123,20 +124,6 @@ fun HubLoadingOverlay(modifier: Modifier = Modifier) {
                     color = LovePrimary,
                     trackColor = LoveOutlineVariant,
                 )
-                Box(
-                    modifier = Modifier
-                        .padding(top = 20.dp)
-                        .clip(RoundedCornerShape(32.dp))
-                        .background(LovePrimaryContainer)
-                        .padding(horizontal = 24.dp, vertical = 12.dp),
-                ) {
-                    Text(
-                        text = stringResource(R.string.hub_loading_cancel_unavailable),
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.SemiBold,
-                        color = LoveOnPrimaryContainer,
-                    )
-                }
             }
         }
     }

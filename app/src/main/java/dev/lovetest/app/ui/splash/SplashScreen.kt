@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.Canvas
@@ -186,7 +187,7 @@ private fun SplashFeatureChip(
 ) {
     Row(
         modifier = modifier
-            .height(LoveLayout.SplashFeatureChipHeight)
+            .heightIn(min = LoveLayout.SplashFeatureChipHeight)
             .clip(RoundedCornerShape(26.dp))
             .background(LovePrimaryContainer)
             .padding(horizontal = 10.dp),
@@ -199,7 +200,7 @@ private fun SplashFeatureChip(
             style = LoveTypographyTokens.HubHeroChip,
             fontWeight = FontWeight.SemiBold,
             color = LoveOnPrimaryContainer,
-            maxLines = 1,
+            maxLines = 2,
             overflow = TextOverflow.Ellipsis,
             textAlign = TextAlign.Center,
         )

@@ -6,6 +6,13 @@ plugins {
     alias(libs.plugins.kotlin.jvm) apply false
 }
 
+// The outer Gradle wrapper already owns Cursor's workspace-wide build lock.
+// Exec tasks may call helper scripts that launch a nested wrapper; propagate a
+// re-entry guard so the child cannot wait forever on the lock held by its parent.
+tasks.withType<Exec>().configureEach {
+    environment("CURSOR_BUILD_LOCK_DISABLE", "1")
+}
+
 tasks.register<Exec>("verifyUiInventory") {
     group = "verification"
     description =
@@ -131,8 +138,20 @@ tasks.register("verifyLoveTest") {
 
 tasks.register("verifyLoveTestRelease") {
     group = "verification"
-    description = "verifyLoveTest + assembleRelease + bundleRelease."
-    dependsOn("verifyLoveTest", ":app:assembleRelease", ":app:bundleRelease")
+    description = "verifyLoveTest + Store PNG без placeholder + assembleRelease + bundleRelease + AAB sanity."
+    dependsOn("verifyLoveTestBeforeStore", ":app:assembleRelease", "verifyReleaseArtifact")
+}
+
+tasks.register<Exec>("verifyReleaseArtifact") {
+    group = "verification"
+    description = "Собирает release AAB и проверяет, что артефакт готов к архиву/upload."
+    dependsOn(":app:bundleRelease")
+    workingDir(rootDir)
+    commandLine(
+        "python3",
+        file("scripts/verify_release_artifact.py").absolutePath,
+        file("app/build/outputs/bundle/release/app-release.aab").absolutePath,
+    )
 }
 
 tasks.register<Exec>("materializeScreenshotPlaceholders") {
@@ -435,7 +454,7 @@ tasks.register<Exec>("verifyLoveTestBeforeStore") {
 }
 
 gradle.projectsEvaluated {
-    val gate = rootProject.tasks.named("verifyLoveTest")
+    val gate = rootProject.tasks.named("verifyLoveTestBeforeStore")
     project(":app").tasks.matching { it.name == "assembleRelease" || it.name == "bundleRelease" }
         .configureEach { mustRunAfter(gate) }
 }

@@ -34,6 +34,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -51,7 +52,10 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
@@ -111,6 +115,7 @@ fun HubScreen(
     val isPremium by preferences.isPremiumFlow.collectAsStateWithLifecycle(initialValue = false)
     val adPending by AdsInterstitialController.pendingOnHub.collectAsStateWithLifecycle()
     var debugAdDismissed by remember { mutableStateOf(false) }
+    var extraTestsVisible by remember { mutableStateOf(false) }
     val showDebugAdPlaceholder = BuildConfig.DEBUG &&
         DebugUiPreview.matches("ad_interstitial_placeholder") &&
         !debugAdDismissed
@@ -190,12 +195,6 @@ fun HubScreen(
 
                 HubWelcomeHero(modifier = Modifier.padding(top = 8.dp))
 
-                PremiumStrip(
-                    onClick = onOpenPremium,
-                    isPremium = isPremium,
-                    modifier = Modifier.padding(top = 16.dp),
-                )
-
                 Text(
                     text = stringResource(R.string.hub_section_tests),
                     style = LoveTypographyTokens.HubSectionTitle,
@@ -229,43 +228,59 @@ fun HubScreen(
                     ),
                     modifier = Modifier.padding(top = LoveLayout.HubGridRowSpacing),
                 )
-                HubTestGridRow(
-                    left = HubTestItem(
-                        title = stringResource(R.string.hub_test_victory_title),
-                        subtitle = stringResource(R.string.hub_test_victory_subtitle),
-                        badge = { DiamondBadge() },
-                        onClick = onOpenVictory,
-                    ),
-                    right = HubTestItem(
-                        title = stringResource(R.string.hub_test_letters_title),
-                        subtitle = stringResource(R.string.hub_test_letters_subtitle),
-                        badge = { LettersBadge() },
-                        onClick = onOpenLetters,
-                    ),
-                    modifier = Modifier.padding(top = LoveLayout.HubGridRowSpacing),
-                )
-                HubTestGridRow(
-                    left = HubTestItem(
-                        title = stringResource(R.string.hub_test_wheel_title),
-                        subtitle = stringResource(R.string.hub_test_wheel_subtitle),
-                        badge = { WheelBadge() },
-                        onClick = onOpenWheel,
-                    ),
-                    right = HubTestItem(
-                        title = stringResource(R.string.hub_test_zodiac_title),
-                        subtitle = stringResource(R.string.hub_test_zodiac_subtitle),
-                        badge = { RingBadge() },
-                        onClick = onOpenZodiac,
-                    ),
-                    modifier = Modifier.padding(top = LoveLayout.HubGridRowSpacing),
-                )
-
-                HubFeaturedProtocolCard(
-                    onClick = onOpenProtocol,
-                    modifier = Modifier.padding(top = 12.dp),
-                )
-
-                ShareHintCard(
+                TextButton(
+                    onClick = { extraTestsVisible = !extraTestsVisible },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .defaultMinSize(minHeight = LoveLayout.SecondaryCtaHeight)
+                        .padding(top = 8.dp),
+                ) {
+                    Text(
+                        text = stringResource(
+                            if (extraTestsVisible) R.string.hub_less_tests else R.string.hub_more_tests,
+                        ),
+                        style = LoveTypographyTokens.HubGoLabel,
+                    )
+                }
+                if (extraTestsVisible) {
+                    HubTestGridRow(
+                        left = HubTestItem(
+                            title = stringResource(R.string.hub_test_victory_title),
+                            subtitle = stringResource(R.string.hub_test_victory_subtitle),
+                            badge = { DiamondBadge() },
+                            onClick = onOpenVictory,
+                        ),
+                        right = HubTestItem(
+                            title = stringResource(R.string.hub_test_letters_title),
+                            subtitle = stringResource(R.string.hub_test_letters_subtitle),
+                            badge = { LettersBadge() },
+                            onClick = onOpenLetters,
+                        ),
+                        modifier = Modifier.padding(top = LoveLayout.HubGridRowSpacing),
+                    )
+                    HubTestGridRow(
+                        left = HubTestItem(
+                            title = stringResource(R.string.hub_test_wheel_title),
+                            subtitle = stringResource(R.string.hub_test_wheel_subtitle),
+                            badge = { WheelBadge() },
+                            onClick = onOpenWheel,
+                        ),
+                        right = HubTestItem(
+                            title = stringResource(R.string.hub_test_zodiac_title),
+                            subtitle = stringResource(R.string.hub_test_zodiac_subtitle),
+                            badge = { RingBadge() },
+                            onClick = onOpenZodiac,
+                        ),
+                        modifier = Modifier.padding(top = LoveLayout.HubGridRowSpacing),
+                    )
+                    HubFeaturedProtocolCard(
+                        onClick = onOpenProtocol,
+                        modifier = Modifier.padding(top = 12.dp),
+                    )
+                }
+                PremiumStrip(
+                    onClick = onOpenPremium,
+                    isPremium = isPremium,
                     modifier = Modifier.padding(top = 16.dp, bottom = 24.dp),
                 )
             }
@@ -345,7 +360,7 @@ private fun HubWelcomeHero(modifier: Modifier = Modifier) {
             Box(
                 modifier = Modifier
                     .padding(top = 8.dp)
-                    .height(LoveLayout.HubHeroChipHeight)
+                    .heightIn(min = LoveLayout.HubHeroChipHeight)
                     .clip(RoundedCornerShape(24.dp))
                     .background(Color.White.copy(alpha = 0.22f))
                     .padding(horizontal = 14.dp),
@@ -392,6 +407,7 @@ private fun HubFeaturedProtocolCard(
             .background(HubProtocolGradientBrush())
             .border(2.dp, Color.White.copy(alpha = 0.28f), shape)
             .semantics(mergeDescendants = true) {
+                role = Role.Button
                 contentDescription = "$title. $subtitle"
             }
             .clickable(onClick = onClick),
@@ -486,7 +502,7 @@ private fun HubGoPill(
 ) {
     Box(
         modifier = modifier
-            .height(LoveLayout.HubGoPillHeight)
+            .heightIn(min = LoveLayout.HubGoPillHeight)
             .defaultMinSize(minWidth = LoveLayout.HubGoPillMinWidth)
             .clip(RoundedCornerShape(LoveLayout.HubGoPillCorner))
             .background(Color.White)
@@ -528,6 +544,7 @@ private fun PremiumStrip(
             .fillMaxWidth()
             .loveCardShadow(shape, elevation = LoveCardShadowElevation.Subtle)
             .semantics(mergeDescendants = true) {
+                role = Role.Button
                 contentDescription = "$title. $subtitle"
             }
             .clickable(onClick = onClick),
@@ -580,6 +597,7 @@ private fun FeaturedLoveTestCard(
             .background(LoveHeroGradientBrush())
             .border(2.dp, Color.White.copy(alpha = 0.35f), shape)
             .semantics(mergeDescendants = true) {
+                role = Role.Button
                 contentDescription = "$title. $subtitle"
             }
             .clickable(onClick = onClick),
@@ -646,6 +664,7 @@ private fun HubGridCard(item: HubTestItem, modifier: Modifier = Modifier) {
             .heightIn(min = LoveLayout.HubGridCellHeight)
             .loveCardShadow(shape, elevation = LoveCardShadowElevation.Subtle)
             .semantics(mergeDescendants = true) {
+                role = Role.Button
                 contentDescription = "${item.title}. ${item.subtitle}"
             }
             .clickable(onClick = item.onClick),
@@ -862,7 +881,9 @@ private fun HubNavItem(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .semantics(mergeDescendants = true) {
+                role = Role.Tab
                 contentDescription = description
+                this.selected = selected
             }
             .clickable(onClick = onClick)
             .padding(horizontal = 16.dp),

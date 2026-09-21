@@ -2,7 +2,6 @@ package dev.lovetest.app.legal
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.webkit.WebSettings
 import android.webkit.WebView
@@ -74,9 +73,7 @@ class LegalDocumentActivity : ComponentActivity() {
                                 settings.allowFileAccess = false
                                 settings.allowContentAccess = false
                                 settings.mixedContentMode = WebSettings.MIXED_CONTENT_NEVER_ALLOW
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                    settings.safeBrowsingEnabled = true
-                                }
+                                settings.safeBrowsingEnabled = true
                                 loadUrl(assetUrl)
                             }
                         },

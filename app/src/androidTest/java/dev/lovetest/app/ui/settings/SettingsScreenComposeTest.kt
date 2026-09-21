@@ -66,7 +66,7 @@ class SettingsScreenComposeTest {
 
         composeRule.setContent {
             LoveTestTheme {
-                settingsTestScreen(prefs = prefs)
+                SettingsTestScreen(prefs = prefs)
             }
         }
 
@@ -130,7 +130,7 @@ class SettingsScreenComposeTest {
     }
 
     @Composable
-    private fun settingsTestScreen(prefs: AppPreferences) {
+    private fun SettingsTestScreen(prefs: AppPreferences) {
         SettingsScreen(
             onBack = {},
             onPremium = {},

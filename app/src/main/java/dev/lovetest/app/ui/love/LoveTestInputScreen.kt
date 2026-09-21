@@ -85,7 +85,7 @@ fun LoveTestInputScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .loveEdgeToEdgeScreenPadding(includeNavigationBar = false)
+                .loveEdgeToEdgeScreenPadding()
                 .loveInputContentPadding()
                 .verticalScroll(rememberScrollState()),
         ) {
@@ -104,13 +104,13 @@ fun LoveTestInputScreen(
             LoveShadowCard(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 20.dp),
+                    .padding(top = 16.dp),
                 shape = RoundedCornerShape(38.dp),
                 shadowElevation = LoveCardShadowElevation.Card,
                 colors = CardDefaults.cardColors(containerColor = LoveSurface),
             ) {
                 Column(
-                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 24.dp),
+                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 20.dp),
                 ) {
                     LoveTestNameField(
                         label = stringResource(R.string.love_test_name1_label),
@@ -136,7 +136,7 @@ fun LoveTestInputScreen(
                         text = stringResource(R.string.love_test_popular_pairs),
                         style = LoveTypographyTokens.CardCaption,
                         color = LoveOnSurfaceVariant,
-                        modifier = Modifier.padding(top = 24.dp),
+                        modifier = Modifier.padding(top = 16.dp),
                     )
                     Row(
                         modifier = Modifier.padding(top = 10.dp),
@@ -155,7 +155,7 @@ fun LoveTestInputScreen(
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 20.dp)
+                            .padding(top = 16.dp)
                             .clip(RoundedCornerShape(24.dp))
                             .background(LovePrimaryContainer)
                             .padding(horizontal = 16.dp, vertical = 14.dp),
@@ -180,7 +180,7 @@ fun LoveTestInputScreen(
                 onClick = { onCalculate(name1.trim(), name2.trim()) },
                 enabled = canSubmit,
                 modifier = Modifier
-                    .padding(top = 24.dp, bottom = 32.dp),
+                    .padding(top = 16.dp, bottom = 24.dp),
             )
         }
     }
@@ -199,7 +199,7 @@ private fun LoveTestInputHero(
         .joinToString(" ")
     LoveFeatureHero(
         modifier = modifier,
-        minHeight = LoveLayout.LoveTestInputHeroMinHeight,
+        minHeight = 112.dp,
         shape = LoveLayout.HubHeroShape,
     ) {
         Row(

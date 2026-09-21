@@ -128,7 +128,7 @@ class CriticalFlowsA11yComposeTest {
         val selected = composeRule.activity.getString(R.string.hub_nav_item_selected, tests)
 
         composeRule.setContent {
-            hubTestContent()
+            HubTestContent()
         }
 
         composeRule.onNodeWithContentDescription(selected).assertIsDisplayed()
@@ -213,7 +213,7 @@ class CriticalFlowsA11yComposeTest {
     }
 
     @androidx.compose.runtime.Composable
-    private fun hubTestContent() {
+    private fun HubTestContent() {
         KoinApplication(
             application = { modules(navHostTestModule()) },
         ) {

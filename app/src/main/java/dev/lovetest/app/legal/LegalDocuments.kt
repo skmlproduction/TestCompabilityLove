@@ -2,7 +2,7 @@ package dev.lovetest.app.legal
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
+import androidx.core.net.toUri
 import dev.lovetest.app.BuildConfig
 import dev.lovetest.app.R
 
@@ -31,7 +31,7 @@ object LegalDocuments {
     fun Context.openTermsOfUse() {
         val external = resolveExternalTermsUrl()
         if (external != null) {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(external)))
+            startActivity(Intent(Intent.ACTION_VIEW, external.toUri()))
         } else {
             startActivity(
                 LegalDocumentActivity.intent(
@@ -46,7 +46,7 @@ object LegalDocuments {
     fun Context.openPrivacyPolicy() {
         val external = resolveExternalPrivacyUrl(BuildConfig.PRIVACY_POLICY_URL)
         if (external != null) {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(external)))
+            startActivity(Intent(Intent.ACTION_VIEW, external.toUri()))
         } else {
             startActivity(
                 LegalDocumentActivity.intent(

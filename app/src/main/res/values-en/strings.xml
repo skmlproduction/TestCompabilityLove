@@ -4,8 +4,6 @@
     <string name="splash_brand_kicker">LOVE TESTER</string>
     <string name="splash_hero_line1">Compatibility test</string>
     <string name="splash_hero_line2">and love</string>
-    <string name="splash_headline_line1">Compatibility test</string>
-    <string name="splash_headline_line2">and love</string>
     <string name="splash_body_line1">Fun name-based tests</string>
     <string name="splash_body_line2">for couples and friends</string>
     <string name="splash_loading_cd">Loading</string>
@@ -15,12 +13,6 @@
     <string name="splash_chip_wheel">Wheel</string>
     <string name="splash_footer">dev.lovetest.app</string>
     <string name="splash_footer_release"></string>
-    <string name="onboarding_welcome_title">Welcome!</string>
-    <string name="onboarding_welcome_body">Discover your compatibility percent from names — fun and free.</string>
-    <string name="onboarding_tests_title">Many tests</string>
-    <string name="onboarding_tests_body">Love, pairs, zodiac, wheel of fortune, and more.</string>
-    <string name="onboarding_disclaimer_title">For entertainment only</string>
-    <string name="onboarding_disclaimer_body">Results are not scientific predictions. Enjoy the game!</string>
     <string name="onboarding_next">Next</string>
     <string name="onboarding_skip">Skip</string>
     <string name="onboarding_start">Get started</string>
@@ -45,14 +37,13 @@
     <string name="onboarding_protocol_hint_love_cap">Popular start</string>
     <string name="onboarding_protocol_hint_calc_title">Calculator</string>
     <string name="onboarding_protocol_hint_calc_cap">+6 in hub</string>
-    <string name="onboarding_protocol_hub_kicker">AFTER ONBOARDING</string>
     <string name="onboarding_protocol_hub_title">Opens from the main menu</string>
     <string name="onboarding_protocol_hub_body">Card with a NEW badge</string>
     <string name="onboarding_protocol_go">GO</string>
     <string name="onboarding_protocol_after_title">After onboarding</string>
     <string name="onboarding_protocol_after_body">Protocol appears in the hub with a NEW badge</string>
     <string name="onboarding_protocol_disclaimer_title">Love protocol — same format</string>
-    <string name="onboarding_protocol_disclaimer_body">Verdict and % do not replace a real conversation.</string>
+    <string name="onboarding_protocol_disclaimer_body">Verdict and %% do not replace a real conversation.</string>
     <string name="onboarding_welcome_kicker">WELCOME</string>
     <string name="onboarding_welcome_hero_line1">Check your</string>
     <string name="onboarding_welcome_hero_line2">love match</string>
@@ -64,15 +55,12 @@
     <string name="onboarding_card_love_title">Love test</string>
     <string name="onboarding_card_love_cap1">Two names,</string>
     <string name="onboarding_card_love_cap2">one %</string>
-    <string name="onboarding_card_love_cap">Two names — one result</string>
     <string name="onboarding_card_zodiac_title">Zodiac</string>
     <string name="onboarding_card_zodiac_cap1">Signs and</string>
     <string name="onboarding_card_zodiac_cap2">a pair</string>
-    <string name="onboarding_card_zodiac_cap">Signs and compatibility</string>
     <string name="onboarding_card_wheel_title">Wheel</string>
     <string name="onboarding_card_wheel_cap1">Random</string>
     <string name="onboarding_card_wheel_cap2">fantasy pick.</string>
-    <string name="onboarding_card_wheel_cap">Random pick</string>
     <string name="onboarding_no_reg_kicker">NO SIGN-UP</string>
     <string name="onboarding_no_reg_title">Start right away</string>
     <string name="onboarding_no_reg_body">Names stay on your device. No account needed.</string>
@@ -112,8 +100,6 @@
     <string name="onboarding_agreement_kicker">ACKNOWLEDGMENT</string>
     <string name="onboarding_agreement_title">By tapping Get started, you agree</string>
     <string name="onboarding_agreement_body">to the entertainment-only nature of all tests, including the protocol.</string>
-    <string name="consent_title">Ads and privacy</string>
-    <string name="consent_body">We may show ads. You can manage consent in ad settings.</string>
     <string name="consent_headline">Privacy</string>
     <string name="consent_intro_line1">We use ads and a device identifier</string>
     <string name="consent_intro_line2">(based on your choice).</string>
@@ -157,7 +143,6 @@
     <string name="hub_loading_cd">Hub loading</string>
     <string name="hub_loading_overlay_status">Loading…</string>
     <string name="hub_loading_overlay_title">Loading tests</string>
-    <string name="hub_loading_overlay_body">Almost ready</string>
     <string name="hub_loading_cancel_unavailable">Cancel unavailable</string>
     <string name="hub_test_love_title">Love test</string>
     <string name="hub_test_love_subtitle">Two names → compatibility %</string>
@@ -173,12 +158,10 @@
     <string name="hub_test_zodiac_subtitle">Two signs → match</string>
     <string name="hub_test_wheel_title">Wheel</string>
     <string name="hub_test_wheel_subtitle">Spin and see fate</string>
-    <string name="hub_settings_cd">Settings</string>
     <string name="hub_protocol_title">Love protocol</string>
     <string name="hub_protocol_subtitle">3 steps → signals → personal verdict</string>
     <string name="hub_protocol_badge_novo">NEW</string>
     <string name="hub_protocol_test_label">Test #8</string>
-    <string name="hub_protocol_soon_toast">Love protocol — coming in an update</string>
 
     <!-- Protocol test -->
     <string name="protocol_title">Love protocol</string>
@@ -223,16 +206,6 @@
     <string name="protocol_share_preview_subtitle">Love protocol</string>
     <string name="protocol_share_preview_hint">Share card preview</string>
     <string name="protocol_signals_fallback_note">Signals restored on device.</string>
-    <string name="protocol_signals_title">Signals</string>
-    <string name="protocol_signal_harmony_0">Name harmony aligns</string>
-    <string name="protocol_signal_harmony_1">Letter rhythm matches</string>
-    <string name="protocol_signal_harmony_2">Gentle pair resonance</string>
-    <string name="protocol_signal_resonance_0">Strong emotional echo</string>
-    <string name="protocol_signal_resonance_1">Warm compatibility wave</string>
-    <string name="protocol_signal_resonance_2">Calm attraction</string>
-    <string name="protocol_signal_spark_0">Spark of recognition</string>
-    <string name="protocol_signal_spark_1">Light spark of interest</string>
-    <string name="protocol_signal_spark_2">Soft spark of tenderness</string>
     <string name="protocol_verdict_title_0">Cautious outlook</string>
     <string name="protocol_verdict_title_1">Balanced outlook</string>
     <string name="protocol_verdict_title_2">Bright outlook</string>
@@ -266,6 +239,8 @@
     <string name="love_test_percent_cd">Compatibility percent</string>
     <string name="love_test_share_cta">Share</string>
     <string name="love_test_try_again">Try again</string>
+    <string name="hub_more_tests">More tests</string>
+    <string name="hub_less_tests">Hide other tests</string>
     <string name="love_test_back_home">Back to home</string>
     <string name="love_test_result_percent_label_love">love</string>
     <string name="love_test_result_high_tag">Great match!</string>
@@ -289,7 +264,6 @@
     <string name="result_entertainment_only">For entertainment only.</string>
     <string name="result_session_expired">Result unavailable. Please run the test again.</string>
     <string name="calculator_title">Love calculator</string>
-    <string name="calculator_name_label">Your name</string>
     <string name="calculator_hero_title">By name letters</string>
     <string name="calculator_hero_body1">The algorithm combines letters</string>
     <string name="calculator_hero_body2">and calculates a love percent.</string>
@@ -379,7 +353,6 @@
     <string name="victory_share_preview_subtitle">Victory in love — Love Tester</string>
     <string name="victory_share_preview_hint">Share card preview</string>
     <string name="victory_share_preview_title">%1$s — %2$s</string>
-    <string name="victory_message">Your heart is on your side!</string>
     <string name="letters_title">Letters test</string>
     <string name="letters_hero_title">Symbols and letters</string>
     <string name="letters_hero_body1">Enter two words or names —</string>
@@ -393,7 +366,6 @@
     <string name="letters_info_line2">Cyrillic and Latin supported.</string>
     <string name="letters_chip_label">Quick examples:</string>
     <string name="letters_chip_1">LOVE + JOY</string>
-    <string name="letters_hint">Enter a name</string>
     <string name="letters_cta">Decode letters</string>
     <string name="letters_result_title">Letters result</string>
     <string name="letters_secret_label">secret letter code</string>
@@ -408,7 +380,6 @@
     <string name="letters_try_another">Other words</string>
     <string name="letters_share_preview_subtitle">Letters test — Love Tester</string>
     <string name="letters_share_preview_hint">Share card preview</string>
-    <string name="letters_message">Passion and tenderness hide in the name.</string>
     <string name="zodiac_title">Zodiac</string>
     <string name="zodiac_hero_title">Pick two signs</string>
     <string name="zodiac_hero_body">Astrology compatibility.</string>
@@ -434,7 +405,6 @@
     <string name="zodiac_try_another">Other signs</string>
     <string name="zodiac_share_preview_subtitle">Zodiac — Love Tester</string>
     <string name="zodiac_share_preview_hint">Share card preview</string>
-    <string name="zodiac_message">The stars favor your pair.</string>
     <string name="wheel_title">Fantasy wheel</string>
     <string name="wheel_hero_body">A random idea for your pair — spin!</string>
     <string name="wheel_test_badge">Test #7</string>
@@ -455,11 +425,8 @@
     <string name="wheel_share_preview_title">Fantasy wheel</string>
     <string name="wheel_share_preview_body">You got %1$s</string>
     <string name="wheel_share_preview_hint">Share card preview</string>
-    <string name="wheel_message">Fate chose you!</string>
-    <string name="premium_title">Premium</string>
     <string name="premium_hero_sub">Support the developers</string>
     <string name="premium_hero_sub_ads">No ads and full access</string>
-    <string name="premium_benefits">Support development</string>
     <string name="premium_benefits_title">What\'s included</string>
     <string name="premium_benefits_title_support">Your support</string>
     <string name="premium_benefit_1_title">All tests</string>
@@ -484,7 +451,6 @@
     <string name="premium_billing_error">Could not complete purchase</string>
     <string name="premium_billing_not_configured">Purchases are not configured (set lovetest.billing.product.ids)</string>
     <string name="premium_legal_1">Purchase terms are in Terms of Use</string>
-    <string name="premium_legal_2">Privacy policy · Subscription terms</string>
     <string name="premium_terms_link">Terms of Use</string>
     <string name="premium_privacy_link">Privacy policy</string>
     <string name="premium_continue_free">Continue for free</string>
@@ -509,7 +475,6 @@
     <string name="premium_thank_you_home">Back to home</string>
     <string name="settings_title">Settings</string>
     <string name="settings_group_premium">PREMIUM</string>
-    <string name="settings_premium">Premium</string>
     <string name="settings_premium_title">Love Tester Premium</string>
     <string name="settings_premium_sub">Support development</string>
     <string name="settings_premium_sub_ads">No ads</string>
@@ -531,7 +496,6 @@
     <string name="settings_privacy_open">Privacy policy</string>
     <string name="settings_privacy_sub">Opens in browser</string>
     <string name="settings_privacy_unavailable">In-app privacy policy</string>
-    <string name="settings_data_collection_unavailable">Data summary: set privacy URL in gradle.properties</string>
     <string name="settings_data_collection">Data collection</string>
     <string name="settings_data_collection_sub">Brief data summary (Play Console)</string>
     <string name="settings_clear_saved_names">Clear saved names</string>
@@ -575,8 +539,6 @@
     <string name="error_network_continue_offline">Continue offline</string>
     <string name="error_retry_cta">Retry</string>
     <string name="ad_interstitial_placeholder_cd">Interstitial ad</string>
-    <string name="ad_interstitial_placeholder_title">Advertisement</string>
     <string name="nav_back">Back</string>
-    <string name="action_share">Share</string>
     <string name="compatibility_label">compatibility</string>
 </resources>

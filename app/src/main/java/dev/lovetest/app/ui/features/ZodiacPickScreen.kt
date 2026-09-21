@@ -32,7 +32,9 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -349,10 +351,9 @@ private fun ZodiacSignCell(
                 else Modifier,
             )
             .semantics(mergeDescendants = true) {
+                role = Role.RadioButton
                 contentDescription = sign
-                if (isSelected) {
-                    selected = true
-                }
+                this.selected = isSelected
             }
             .clickable(onClick = onClick),
         contentAlignment = Alignment.Center,

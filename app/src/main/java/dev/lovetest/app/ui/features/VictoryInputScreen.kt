@@ -321,7 +321,7 @@ private fun VictoryOutcomePreview(modifier: Modifier = Modifier) {
 private fun VictoryOutcomeChip(text: String, background: Color, foreground: Color) {
     Box(
         modifier = Modifier
-            .height(48.dp)
+            .heightIn(min = 48.dp)
             .clip(RoundedCornerShape(16.dp))
             .background(background)
             .padding(horizontal = 20.dp),

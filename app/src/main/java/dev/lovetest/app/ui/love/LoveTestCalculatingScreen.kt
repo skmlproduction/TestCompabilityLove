@@ -272,9 +272,9 @@ private fun LoveCalculatingNamesCard(
 @Composable
 private fun LoveCalculatingProgressRing(
     progress: Float,
+    modifier: Modifier = Modifier,
     accent: Color = LovePrimary,
     accentContainer: Color = LovePrimaryContainer,
-    modifier: Modifier = Modifier,
 ) {
     val pulse by rememberInfiniteTransition(label = "heartPulse").animateFloat(
         initialValue = 0.92f,
@@ -347,8 +347,8 @@ private fun CalculatingStepRow(
     label: String,
     stepIndex: Int,
     activeStep: Int,
-    accent: Color = LovePrimary,
     modifier: Modifier = Modifier,
+    accent: Color = LovePrimary,
 ) {
     val reached = activeStep >= stepIndex
     val dotColor = if (reached) accent else LoveOutlineVariant

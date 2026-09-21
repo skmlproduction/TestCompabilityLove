@@ -171,8 +171,8 @@ private fun OnboardingProgressBar(
     progress: Float,
     currentPage: Int,
     pageCount: Int,
-    accentColor: Color = LovePrimary,
     modifier: Modifier = Modifier,
+    accentColor: Color = LovePrimary,
 ) {
     val progressCd = stringResource(R.string.onboarding_progress_cd, currentPage, pageCount)
     LinearProgressIndicator(
@@ -192,8 +192,8 @@ private fun OnboardingProgressBar(
 private fun OnboardingPageDots(
     currentPage: Int,
     pageCount: Int,
-    activeColor: Color = LovePrimary,
     modifier: Modifier = Modifier,
+    activeColor: Color = LovePrimary,
 ) {
     Row(
         modifier = modifier
@@ -751,11 +751,11 @@ private fun OnboardingHeroCard(
     line2: String,
     body1: String,
     body2: String,
+    modifier: Modifier = Modifier,
     showHeart: Boolean = false,
     showExclamation: Boolean = false,
     heroBrush: Brush = LoveHeroGradientBrush(),
     topBadge: String? = null,
-    modifier: Modifier = Modifier,
     heroHeight: Dp = LoveLayout.OnboardingHeroWelcomeHeight,
 ) {
     LoveShadowCard(
@@ -767,7 +767,7 @@ private fun OnboardingHeroCard(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(heroHeight)
+                .heightIn(min = heroHeight)
                 .background(heroBrush)
                 .padding(20.dp),
         ) {

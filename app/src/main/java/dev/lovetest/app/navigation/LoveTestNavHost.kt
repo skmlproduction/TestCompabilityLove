@@ -1,7 +1,7 @@
 package dev.lovetest.app.navigation
 
 import android.content.Intent
-import android.net.Uri
+import android.os.Build
 import android.provider.Settings
 import android.widget.Toast
 import androidx.compose.runtime.Composable
@@ -12,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.net.toUri
 import dev.lovetest.app.BuildConfig
 import dev.lovetest.app.R
 import androidx.navigation.NavHostController
@@ -576,11 +577,14 @@ fun LoveTestNavHost(
                 },
                 onLanguage = {
                     try {
-                        context.startActivity(
+                        val intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                             Intent(Settings.ACTION_APP_LOCALE_SETTINGS).apply {
-                                data = Uri.parse("package:${context.packageName}")
-                            },
-                        )
+                                data = "package:${context.packageName}".toUri()
+                            }
+                        } else {
+                            Intent(Settings.ACTION_LOCALE_SETTINGS)
+                        }
+                        context.startActivity(intent)
                     } catch (_: Exception) {
                         context.startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
                     }

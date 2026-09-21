@@ -35,8 +35,8 @@ fun ShareResultPreview(
     shareText: String,
     high: Boolean,
     onDismiss: () -> Unit,
-    onShareFallback: () -> Unit = {},
     modifier: Modifier = Modifier,
+    onShareFallback: () -> Unit = {},
 ) {
     val cardCd = stringResource(R.string.share_preview_cd)
     val dismissCd = stringResource(R.string.share_cancel)
