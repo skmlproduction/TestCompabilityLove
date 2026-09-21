@@ -20,6 +20,7 @@ fi
 
 AAB="$(ls -1 "${OUT}"/*.aab 2>/dev/null | head -1 || true)"
 if [[ -n "${AAB}" && "$(wc -c <"${AAB}" | tr -d ' ')" -ge 1000000 ]]; then
+  python3 scripts/verify_release_artifact.py "${AAB}"
   pass "AAB $(basename "${AAB}")"
 else
   fail "AAB отсутствует или слишком мал"

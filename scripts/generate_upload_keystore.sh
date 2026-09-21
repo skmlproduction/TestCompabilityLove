@@ -63,5 +63,5 @@ echo "  • Сохраните backup ${REL_PATH} — потеря ключа = 
 echo "  • Play App Signing: загрузите AAB, Google хранит app signing key"
 echo ""
 echo "Дальше:"
-echo "  ./gradlew bundleReleaseLoveTest"
+echo "  ./gradlew verifyLoveTestRelease"
 echo "  ./scripts/finalize_store_release.sh"

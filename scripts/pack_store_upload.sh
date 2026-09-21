@@ -23,10 +23,11 @@ copy_if_exists() {
 
 AAB="$(ls -1 app/build/outputs/bundle/release/*.aab 2>/dev/null | head -1 || true)"
 if [[ -n "${AAB}" ]]; then
+  python3 scripts/verify_release_artifact.py "${AAB}"
   cp "${AAB}" "${OUT}/"
   echo "  + $(basename "${AAB}")"
 else
-  echo "  skip AAB — ./gradlew bundleReleaseLoveTest"
+  echo "  skip AAB — ./gradlew verifyReleaseArtifact"
 fi
 
 if [[ ! -f build/legal-host/index.html ]]; then

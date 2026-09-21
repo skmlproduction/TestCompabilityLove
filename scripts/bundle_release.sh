@@ -20,7 +20,7 @@ if [[ "${store_ok}" != true ]]; then
 fi
 
 ./gradlew verifyLoveTest -q
-./gradlew bundleRelease
+./gradlew verifyReleaseArtifact
 
 AAB="$(ls -1 app/build/outputs/bundle/release/*.aab 2>/dev/null | head -1 || true)"
 if [[ -n "${AAB}" ]]; then

@@ -233,7 +233,7 @@ def render_markdown(result: AuditResult) -> str:
             "1. `./gradlew captureScreenshotCatalogRu` и `En` на эмуляторе 1080×1920",
             "2. `./gradlew verifyLoveTestBeforeStore`",
             "3. Задать `lovetest.privacy.policy.url` в `gradle.properties` (`./scripts/init_store_config.sh`)",
-            "4. `./gradlew releaseGateLoveTest` → `bundleRelease`",
+            "4. `./gradlew releaseGateLoveTest` → `verifyReleaseArtifact`",
             "5. Internal track → Closed testing → Production",
             "",
         ],

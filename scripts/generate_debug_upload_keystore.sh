@@ -51,6 +51,6 @@ EOF
 echo "  wrote keystore.properties → ${REL_PATH}"
 echo ""
 echo "Smoke-test:"
-echo "  ./gradlew bundleReleaseLoveTest"
+echo "  ./gradlew verifyLoveTestRelease"
 echo ""
 echo "Play Console: замените keystore.properties на production upload key."

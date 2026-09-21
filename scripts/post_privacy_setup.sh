@@ -22,9 +22,9 @@ bash scripts/export_privacy_for_hosting.sh
 if [[ -f keystore.properties ]]; then
   store_path="$(grep -E '^storeFile=' keystore.properties 2>/dev/null | cut -d= -f2- | tr -d ' ' || true)"
   if [[ -n "${store_path}" && -f "${store_path}" ]]; then
-    ./gradlew bundleReleaseLoveTest -q
+    ./gradlew verifyReleaseArtifact -q
   else
-    echo "WARN: keystore invalid — skip bundleRelease (см. generate_upload_keystore.sh)"
+    echo "WARN: keystore invalid — skip verifyReleaseArtifact (см. generate_upload_keystore.sh)"
   fi
 fi
 

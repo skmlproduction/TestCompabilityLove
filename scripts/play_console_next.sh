@@ -96,7 +96,7 @@ elif [[ "${is_debug_ks}" == true || -z "${store_path}" ]]; then
   step=3
   title="Создать production upload keystore"
   cmd="LOVETEST_KEYSTORE_PASS='***' LOVETEST_KEY_PASS='***' ./scripts/generate_upload_keystore.sh"
-  note="Backup build/keystore/lovetest-upload.jks обязателен. Затем: ./gradlew bundleReleaseLoveTest"
+  note="Backup build/keystore/lovetest-upload.jks обязателен. Затем: ./gradlew verifyLoveTestRelease"
 elif ! bash scripts/check_privacy_url.sh "${privacy}" >/dev/null 2>&1; then
   step=2
   title="Privacy URL недоступен — проверьте deploy Pages"
@@ -109,7 +109,7 @@ else
   if [[ -z "${aab}" ]]; then
     step=4
     title="Собрать подписанный release AAB"
-    cmd="./gradlew bundleReleaseLoveTest"
+    cmd="./gradlew verifyLoveTestRelease"
   elif [[ -f "${pack_aab}" && -f "${pack_zip}" ]]; then
     step=5
     title="Загрузить AAB в Play Console (Internal testing)"

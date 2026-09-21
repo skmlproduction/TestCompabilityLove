@@ -34,4 +34,4 @@ fi
 
 echo "OK: lovetest.privacy.policy.url=${URL}"
 echo "Проверка после деплоя: ./scripts/check_privacy_url.sh ${URL}"
-echo "Пересборка: ./gradlew bundleReleaseLoveTest"
+echo "Пересборка: ./gradlew verifyLoveTestRelease"

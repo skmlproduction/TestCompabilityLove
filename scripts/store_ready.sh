@@ -12,4 +12,4 @@ echo "OK: код и инвентарь. Далее на машине с эмул
 echo "  ./gradlew captureScreenshotCatalogRu"
 echo "  ./gradlew captureScreenshotCatalogEn"
 echo "  ./gradlew verifyLoveTestBeforeStore"
-echo "  ./gradlew bundleRelease"
+echo "  ./gradlew verifyReleaseArtifact"

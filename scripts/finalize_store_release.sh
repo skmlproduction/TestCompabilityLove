@@ -32,13 +32,13 @@ run_step "release gate" bash scripts/release_gate.sh
 if [[ -f keystore.properties ]]; then
   store_path="$(grep -E '^storeFile=' keystore.properties 2>/dev/null | cut -d= -f2- | tr -d ' ' || true)"
   if [[ -n "${store_path}" && -f "${store_path}" ]]; then
-    run_step "bundleRelease" ./gradlew bundleRelease -q
+    run_step "verifyReleaseArtifact" ./gradlew verifyReleaseArtifact -q
   else
-    echo "→ skip bundleRelease (keystore storeFile invalid)"
+    echo "→ skip verifyReleaseArtifact (keystore storeFile invalid)"
     echo ""
   fi
 else
-  echo "→ skip bundleRelease (no keystore.properties)"
+  echo "→ skip verifyReleaseArtifact (no keystore.properties)"
   echo ""
 fi
 
@@ -66,7 +66,7 @@ if [[ "${privacy}" == https://example.com/privacy || -z "${privacy}" ]]; then
   echo "  1. Privacy URL — docs/store/PRIVACY_HOSTING.md"
   echo "     ./scripts/set_privacy_url.sh https://USER.github.io/REPO/"
   echo "  2. Production upload key в keystore.properties"
-  echo "  3. ./gradlew bundleReleaseLoveTest && ./scripts/finalize_store_release.sh"
+  echo "  3. ./gradlew verifyLoveTestRelease && ./scripts/finalize_store_release.sh"
   echo "  4. Upload build/store-upload/ — docs/store/INTERNAL_TESTING.md"
   exit 0
 fi

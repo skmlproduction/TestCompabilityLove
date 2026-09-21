@@ -96,7 +96,7 @@ echo "4. Финальный gate PNG (опционально)"
 echo "     ./gradlew verifyLoveTestBeforeStore"
 echo ""
 echo "5. Release AAB"
-echo "     ./gradlew bundleRelease"
+echo "     ./gradlew verifyReleaseArtifact"
 echo ""
 
 if [[ "${FAIL}" -ne 0 ]]; then

@@ -120,6 +120,6 @@ echo "Далее:"
 echo "  ./gradlew storeReadyLoveTest          # код + инвентарь"
 echo "  ./gradlew captureScreenshotCatalogRu"
 echo "  ./gradlew verifyLoveTestBeforeStore   # gate: без placeholder"
-echo "  ./gradlew bundleRelease"
+echo "  ./gradlew verifyReleaseArtifact"
 
 exit "${FAIL}"

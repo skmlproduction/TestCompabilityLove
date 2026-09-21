@@ -104,7 +104,7 @@ checks = [
     ("Keystore", keystore_status),
     ("Store PNG", png_status),
     ("Feature graphic", f"OK ({fg.stat().st_size} B)" if fg.is_file() and fg.stat().st_size >= 50_000 else "MISSING/small"),
-    ("Release AAB", f"OK ({aab[-1].name})" if aab else "not built — ./gradlew bundleReleaseLoveTest"),
+    ("Release AAB", f"OK ({aab[-1].name})" if aab else "not built — ./gradlew verifyReleaseArtifact"),
     ("Legal host export", "OK" if legal.is_file() else "./gradlew exportPrivacyForHosting"),
     ("Upload pack", upload_status),
 ]
