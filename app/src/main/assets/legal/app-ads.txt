@@ -1,0 +1,5 @@
+# app-ads.txt — временный placeholder (2026-09-22).
+# После регистрации приложения в дашборде CAS.AI (https://cas.ai) заменить этот
+# файл сгенерированными строками app-ads.txt (Google/CAS и партнёры медиации).
+# Публикуется на GitHub Pages через scripts/export_privacy_for_hosting.sh
+# → build/legal-host/app-ads.txt (workflow Privacy GitHub Pages).

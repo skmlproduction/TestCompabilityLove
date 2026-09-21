@@ -27,6 +27,8 @@ print(f"  cleaned {out.relative_to(root)}")
 PY
 cp "${SRC}/data_collection.html" "${OUT}/data-collection.html"
 cp "${SRC}/terms_of_use.html" "${OUT}/terms.html"
+# app-ads.txt для верификации рекламного инвентаря (CAS.AI/AdMob); placeholder до регистрации в CAS.
+cp "${SRC}/app-ads.txt" "${OUT}/app-ads.txt"
 touch "${OUT}/.nojekyll"
 
 # Canonical path /privacy → index.html (GitHub Pages)
