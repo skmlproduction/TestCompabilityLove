@@ -4,8 +4,8 @@
 
 Локальный чеклист `./scripts/print_store_checklist.sh` → **блокеров нет**.
 
-> Пакет пересобран **2026-09-21** из одной сборки (LT-01 закрыт): AAB SHA-256
-> `fe86e8b5ddacb67e2c97af9b9b33fdb5485d7aefca88b5d02d60f8a25dd6f54e`,
+> Пакет пересобран **2026-09-21** из одной сборки (LT-01 закрыт, включает дизайн-фикс D5): AAB SHA-256
+> `e648369e530d80a4ab7568c31af77d2755ab835ff92f19d5cf2b8bd44cd68295`,
 > versionCode 1 / 1.0.0, target 36. Старый пакет — `build/store-upload-ARCHIVED-20260921/`, не использовать.
 > ⚠️ Listing-скриншоты в пакете от 2026-07-18 (до adaptive/accessibility pass) — планируется пересъёмка; для старта Internal допустимы, перед Closed заменить.
 
