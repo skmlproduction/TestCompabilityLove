@@ -43,3 +43,7 @@ core/domain/bin/
 
 # Store assets (upload to Play Console locally)
 docs/store/feature_graphic.png
+
+# JVM crash dumps
+hs_err_pid*.log
+replay_pid*.log
