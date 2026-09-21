@@ -2,6 +2,8 @@
 
 Дата: 2026-09-21 (Kimi). Нужно **одно решение** перед выходом за пределы Internal testing. Для Internal ничего менять не требуется.
 
+> **Обновление 2026-09-22:** владелец заявил медиацию **CleverAdsSolutions (CAS.AI) на всех приложениях**. Это уточняет «вариант B»: реклама внедряется через CAS SDK (CAS ID = `dev.lovetest.app`, регистрация на cas.ai), а не через прямой AdMob — отдельные AdMob unit ID не нужны, юниты управляются дашбордом CAS. Плейбук: `../CAS_MEDIATION_PLAYBOOK.md` (в корне флотилии `Android/`). Если владелец подтверждает B/C — интеграция CAS становится код-задачей агента; app-ads.txt-хостинг уже готов (`https://skmlproduction.github.io/TestCompabilityLove/app-ads.txt`, placeholder, HTTP 200).
+
 ## Конфликт
 
 | Слой | Что заявлено |
