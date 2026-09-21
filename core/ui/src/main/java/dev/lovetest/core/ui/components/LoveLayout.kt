@@ -19,6 +19,9 @@ object LoveLayout {
     /** Primary pill CTA height (M3 comfortable touch; SVG 88px ≈ 56dp on phone). */
     val PrimaryCtaHeight: Dp = 56.dp
 
+    /** Secondary actions retain the accessible 48dp target without competing with the primary CTA. */
+    val SecondaryCtaHeight: Dp = 48.dp
+
     /** Minimum hero block height on feature input screens (v2 editorial). */
     val FeatureHeroMinHeight: Dp = 132.dp
 

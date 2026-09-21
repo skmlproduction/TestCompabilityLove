@@ -2,7 +2,7 @@ package dev.lovetest.core.ui.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -12,9 +12,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
-private val PillShape = RoundedCornerShape(44.dp)
+private val PrimaryButtonShape = RoundedCornerShape(28.dp)
+private val SecondaryButtonShape = RoundedCornerShape(16.dp)
 
 @Composable
 fun LovePrimaryButton(
@@ -30,14 +33,20 @@ fun LovePrimaryButton(
         enabled = enabled,
         modifier = modifier
             .fillMaxWidth()
-            .height(LoveLayout.PrimaryCtaHeight),
-        shape = PillShape,
+            .heightIn(min = LoveLayout.PrimaryCtaHeight),
+        shape = PrimaryButtonShape,
         colors = ButtonDefaults.buttonColors(
             containerColor = containerColor,
             contentColor = contentColor,
         ),
     ) {
-        Text(text = text, style = MaterialTheme.typography.labelLarge)
+        Text(
+            text = text,
+            style = MaterialTheme.typography.labelLarge,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+            textAlign = TextAlign.Center,
+        )
     }
 }
 
@@ -55,8 +64,8 @@ fun LoveOutlinedButton(
         enabled = enabled,
         modifier = modifier
             .fillMaxWidth()
-            .height(LoveLayout.PrimaryCtaHeight),
-        shape = PillShape,
+            .heightIn(min = LoveLayout.SecondaryCtaHeight),
+        shape = SecondaryButtonShape,
         border = BorderStroke(2.dp, borderColor),
         colors = ButtonDefaults.outlinedButtonColors(contentColor = contentColor),
     ) {
@@ -64,6 +73,9 @@ fun LoveOutlinedButton(
             text = text,
             style = MaterialTheme.typography.labelLarge,
             color = contentColor,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+            textAlign = TextAlign.Center,
         )
     }
 }
@@ -83,8 +95,8 @@ fun LoveTonalButton(
         enabled = enabled,
         modifier = modifier
             .fillMaxWidth()
-            .height(LoveLayout.PrimaryCtaHeight),
-        shape = PillShape,
+            .heightIn(min = LoveLayout.SecondaryCtaHeight),
+        shape = SecondaryButtonShape,
         colors = ButtonDefaults.buttonColors(
             containerColor = containerColor,
             contentColor = contentColor,
@@ -97,6 +109,12 @@ fun LoveTonalButton(
             disabledElevation = 0.dp,
         ),
     ) {
-        Text(text = text, style = MaterialTheme.typography.labelLarge)
+        Text(
+            text = text,
+            style = MaterialTheme.typography.labelLarge,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+            textAlign = TextAlign.Center,
+        )
     }
 }

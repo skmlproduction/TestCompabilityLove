@@ -4,9 +4,8 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
@@ -30,7 +29,7 @@ fun LoveSplashHeroPanel(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(240.dp)
+            .heightIn(min = 240.dp)
             .loveCardShadow(LoveLayout.HeroShape, elevation = LoveCardShadowElevation.Hero)
             .clip(LoveLayout.HeroShape)
             .background(LoveHeroGradientBrush()),
@@ -53,7 +52,7 @@ fun LoveSplashHeroPanel(
         }
         Column(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .padding(horizontal = 20.dp, vertical = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
