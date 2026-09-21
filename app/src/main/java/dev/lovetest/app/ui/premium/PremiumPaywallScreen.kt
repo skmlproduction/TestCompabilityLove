@@ -47,6 +47,7 @@ import dev.lovetest.app.util.decorativeForAccessibility
 import dev.lovetest.core.ui.components.LoveCardShadowElevation
 import dev.lovetest.core.ui.components.LoveShadowCard
 import dev.lovetest.core.ui.components.LoveGradientBackground
+import dev.lovetest.core.ui.components.LoveHeroGradientBrush
 import dev.lovetest.core.ui.components.LoveHubBackgroundBlobs
 import dev.lovetest.core.ui.components.LoveTonalButton
 import dev.lovetest.core.ui.components.LoveLayout
@@ -56,18 +57,11 @@ import dev.lovetest.core.ui.theme.LoveOnSurface
 import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
 import dev.lovetest.core.ui.theme.LovePrimary
 import dev.lovetest.core.ui.theme.LovePrimaryContainer
-import dev.lovetest.core.ui.theme.LoveSecondary
 import dev.lovetest.core.ui.theme.LoveSurface
 import dev.lovetest.core.ui.theme.LoveTypographyTokens
 
-private val PremiumHeroBrush = Brush.linearGradient(
-    colors = listOf(
-        Color(0xFF5C1228),
-        LovePrimary,
-        LoveSecondary,
-        Color(0xFFE8C547),
-    ),
-)
+private val PremiumHeroBrush: Brush
+    @Composable get() = LoveHeroGradientBrush()
 
 private val PremiumGoldBrush = Brush.linearGradient(
     colors = listOf(Color(0xFFFFD54F), Color(0xFFFF8F00)),
