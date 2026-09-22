@@ -67,6 +67,8 @@ import dev.lovetest.core.ui.theme.LoveZodiacResultHeroBrush
 import dev.lovetest.core.ui.theme.LoveZodiacShareBorder
 import dev.lovetest.core.ui.theme.LoveTypographyTokens
 import dev.lovetest.core.ui.theme.LoveZodiacViolet
+import dev.lovetest.core.ui.theme.LoveZodiacVioletSoft
+import dev.lovetest.core.ui.theme.VelvetGold
 
 @Composable
 fun ZodiacResultScreen(
@@ -333,10 +335,10 @@ private fun ZodiacForecastCard(
 @Composable
 private fun ZodiacElementChip(element: ZodiacElement) {
     val (bg, fg) = when (element) {
-        ZodiacElement.Fire -> Color(0xFFFFCCBC) to Color(0xFFBF360C)
-        ZodiacElement.Earth -> Color(0xFFDCEDC8) to Color(0xFF33691E)
-        ZodiacElement.Air -> Color(0xFFE1BEE7) to Color(0xFF4A148C)
-        ZodiacElement.Water -> Color(0xFFB3E5FC) to Color(0xFF01579B)
+        ZodiacElement.Fire -> Color(0x29FF8A5C) to Color(0xFFFFB08A)
+        ZodiacElement.Earth -> Color(0x29FFC94D) to VelvetGold
+        ZodiacElement.Air -> Color(0x29C9B4E4) to LoveZodiacVioletSoft
+        ZodiacElement.Water -> Color(0x2980D8FF) to Color(0xFF9AD6F2)
     }
     Box(
         modifier = Modifier

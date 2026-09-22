@@ -78,6 +78,8 @@ import dev.lovetest.core.ui.theme.LovePrimary
 import dev.lovetest.core.ui.theme.LovePrimaryContainer
 import dev.lovetest.core.ui.theme.LoveSecondary
 import dev.lovetest.core.ui.theme.LoveSurface
+import dev.lovetest.core.ui.theme.VelvetCardStrong
+import dev.lovetest.core.ui.theme.VelvetGold
 import dev.lovetest.core.ui.theme.LoveTypographyTokens
 
 private val VictoryInputHeroBrush = Brush.linearGradient(
@@ -139,7 +141,7 @@ fun VictoryInputScreen(
                                 .padding(top = 8.dp)
                                 .height(52.dp)
                                 .clip(RoundedCornerShape(28.dp))
-                                .background(Color.White)
+                                .background(VelvetCardStrong)
                                 .border(2.dp, LovePrimary, RoundedCornerShape(28.dp))
                                 .padding(horizontal = 16.dp),
                             contentAlignment = Alignment.CenterStart,
@@ -164,13 +166,13 @@ fun VictoryInputScreen(
                                     .align(Alignment.CenterEnd)
                                     .size(40.dp)
                                     .clip(RoundedCornerShape(12.dp))
-                                    .background(Color(0xFFFFF8E1)),
+                                    .background(Color(0x29FFC94D)),
                                 contentAlignment = Alignment.Center,
                             ) {
                                 Icon(
                                     Icons.Filled.EmojiEvents,
                                     contentDescription = null,
-                                    tint = Color(0xFFFF8F00),
+                                    tint = VelvetGold,
                                     modifier = Modifier
                                         .decorativeForAccessibility()
                                         .size(22.dp),
@@ -197,19 +199,19 @@ fun VictoryInputScreen(
                                 .fillMaxWidth()
                                 .padding(top = 20.dp)
                                 .clip(RoundedCornerShape(24.dp))
-                                .background(Color(0xFFFFF8E1))
+                                .background(VelvetCardStrong)
                                 .padding(16.dp),
                         ) {
                             Column {
                                 Text(
                                     text = stringResource(R.string.victory_tip_line1),
                                     style = MaterialTheme.typography.bodyLarge,
-                                    color = Color(0xFFE65100),
+                                    color = VelvetGold,
                                 )
                                 Text(
                                     text = stringResource(R.string.victory_tip_line2),
                                     style = MaterialTheme.typography.bodyMedium,
-                                    color = Color(0xFFF57F17),
+                                    color = LoveOnSurfaceVariant,
                                     modifier = Modifier.padding(top = 8.dp),
                                 )
                             }
@@ -294,13 +296,13 @@ private fun VictoryOutcomePreview(modifier: Modifier = Modifier) {
         ) {
             VictoryOutcomeChip(
                 text = stringResource(R.string.victory_outcome_yes),
-                background = Color(0xFFE8F5E9),
-                foreground = Color(0xFF2E7D32),
+                background = Color(0x29FFC94D),
+                foreground = VelvetGold,
             )
             VictoryOutcomeChip(
                 text = stringResource(R.string.victory_outcome_maybe),
-                background = Color(0xFFFFF8E1),
-                foreground = Color(0xFFF57F17),
+                background = VelvetCardStrong,
+                foreground = LoveOnSurfaceVariant,
             )
             VictoryOutcomeChip(
                 text = stringResource(R.string.victory_outcome_soon),

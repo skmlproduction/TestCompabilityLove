@@ -49,6 +49,8 @@ import dev.lovetest.core.ui.theme.LovePrimaryContainer
 import dev.lovetest.core.ui.theme.LoveSecondary
 import dev.lovetest.core.ui.theme.LoveSurface
 import dev.lovetest.core.ui.theme.LoveTypographyTokens
+import dev.lovetest.core.ui.theme.VelvetCardStrong
+import dev.lovetest.core.ui.theme.VelvetGold
 
 private val ThankYouHeroBrush = Brush.linearGradient(
     colors = listOf(
@@ -151,14 +153,14 @@ fun PremiumThankYouScreen(
                         modifier = Modifier
                             .padding(top = 16.dp)
                             .clip(RoundedCornerShape(26.dp))
-                            .background(Color(0xFFE8F5E9))
+                            .background(Color(0x29FFC94D))
                             .padding(horizontal = 24.dp, vertical = 12.dp),
                     ) {
                         Text(
                             text = stringResource(R.string.premium_active_badge),
                             style = LoveTypographyTokens.HubHeroChip,
                             fontWeight = FontWeight.ExtraBold,
-                            color = Color(0xFF2E7D32),
+                            color = VelvetGold,
                         )
                     }
                 }
@@ -240,13 +242,13 @@ private fun PremiumThankYouHero(modifier: Modifier = Modifier) {
                         modifier = Modifier
                             .size(96.dp)
                             .clip(CircleShape)
-                            .background(Color.White),
+                            .background(VelvetCardStrong),
                         contentAlignment = Alignment.Center,
                     ) {
                         Icon(
                             Icons.Filled.Check,
                             contentDescription = null,
-                            tint = Color(0xFF2E7D32),
+                            tint = VelvetGold,
                             modifier = Modifier
                                 .decorativeForAccessibility()
                                 .size(56.dp),

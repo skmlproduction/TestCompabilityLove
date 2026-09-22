@@ -55,6 +55,7 @@ import dev.lovetest.core.ui.theme.LovePrimary
 import dev.lovetest.core.ui.theme.LovePrimaryContainer
 import dev.lovetest.core.ui.theme.LoveSurface
 import dev.lovetest.core.ui.theme.LoveTypographyTokens
+import dev.lovetest.core.ui.theme.VelvetCardStrong
 
 @Composable
 fun ConsentScreen(
@@ -89,7 +90,7 @@ fun ConsentScreen(
                     style = LoveTypographyTokens.ScreenHeadline,
                     color = LoveOnSurface,
                     modifier = Modifier
-                        .padding(top = 20.dp)
+                        .padding(top = 14.dp)
                         .semantics { heading() },
                 )
                 Text(
@@ -104,8 +105,8 @@ fun ConsentScreen(
                     color = LoveOnSurfaceVariant,
                 )
 
-                ConsentDetailsCard(modifier = Modifier.padding(top = 20.dp))
-                ConsentPremiumHint(modifier = Modifier.padding(top = 16.dp, bottom = 8.dp))
+                ConsentDetailsCard(modifier = Modifier.padding(top = 14.dp))
+                ConsentPremiumHint(modifier = Modifier.padding(top = 12.dp, bottom = 20.dp))
             }
 
             LovePrimaryButton(
@@ -129,7 +130,7 @@ fun ConsentScreen(
                     .fillMaxWidth()
                     .semantics { role = Role.Button }
                     .clickable(onClick = onOpenPrivacy)
-                    .padding(top = 16.dp, bottom = 16.dp),
+                    .padding(top = 10.dp, bottom = 12.dp),
             )
         }
     }
@@ -169,14 +170,14 @@ private fun ConsentIllustrationCard(modifier: Modifier = Modifier) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(20.dp),
+                .padding(14.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Box(
                 modifier = Modifier
-                    .size(100.dp)
+                    .size(84.dp)
                     .clip(RoundedCornerShape(24.dp))
-                    .background(Color.White.copy(0.9f))
+                    .background(VelvetCardStrong)
                     .padding(12.dp),
             ) {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {

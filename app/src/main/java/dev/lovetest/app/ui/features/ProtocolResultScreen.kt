@@ -58,11 +58,14 @@ import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
 import dev.lovetest.core.ui.theme.LovePrimary
 import dev.lovetest.core.ui.theme.LoveProtocolContainer
 import dev.lovetest.core.ui.theme.LoveProtocolHeroGradientColors
+import dev.lovetest.core.ui.theme.LoveProtocolLight
 import dev.lovetest.core.ui.theme.LoveProtocolMutedHeroBrush
 import dev.lovetest.core.ui.theme.LoveProtocolPrimary
 import dev.lovetest.core.ui.theme.LoveProtocolPrimaryDark
 import dev.lovetest.core.ui.theme.LoveSurface
 import dev.lovetest.core.ui.theme.LoveTypographyTokens
+import dev.lovetest.core.ui.theme.VelvetCardStrong
+import dev.lovetest.core.ui.theme.VelvetGold
 
 private val ProtocolHeroBrush = Brush.linearGradient(colors = LoveProtocolHeroGradientColors)
 
@@ -296,54 +299,54 @@ private fun ProtocolLowWarningCard(modifier: Modifier = Modifier) {
                     modifier = Modifier
                         .size(48.dp)
                         .clip(RoundedCornerShape(16.dp))
-                        .background(Color.White),
+                        .background(VelvetCardStrong),
                     contentAlignment = Alignment.Center,
                 ) {
                     Text(
                         text = "!",
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.ExtraBold,
-                        color = LoveProtocolPrimary,
+                        color = LoveProtocolLight,
                     )
                 }
                 Text(
                     text = stringResource(R.string.protocol_low_warning_title),
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold,
-                    color = LoveProtocolPrimaryDark,
+                    color = LoveProtocolLight,
                     modifier = Modifier.padding(start = 16.dp),
                 )
             }
             Text(
                 text = stringResource(R.string.protocol_low_warning_body1),
                 style = MaterialTheme.typography.bodyLarge,
-                color = LoveProtocolPrimaryDark.copy(alpha = 0.88f),
+                color = LoveOnSurfaceVariant,
                 modifier = Modifier.padding(top = 16.dp),
             )
             Text(
                 text = stringResource(R.string.protocol_low_warning_body2),
                 style = MaterialTheme.typography.bodyLarge,
-                color = LoveProtocolPrimaryDark.copy(alpha = 0.88f),
+                color = LoveOnSurfaceVariant,
                 modifier = Modifier.padding(top = 4.dp),
             )
             Text(
                 text = stringResource(R.string.protocol_low_warning_body3),
                 style = MaterialTheme.typography.bodyLarge,
-                color = LoveProtocolPrimaryDark.copy(alpha = 0.88f),
+                color = LoveOnSurfaceVariant,
                 modifier = Modifier.padding(top = 4.dp),
             )
             Box(
                 modifier = Modifier
                     .padding(top = 16.dp)
                     .clip(RoundedCornerShape(24.dp))
-                    .background(Color.White.copy(alpha = 0.75f))
+                    .background(VelvetCardStrong)
                     .padding(horizontal = 20.dp, vertical = 10.dp),
             ) {
                 Text(
                     text = stringResource(R.string.love_test_result_low_chip, threshold),
                     style = MaterialTheme.typography.labelLarge,
                     fontWeight = FontWeight.Bold,
-                    color = LoveProtocolPrimaryDark,
+                    color = LoveProtocolLight,
                 )
             }
         }
@@ -427,7 +430,7 @@ private fun ProtocolSummaryCard(
                     text = stringResource(R.string.hub_protocol_test_label),
                     style = MaterialTheme.typography.labelLarge,
                     fontWeight = FontWeight.Bold,
-                    color = LoveProtocolPrimary,
+                    color = LoveProtocolLight,
                 )
             }
         }
@@ -442,18 +445,18 @@ private fun ProtocolSummaryRow(
 ) {
     val (bg, fg, icon) = when (tone) {
         ProtocolSummaryTone.Success -> Triple(
-            Color(0xFFE8F5E9),
-            Color(0xFF2E7D32),
+            Color(0x332A9B90),
+            LoveProtocolLight,
             ProtocolSummaryIcon.Check,
         )
         ProtocolSummaryTone.Warning -> Triple(
-            Color(0xFFFFF3E0),
-            Color(0xFFE65100),
+            Color(0x29FFC94D),
+            VelvetGold,
             ProtocolSummaryIcon.Warning,
         )
         ProtocolSummaryTone.Neutral -> Triple(
-            Color(0xFFECEFF1),
-            Color(0xFF78909C),
+            VelvetCardStrong,
+            LoveOnSurfaceVariant,
             ProtocolSummaryIcon.Neutral,
         )
     }
@@ -514,18 +517,18 @@ private fun ProtocolVerdictCard(
     val (containerColor, titleColor, bodyColor) = when (band) {
         2 -> Triple(
             LoveProtocolContainer,
-            LoveProtocolPrimaryDark,
-            LoveProtocolPrimary,
+            LoveProtocolLight,
+            LoveOnSurfaceVariant,
         )
         1 -> Triple(
-            Color(0xFFB2DFDB),
-            LoveProtocolPrimaryDark,
-            LoveProtocolPrimaryDark,
+            Color(0x332A9B90),
+            LoveProtocolLight,
+            LoveOnSurfaceVariant,
         )
         else -> Triple(
-            Color(0xFFECEFF1),
-            Color(0xFF546E7A),
-            Color(0xFF78909C),
+            VelvetCardStrong,
+            LoveOnSurface,
+            LoveOnSurfaceVariant,
         )
     }
     LoveShadowCard(

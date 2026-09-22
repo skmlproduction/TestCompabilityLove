@@ -60,6 +60,11 @@ import dev.lovetest.core.ui.components.LoveShadowCard
 import dev.lovetest.core.ui.components.LoveGradientBackground
 import dev.lovetest.core.ui.components.LoveHeartIcon
 import dev.lovetest.core.ui.components.LoveHeroGradientBrush
+import androidx.compose.ui.graphics.PathEffect
+import dev.lovetest.core.ui.theme.VelvetAccentBrush
+import dev.lovetest.core.ui.theme.VelvetAccentRose
+import dev.lovetest.core.ui.theme.VelvetPinkSoft
+import dev.lovetest.core.ui.theme.VelvetTextMuted
 import dev.lovetest.core.ui.components.LoveHubBackgroundBlobs
 import dev.lovetest.core.ui.components.LoveLayout
 import dev.lovetest.core.ui.components.LovePrimaryButton
@@ -77,9 +82,11 @@ import dev.lovetest.core.ui.theme.LovePrimary
 import dev.lovetest.core.ui.theme.LovePrimaryContainer
 import dev.lovetest.core.ui.theme.LoveProtocolContainer
 import dev.lovetest.core.ui.theme.LoveProtocolHeroGradientColors
+import dev.lovetest.core.ui.theme.LoveProtocolLight
 import dev.lovetest.core.ui.theme.LoveProtocolPrimary
 import dev.lovetest.core.ui.theme.LoveSurface
 import dev.lovetest.core.ui.theme.LoveTypographyTokens
+import dev.lovetest.core.ui.theme.VelvetCardStrong
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -229,16 +236,12 @@ private fun OnboardingWelcomePage() {
             .fillMaxWidth()
             .verticalScroll(rememberOnboardingPageScrollState()),
     ) {
-        OnboardingHeroCard(
+        VelvetWelcomeHero(
             pageLabel = stringResource(R.string.onboarding_page_1_of_4),
-            kicker = stringResource(R.string.onboarding_welcome_kicker),
             line1 = stringResource(R.string.onboarding_welcome_hero_line1),
             line2 = stringResource(R.string.onboarding_welcome_hero_line2),
             body1 = stringResource(R.string.onboarding_welcome_hero_body1),
             body2 = stringResource(R.string.onboarding_welcome_hero_body2),
-            showHeart = true,
-            showExclamation = false,
-            heroHeight = LoveLayout.OnboardingHeroWelcomeHeight,
             modifier = Modifier.fillMaxWidth(),
         )
         Text(
@@ -297,6 +300,91 @@ private fun OnboardingWelcomePage() {
             body = stringResource(R.string.onboarding_no_reg_body),
             modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
         )
+    }
+}
+
+@Composable
+private fun VelvetWelcomeHero(
+    pageLabel: String,
+    line1: String,
+    line2: String,
+    body1: String,
+    body2: String,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Box(
+            modifier = Modifier
+                .padding(top = 12.dp)
+                .size(212.dp),
+            contentAlignment = Alignment.Center,
+        ) {
+            // soft rose glow
+            Box(
+                modifier = Modifier
+                    .size(212.dp)
+                    .background(
+                        Brush.radialGradient(
+                            listOf(VelvetAccentRose.copy(alpha = 0.38f), Color.Transparent),
+                        ),
+                        CircleShape,
+                    ),
+            )
+            // dashed orbit ring
+            Canvas(modifier = Modifier.size(188.dp)) {
+                drawCircle(
+                    color = VelvetPinkSoft.copy(alpha = 0.35f),
+                    style = Stroke(
+                        width = 1.5.dp.toPx(),
+                        pathEffect = PathEffect.dashPathEffect(floatArrayOf(14f, 12f), 0f),
+                    ),
+                )
+            }
+            // gradient heart ball
+            Box(
+                modifier = Modifier
+                    .size(140.dp)
+                    .clip(CircleShape)
+                    .background(VelvetAccentBrush),
+                contentAlignment = Alignment.Center,
+            ) {
+                LoveHeartIcon(Modifier.size(64.dp), color = Color.White)
+            }
+        }
+        Text(
+            text = listOf(line1, line2).filter { it.isNotBlank() }.joinToString("\n"),
+            style = LoveTypographyTokens.ScreenHeadline,
+            color = Color.White,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(top = 18.dp),
+        )
+        val body = listOf(body1, body2).map { it.trim() }.filter { it.isNotEmpty() }.joinToString(" ")
+        if (body.isNotEmpty()) {
+            Text(
+                text = body,
+                style = LoveTypographyTokens.HeroBody,
+                color = VelvetTextMuted,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(top = 8.dp, start = 12.dp, end = 12.dp),
+            )
+        }
+        Box(
+            modifier = Modifier
+                .padding(top = 14.dp)
+                .clip(RoundedCornerShape(28.dp))
+                .background(VelvetPinkSoft.copy(alpha = 0.14f))
+                .padding(horizontal = 16.dp, vertical = 7.dp),
+        ) {
+            Text(
+                text = pageLabel,
+                style = MaterialTheme.typography.labelLarge,
+                fontWeight = FontWeight.Bold,
+                color = VelvetPinkSoft,
+            )
+        }
     }
 }
 
@@ -406,7 +494,7 @@ private fun OnboardingProtocolPage() {
             fontWeight = FontWeight.Bold,
             color = LoveOnSurface,
             modifier = Modifier
-                .padding(top = 12.dp)
+                .padding(top = 8.dp)
                 .semantics { heading() },
         )
         Text(
@@ -440,8 +528,8 @@ private fun OnboardingProtocolPage() {
                 modifier = Modifier.weight(1f),
             )
         }
-        OnboardingProtocolHubPreviewCard(modifier = Modifier.padding(top = 12.dp))
-        OnboardingProtocolAfterBanner(modifier = Modifier.padding(top = 12.dp, bottom = 40.dp))
+        OnboardingProtocolHubPreviewCard(modifier = Modifier.padding(top = 10.dp))
+        OnboardingProtocolAfterBanner(modifier = Modifier.padding(top = 10.dp, bottom = 40.dp))
     }
 }
 
@@ -484,7 +572,7 @@ private fun OnboardingProtocolStep(number: Int, label: String) {
                 text = number.toString(),
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.ExtraBold,
-                color = LoveProtocolPrimary,
+                color = LoveProtocolLight,
             )
         }
         Text(
@@ -574,12 +662,12 @@ private fun OnboardingProtocolAfterBanner(modifier: Modifier = Modifier) {
                 text = stringResource(R.string.onboarding_protocol_after_title),
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.Bold,
-                color = LoveProtocolPrimary.copy(alpha = 0.85f),
+                color = LoveProtocolLight,
             )
             Text(
                 text = stringResource(R.string.onboarding_protocol_after_body),
                 style = MaterialTheme.typography.bodyMedium,
-                color = LoveProtocolPrimary,
+                color = LoveOnSurfaceVariant,
                 modifier = Modifier.padding(top = 4.dp),
             )
         }
@@ -602,19 +690,19 @@ private fun OnboardingProtocolDisclaimerStrip(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .size(40.dp)
                     .clip(RoundedCornerShape(14.dp))
-                    .background(Color.White),
+                    .background(VelvetCardStrong),
             )
             Column(modifier = Modifier.padding(start = 16.dp)) {
                 Text(
                     text = stringResource(R.string.onboarding_protocol_disclaimer_title),
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.Bold,
-                    color = LoveProtocolPrimary.copy(alpha = 0.85f),
+                    color = LoveProtocolLight,
                 )
                 Text(
                     text = stringResource(R.string.onboarding_protocol_disclaimer_body),
                     style = MaterialTheme.typography.bodyMedium,
-                    color = LoveProtocolPrimary,
+                    color = LoveOnSurfaceVariant,
                     modifier = Modifier.padding(top = 4.dp),
                 )
             }
@@ -810,7 +898,16 @@ private fun OnboardingHeroCard(
                 }
             }
             Column(
-                modifier = Modifier.align(Alignment.BottomStart),
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .padding(
+                        top = when {
+                            showHeart -> 116.dp
+                            showExclamation -> 96.dp
+                            topBadge != null -> 44.dp
+                            else -> 0.dp
+                        },
+                    ),
             ) {
                 if (kicker.isNotEmpty()) {
                     Text(

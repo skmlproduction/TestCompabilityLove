@@ -78,6 +78,7 @@ import dev.lovetest.core.ui.theme.LoveOutline
 import dev.lovetest.core.ui.theme.LovePrimary
 import dev.lovetest.core.ui.theme.LovePrimaryContainer
 import dev.lovetest.core.ui.theme.LoveSurface
+import dev.lovetest.core.ui.theme.VelvetCardStrong
 import dev.lovetest.core.ui.theme.LoveTypographyTokens
 
 private val LettersHeroBrush = Brush.linearGradient(
@@ -360,7 +361,7 @@ private fun LettersWordField(
                 .padding(top = 8.dp)
                 .height(LoveLayout.LoveTestInputFieldHeight)
                 .clip(RoundedCornerShape(28.dp))
-                .background(Color.White)
+                .background(VelvetCardStrong)
                 .border(
                     if (highlighted) 2.dp else 1.dp,
                     if (highlighted) LettersAccent else LoveOutline,

@@ -71,6 +71,7 @@ import dev.lovetest.core.ui.theme.LoveOutlineVariant
 import dev.lovetest.core.ui.theme.LovePrimary
 import dev.lovetest.core.ui.theme.LovePrimaryContainer
 import dev.lovetest.core.ui.theme.LoveSurface
+import dev.lovetest.core.ui.theme.VelvetCardStrong
 import dev.lovetest.core.ui.theme.LoveTypographyTokens
 
 private val CalculatorHeroBrush = Brush.linearGradient(
@@ -283,7 +284,7 @@ private fun CalculatorNameField(
                 .padding(top = 8.dp)
                 .height(LoveLayout.LoveTestInputFieldHeight)
                 .clip(RoundedCornerShape(28.dp))
-                .background(Color.White)
+                .background(VelvetCardStrong)
                 .border(
                     width = if (highlighted) 2.dp else 1.dp,
                     color = if (highlighted) LovePrimary else LoveOutline,

@@ -66,6 +66,8 @@ import dev.lovetest.core.ui.theme.LovePrimaryContainer
 import dev.lovetest.core.ui.theme.LoveResultMutedHeroBrush
 import dev.lovetest.core.ui.theme.LoveSecondary
 import dev.lovetest.core.ui.theme.LoveSurface
+import dev.lovetest.core.ui.theme.VelvetCardStrong
+import dev.lovetest.core.ui.theme.VelvetGold
 
 private val VictoryResultHeroBrush = Brush.linearGradient(
     colors = listOf(
@@ -258,14 +260,14 @@ private fun VictoryResultOutcomeChips(
         ) {
             VictoryOutcomeChip(
                 text = stringResource(R.string.victory_outcome_yes),
-                background = if (victory) Color(0xFFE8F5E9) else LovePrimaryContainer,
-                foreground = if (victory) Color(0xFF2E7D32) else LoveOnSurfaceVariant,
+                background = if (victory) Color(0x29FFC94D) else LovePrimaryContainer,
+                foreground = if (victory) VelvetGold else LoveOnSurfaceVariant,
                 selected = victory,
             )
             VictoryOutcomeChip(
                 text = stringResource(R.string.victory_outcome_maybe),
-                background = if (!victory) Color(0xFFFFF8E1) else LovePrimaryContainer,
-                foreground = if (!victory) Color(0xFFF57F17) else LoveOnSurfaceVariant,
+                background = if (!victory) Color(0x29FFC94D) else LovePrimaryContainer,
+                foreground = if (!victory) VelvetGold else LoveOnSurfaceVariant,
                 selected = !victory,
             )
         }
@@ -323,18 +325,18 @@ private fun VictoryMessageCard(
                         .size(56.dp)
                         .clip(RoundedCornerShape(20.dp))
                         .background(
-                            if (victory) Color(0xFFE8F5E9) else Color(0xFFFFF8E1),
+                            if (victory) Color(0x29FFC94D) else VelvetCardStrong,
                         ),
                     contentAlignment = Alignment.Center,
                 ) {
                     if (victory) {
-                        Icon(Icons.Filled.Check, null, tint = Color(0xFF2E7D32), modifier = Modifier.size(32.dp))
+                        Icon(Icons.Filled.Check, null, tint = VelvetGold, modifier = Modifier.size(32.dp))
                     } else {
                         Text(
                             text = stringResource(R.string.victory_outcome_maybe),
                             style = MaterialTheme.typography.headlineSmall,
                             fontWeight = FontWeight.ExtraBold,
-                            color = Color(0xFFF57F17),
+                            color = VelvetGold,
                         )
                     }
                 }
@@ -398,21 +400,21 @@ private fun VictoryMessageCard(
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(24.dp))
-                        .background(Color(0xFFFFF8E1))
+                        .background(VelvetCardStrong)
                         .padding(horizontal = 20.dp, vertical = 10.dp),
                 ) {
                     Text(
                         text = stringResource(R.string.victory_test_badge),
                         style = MaterialTheme.typography.labelLarge,
                         fontWeight = FontWeight.Bold,
-                        color = Color(0xFFE65100),
+                        color = VelvetGold,
                     )
                 }
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(24.dp))
                         .background(
-                            if (victory) Color(0xFFE8F5E9) else Color(0xFFFFF8E1),
+                            if (victory) Color(0x29FFC94D) else VelvetCardStrong,
                         )
                         .padding(horizontal = 20.dp, vertical = 10.dp),
                 ) {
@@ -420,7 +422,7 @@ private fun VictoryMessageCard(
                         text = stringResource(R.string.victory_outcome_label, outcomeLabel),
                         style = MaterialTheme.typography.labelLarge,
                         fontWeight = FontWeight.Bold,
-                        color = if (victory) Color(0xFF2E7D32) else Color(0xFFF57F17),
+                        color = if (victory) VelvetGold else LoveOnSurfaceVariant,
                     )
                 }
             }
@@ -446,7 +448,7 @@ private fun VictorySharePreviewCard(
         shape = RoundedCornerShape(32.dp),
         shadowElevation = LoveCardShadowElevation.Subtle,
         colors = CardDefaults.cardColors(containerColor = LoveSurface),
-        border = BorderStroke(2.dp, Color(0xFFFFE082)),
+        border = BorderStroke(2.dp, Color(0x66FFC94D)),
     ) {
         Row(
             modifier = Modifier.padding(16.dp),

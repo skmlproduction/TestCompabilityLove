@@ -62,6 +62,7 @@ import dev.lovetest.core.ui.theme.LoveZodiacAccentPink
 import dev.lovetest.core.ui.theme.LoveZodiacHeroBrush
 import dev.lovetest.core.ui.theme.LoveZodiacSlotUnselected
 import dev.lovetest.core.ui.theme.LoveZodiacViolet
+import dev.lovetest.core.ui.theme.LoveZodiacVioletSoft
 
 @Composable
 fun ZodiacPickScreen(
@@ -93,7 +94,7 @@ fun ZodiacPickScreen(
             LoveFeatureTopBar(
                 title = stringResource(R.string.zodiac_title),
                 onBack = onBack,
-                backContentColor = LoveZodiacViolet,
+                backContentColor = LoveZodiacVioletSoft,
             )
             ZodiacPickHero(modifier = Modifier.padding(top = 8.dp))
                 ZodiacSelectedSlots(
@@ -307,7 +308,7 @@ private fun ZodiacSlot(
         Text(
             text = label,
             style = LoveTypographyTokens.FieldLabel,
-            color = LoveZodiacViolet,
+            color = LoveZodiacVioletSoft,
         )
         Box(
             modifier = Modifier

@@ -57,9 +57,11 @@ import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
 import dev.lovetest.core.ui.theme.LoveOutline
 import dev.lovetest.core.ui.theme.LoveProtocolContainer
 import dev.lovetest.core.ui.theme.LoveProtocolHeroGradientColors
+import dev.lovetest.core.ui.theme.LoveProtocolLight
 import dev.lovetest.core.ui.theme.LoveProtocolPrimary
 import dev.lovetest.core.ui.theme.LoveProtocolPrimaryDark
 import dev.lovetest.core.ui.theme.LoveSurface
+import dev.lovetest.core.ui.theme.VelvetCardStrong
 import dev.lovetest.core.ui.theme.LoveTypographyTokens
 
 private val ProtocolHeroBrush = Brush.linearGradient(colors = LoveProtocolHeroGradientColors)
@@ -162,7 +164,7 @@ fun ProtocolInputScreen(
                         Text(
                             text = stringResource(R.string.protocol_tip),
                             style = LoveTypographyTokens.HeroBody,
-                            color = LoveProtocolPrimaryDark,
+                            color = LoveProtocolLight,
                             modifier = Modifier
                                 .padding(top = 16.dp)
                                 .fillMaxWidth()
@@ -227,7 +229,7 @@ private fun ProtocolStepChip(number: Int, label: String) {
             Text(
                 text = number.toString(),
                 fontWeight = FontWeight.ExtraBold,
-                color = LoveProtocolPrimary,
+                color = LoveProtocolLight,
             )
         }
         Text(
@@ -253,7 +255,7 @@ private fun ProtocolNameField(
         Text(
             text = label,
             style = LoveTypographyTokens.FieldLabel,
-            color = LoveProtocolPrimary,
+            color = LoveProtocolLight,
             modifier = Modifier.loveInputLabelForAccessibility(),
         )
         BasicTextField(
@@ -277,7 +279,7 @@ private fun ProtocolNameField(
                     color = borderColor,
                     shape = RoundedCornerShape(28.dp),
                 )
-                .background(Color.White)
+                .background(VelvetCardStrong)
                 .padding(horizontal = 20.dp)
                 .loveInputFieldSemantics(label = label, value = value, placeholder = placeholder),
             decorationBox = { inner ->

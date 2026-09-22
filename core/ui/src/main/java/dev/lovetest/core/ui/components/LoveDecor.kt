@@ -7,35 +7,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
-import dev.lovetest.core.ui.theme.LoveBgGlowBottom
-import dev.lovetest.core.ui.theme.LoveBgGlowTop
-import dev.lovetest.core.ui.theme.LoveHeroEnd
-import dev.lovetest.core.ui.theme.LovePrimary
-import dev.lovetest.core.ui.theme.LoveSecondary
-import dev.lovetest.core.ui.theme.LoveSurface
+import dev.lovetest.core.ui.theme.VelvetAccentCoral
+import dev.lovetest.core.ui.theme.VelvetAccentRose
+import dev.lovetest.core.ui.theme.VelvetBgBrush
 
+/** Velvet: full-screen deep-plum vertical gradient. */
 @Composable
 fun LoveGradientBackground(
     modifier: Modifier = Modifier,
 ) {
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(
-                Brush.linearGradient(
-                    colors = listOf(LoveBgGlowTop, LoveSurface, LoveBgGlowBottom),
-                    start = Offset(0f, 0f),
-                    end = Offset(1000f, 2000f),
-                ),
-            ),
-    )
+    Box(modifier = modifier.fillMaxSize().background(VelvetBgBrush))
 }
 
+/** Velvet hero/CTA gradient — rose → coral, diagonal. */
 @Composable
 fun LoveHeroGradientBrush(): Brush =
     Brush.linearGradient(
-        colors = listOf(LovePrimary, LoveSecondary, LoveHeroEnd),
+        colors = listOf(VelvetAccentRose, VelvetAccentCoral),
         start = Offset.Zero,
         end = Offset(800f, 600f),
     )

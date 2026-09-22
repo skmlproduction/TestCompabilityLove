@@ -6,13 +6,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import dev.lovetest.core.ui.theme.LovePrimary
+import dev.lovetest.core.ui.theme.VelvetAccentRose
 
-private val ShadowAmbient = Color(0x141C1B1F)
-private val DefaultSpotTint = LovePrimary
+private val ShadowAmbient = Color(0x59000000)
+private val DefaultSpotTint = VelvetAccentRose
 
 /**
- * Approximates SVG `cardShadow`: neutral depth (dy=16, blur≈24) + tinted accent (dy=2, blur≈7).
+ * Velvet: deep neutral drop + rose glow (dy=2, blur≈7) — читается на тёмном фоне.
  */
 fun Modifier.loveCardShadow(
     shape: Shape,
@@ -23,11 +23,11 @@ fun Modifier.loveCardShadow(
     shape = shape,
     clip = false,
     ambientColor = ShadowAmbient,
-    spotColor = spotTint.copy(alpha = 0.12f),
+    spotColor = spotTint.copy(alpha = 0.35f),
 )
 
 object LoveCardShadowElevation {
-    val Hero = 16.dp
-    val Card = 8.dp
+    val Hero = 18.dp
+    val Card = 10.dp
     val Subtle = 4.dp
 }

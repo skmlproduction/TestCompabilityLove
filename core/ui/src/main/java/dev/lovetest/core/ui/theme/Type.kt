@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.sp
 object LoveTypographyTokens {
     /** SVG hub/onboarding `.appTitle` — 36px → ~18sp; brand-readable without truncating. */
     val AppTitle = TextStyle(
-        fontFamily = InterFontFamily,
+        fontFamily = VelvetDisplayFamily,
         fontWeight = FontWeight.ExtraBold,
         fontSize = 20.sp,
         lineHeight = 26.sp,
@@ -22,7 +22,7 @@ object LoveTypographyTokens {
 
     /** Feature screen center title — editorial; 2 lines OK for RU. */
     val FeatureScreenTitle = TextStyle(
-        fontFamily = InterFontFamily,
+        fontFamily = VelvetDisplayFamily,
         fontWeight = FontWeight.ExtraBold,
         fontSize = 18.sp,
         lineHeight = 24.sp,
@@ -31,7 +31,7 @@ object LoveTypographyTokens {
 
     /** Field labels on input forms. */
     val FieldLabel = TextStyle(
-        fontFamily = InterFontFamily,
+        fontFamily = VelvetBodyFamily,
         fontWeight = FontWeight.SemiBold,
         fontSize = 13.sp,
         lineHeight = 18.sp,
@@ -40,7 +40,7 @@ object LoveTypographyTokens {
 
     /** SVG `.section` — 21px, letter-spacing 3px. */
     val SectionKicker = TextStyle(
-        fontFamily = InterFontFamily,
+        fontFamily = VelvetBodyFamily,
         fontWeight = FontWeight.SemiBold,
         fontSize = 11.sp,
         lineHeight = 14.sp,
@@ -49,7 +49,7 @@ object LoveTypographyTokens {
 
     /** Hero title on cards. */
     val HeroTitle = TextStyle(
-        fontFamily = InterFontFamily,
+        fontFamily = VelvetDisplayFamily,
         fontWeight = FontWeight.Black,
         fontSize = 22.sp,
         lineHeight = 28.sp,
@@ -58,7 +58,7 @@ object LoveTypographyTokens {
 
     /** Hero title on gradient (splash/onboarding). */
     val HeroTitleOnGradient = TextStyle(
-        fontFamily = InterFontFamily,
+        fontFamily = VelvetDisplayFamily,
         fontWeight = FontWeight.Black,
         fontSize = 28.sp,
         lineHeight = 34.sp,
@@ -67,7 +67,7 @@ object LoveTypographyTokens {
 
     /** Screen headlines below hero / consent. */
     val ScreenHeadline = TextStyle(
-        fontFamily = InterFontFamily,
+        fontFamily = VelvetDisplayFamily,
         fontWeight = FontWeight.ExtraBold,
         fontSize = 28.sp,
         lineHeight = 34.sp,
@@ -76,7 +76,7 @@ object LoveTypographyTokens {
 
     /** Body under hero title — must stay readable on gradient. */
     val HeroBody = TextStyle(
-        fontFamily = InterFontFamily,
+        fontFamily = VelvetBodyFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 15.sp,
         lineHeight = 22.sp,
@@ -84,7 +84,7 @@ object LoveTypographyTokens {
 
     /** Percent base @ ring Ø200dp; use [percentForRing] to scale. */
     val PercentDisplay = TextStyle(
-        fontFamily = InterFontFamily,
+        fontFamily = VelvetDisplayFamily,
         fontWeight = FontWeight.Black,
         fontSize = 40.sp,
         lineHeight = 44.sp,
@@ -93,7 +93,7 @@ object LoveTypographyTokens {
 
     /** SVG `.percentLabel` — 32px companion under percent. */
     val PercentLabel = TextStyle(
-        fontFamily = InterFontFamily,
+        fontFamily = VelvetBodyFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 11.sp,
         lineHeight = 14.sp,
@@ -105,7 +105,7 @@ object LoveTypographyTokens {
 
     /** SVG `.headline` on hub section — 44px. */
     val HubSectionTitle = TextStyle(
-        fontFamily = InterFontFamily,
+        fontFamily = VelvetDisplayFamily,
         fontWeight = FontWeight.ExtraBold,
         fontSize = 22.sp,
         lineHeight = 28.sp,
@@ -114,7 +114,7 @@ object LoveTypographyTokens {
 
     /** SVG `.subtitle` on hub — 28px. */
     val HubSectionSubtitle = TextStyle(
-        fontFamily = InterFontFamily,
+        fontFamily = VelvetBodyFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         lineHeight = 20.sp,
@@ -122,7 +122,7 @@ object LoveTypographyTokens {
 
     /** SVG `.cardTitle` — grid cell title 28px. */
     val CardTitle = TextStyle(
-        fontFamily = InterFontFamily,
+        fontFamily = VelvetBodyFamily,
         fontWeight = FontWeight.SemiBold,
         fontSize = 14.sp,
         lineHeight = 18.sp,
@@ -130,7 +130,7 @@ object LoveTypographyTokens {
 
     /** SVG `.cardCaption` — grid subtitle 20px. */
     val CardCaption = TextStyle(
-        fontFamily = InterFontFamily,
+        fontFamily = VelvetBodyFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp,
         lineHeight = 16.sp,
@@ -138,7 +138,7 @@ object LoveTypographyTokens {
 
     /** SVG `.cardTitleLight` — featured row on gradient 32px. */
     val CardTitleLight = TextStyle(
-        fontFamily = InterFontFamily,
+        fontFamily = VelvetBodyFamily,
         fontWeight = FontWeight.ExtraBold,
         fontSize = 16.sp,
         lineHeight = 20.sp,
@@ -146,7 +146,7 @@ object LoveTypographyTokens {
 
     /** SVG `.cardCaptionLight` — featured subtitle 22px. */
     val CardCaptionLight = TextStyle(
-        fontFamily = InterFontFamily,
+        fontFamily = VelvetBodyFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp,
         lineHeight = 16.sp,
@@ -154,7 +154,7 @@ object LoveTypographyTokens {
 
     /** SVG GO pill label — 24px ExtraBold. */
     val HubGoLabel = TextStyle(
-        fontFamily = InterFontFamily,
+        fontFamily = VelvetDisplayFamily,
         fontWeight = FontWeight.ExtraBold,
         fontSize = 14.sp,
         lineHeight = 18.sp,
@@ -162,7 +162,7 @@ object LoveTypographyTokens {
 
     /** SVG hub hero chip — 22px SemiBold. */
     val HubHeroChip = TextStyle(
-        fontFamily = InterFontFamily,
+        fontFamily = VelvetBodyFamily,
         fontWeight = FontWeight.SemiBold,
         fontSize = 12.sp,
         lineHeight = 16.sp,
@@ -170,7 +170,7 @@ object LoveTypographyTokens {
 
     /** SVG `.premiumText` on hub strip — 26px. */
     val HubPremiumTitle = TextStyle(
-        fontFamily = InterFontFamily,
+        fontFamily = VelvetBodyFamily,
         fontWeight = FontWeight.SemiBold,
         fontSize = 13.sp,
         lineHeight = 18.sp,
@@ -178,7 +178,7 @@ object LoveTypographyTokens {
 
     /** SVG `.caption` on premium strip — 21px. */
     val HubPremiumSubtitle = TextStyle(
-        fontFamily = InterFontFamily,
+        fontFamily = VelvetBodyFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 11.sp,
         lineHeight = 14.sp,
@@ -187,43 +187,43 @@ object LoveTypographyTokens {
 
 val LoveTypography = Typography(
     headlineLarge = TextStyle(
-        fontFamily = InterFontFamily,
+        fontFamily = VelvetDisplayFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 34.sp,
         lineHeight = 42.sp,
     ),
     headlineMedium = TextStyle(
-        fontFamily = InterFontFamily,
+        fontFamily = VelvetDisplayFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 30.sp,
         lineHeight = 38.sp,
     ),
     titleLarge = TextStyle(
-        fontFamily = InterFontFamily,
+        fontFamily = VelvetDisplayFamily,
         fontWeight = FontWeight.SemiBold,
         fontSize = 24.sp,
         lineHeight = 30.sp,
     ),
     titleMedium = TextStyle(
-        fontFamily = InterFontFamily,
+        fontFamily = VelvetBodyFamily,
         fontWeight = FontWeight.SemiBold,
         fontSize = 18.sp,
         lineHeight = 24.sp,
     ),
     bodyLarge = TextStyle(
-        fontFamily = InterFontFamily,
+        fontFamily = VelvetBodyFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 24.sp,
     ),
     bodyMedium = TextStyle(
-        fontFamily = InterFontFamily,
+        fontFamily = VelvetBodyFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         lineHeight = 20.sp,
     ),
     labelLarge = TextStyle(
-        fontFamily = InterFontFamily,
+        fontFamily = VelvetDisplayFamily,
         fontWeight = FontWeight.SemiBold,
         fontSize = 18.sp,
         lineHeight = 22.sp,

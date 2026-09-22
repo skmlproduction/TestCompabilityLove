@@ -6,26 +6,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.dp
-import dev.lovetest.core.ui.theme.LoveBgGlowBottom
-import dev.lovetest.core.ui.theme.LoveHeroEnd
+import dev.lovetest.core.ui.theme.VelvetGlowCoral
+import dev.lovetest.core.ui.theme.VelvetGlowRose
 
+/** Velvet: ambient rose/coral glows on the dark background. */
 @Composable
 fun LoveHubBackgroundBlobs(modifier: Modifier = Modifier) {
     Canvas(modifier = modifier.fillMaxSize()) {
         drawCircle(
-            color = LoveHeroEnd.copy(alpha = 0.42f),
-            radius = 220.dp.toPx(),
-            center = Offset(size.width * 0.83f, 140.dp.toPx()),
+            color = VelvetGlowRose,
+            radius = 240.dp.toPx(),
+            center = Offset(size.width * 0.86f, 130.dp.toPx()),
         )
         drawCircle(
-            color = LoveBgGlowBottom.copy(alpha = 0.45f),
-            radius = 170.dp.toPx(),
-            center = Offset(120.dp.toPx(), 600.dp.toPx()),
+            color = VelvetGlowCoral,
+            radius = 190.dp.toPx(),
+            center = Offset(100.dp.toPx(), size.height * 0.72f),
         )
         drawCircle(
-            color = LoveBgGlowBottom.copy(alpha = 0.3f),
+            color = VelvetGlowRose.copy(alpha = 0.10f),
             radius = 280.dp.toPx(),
-            center = Offset(size.width * 0.89f, size.height * 0.88f),
+            center = Offset(size.width * 0.88f, size.height * 0.92f),
         )
     }
 }

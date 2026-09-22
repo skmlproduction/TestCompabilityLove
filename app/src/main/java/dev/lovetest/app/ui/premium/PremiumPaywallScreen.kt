@@ -59,6 +59,7 @@ import dev.lovetest.core.ui.theme.LovePrimary
 import dev.lovetest.core.ui.theme.LovePrimaryContainer
 import dev.lovetest.core.ui.theme.LoveSurface
 import dev.lovetest.core.ui.theme.LoveTypographyTokens
+import dev.lovetest.core.ui.theme.VelvetGold
 
 private val PremiumHeroBrush: Brush
     @Composable get() = LoveHeroGradientBrush()
@@ -160,8 +161,8 @@ fun PremiumPaywallScreen(
                     .padding(top = 20.dp),
                 shape = RoundedCornerShape(32.dp),
                 shadowElevation = LoveCardShadowElevation.Subtle,
-                colors = CardDefaults.cardColors(containerColor = Color(0xFFFFF8E1)),
-                border = BorderStroke(2.dp, Color(0xFFFFE082)),
+                colors = CardDefaults.cardColors(containerColor = Color(0x14FFC94D)),
+                border = BorderStroke(2.dp, Color(0x66FFC94D)),
             ) {
                 Column(
                     modifier = Modifier
@@ -173,7 +174,7 @@ fun PremiumPaywallScreen(
                         text = priceText,
                         style = LoveTypographyTokens.ScreenHeadline,
                         fontWeight = FontWeight.ExtraBold,
-                        color = LoveOnSurface,
+                        color = VelvetGold,
                     )
                     Text(
                         text = stringResource(R.string.premium_price_sub),
@@ -356,10 +357,10 @@ private fun PremiumBenefitRow(
             modifier = Modifier
                 .size(56.dp)
                 .clip(CircleShape)
-                .background(Color(0xFFE8F5E9)),
+                .background(Color(0x29FFC94D)),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(Icons.Filled.Check, null, tint = Color(0xFF2E7D32), modifier = Modifier.size(28.dp))
+            Icon(Icons.Filled.Check, null, tint = VelvetGold, modifier = Modifier.size(28.dp))
         }
         Column(modifier = Modifier.padding(start = 16.dp)) {
             Text(

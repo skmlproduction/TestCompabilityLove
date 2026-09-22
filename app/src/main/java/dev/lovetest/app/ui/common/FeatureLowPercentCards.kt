@@ -29,6 +29,7 @@ import dev.lovetest.core.ui.theme.LoveOnSurface
 import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
 import dev.lovetest.core.ui.theme.LovePrimary
 import dev.lovetest.core.ui.theme.LoveSurface
+import dev.lovetest.core.ui.theme.VelvetCardStrong
 
 /** Low-% warning band — same pattern as love test / protocol results (screen11, screen34). */
 @Composable
@@ -46,7 +47,7 @@ fun FeatureLowWarningCard(modifier: Modifier = Modifier) {
                     modifier = Modifier
                         .size(48.dp)
                         .clip(RoundedCornerShape(16.dp))
-                        .background(Color.White),
+                        .background(VelvetCardStrong),
                     contentAlignment = Alignment.Center,
                 ) {
                     Text(
@@ -80,7 +81,7 @@ fun FeatureLowWarningCard(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .padding(top = 16.dp)
                     .clip(RoundedCornerShape(24.dp))
-                    .background(Color.White.copy(alpha = 0.7f))
+                    .background(VelvetCardStrong)
                     .padding(horizontal = 20.dp, vertical = 10.dp),
             ) {
                 Text(

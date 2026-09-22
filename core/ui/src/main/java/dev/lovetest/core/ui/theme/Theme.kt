@@ -4,6 +4,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 
 private val LightColors = lightColorScheme(
     primary = LovePrimary,
@@ -24,25 +25,39 @@ private val LightColors = lightColorScheme(
     onErrorContainer = LoveOnErrorContainer,
 )
 
-private val DarkColors = darkColorScheme(
-    primary = LoveSecondary,
-    onPrimary = LoveOnPrimary,
-    primaryContainer = LoveOnPrimaryContainer,
-    onPrimaryContainer = LovePrimaryContainer,
-    background = LoveOnSurface,
-    onBackground = LoveSurface,
-    surface = LoveOnSurface,
-    onSurface = LoveSurface,
+/**
+ * Velvet dark — default product theme.
+ * Glass surfaces are applied by components; here surface = solid base for scrims/dialogs.
+ */
+private val VelvetColors = darkColorScheme(
+    primary = VelvetAccentRose,
+    onPrimary = VelvetText,
+    primaryContainer = VelvetCardStrong,
+    onPrimaryContainer = VelvetPinkSoft,
+    secondary = VelvetAccentCoral,
+    onSecondary = VelvetBgBottom,
+    tertiary = VelvetGold,
+    background = VelvetBgMid,
+    onBackground = VelvetText,
+    surface = VelvetBgMid,
+    onSurface = VelvetText,
+    surfaceVariant = VelvetCardStrong,
+    onSurfaceVariant = VelvetTextSecondary,
+    surfaceContainerHigh = VelvetCardStrong,
+    outline = VelvetCardBorderStrong,
+    outlineVariant = VelvetCardBorder,
+    errorContainer = Color(0xFF5C1228),
+    onErrorContainer = VelvetText,
 )
 
 @Composable
 fun LoveTestTheme(
-    /** v2 editorial romance ships light-only; pass true only for experiments. */
-    darkTheme: Boolean = false,
+    /** Legacy light editorial theme — только для экспериментов/старого preview. */
+    legacyLight: Boolean = false,
     content: @Composable () -> Unit,
 ) {
     MaterialTheme(
-        colorScheme = if (darkTheme) DarkColors else LightColors,
+        colorScheme = if (legacyLight) LightColors else VelvetColors,
         typography = LoveTypography,
         content = content,
     )

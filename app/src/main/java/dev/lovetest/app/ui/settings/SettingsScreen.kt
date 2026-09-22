@@ -69,6 +69,8 @@ import dev.lovetest.core.ui.theme.LovePrimary
 import dev.lovetest.core.ui.theme.LovePrimaryContainer
 import dev.lovetest.core.ui.theme.LoveSurface
 import dev.lovetest.core.ui.theme.LoveTypographyTokens
+import dev.lovetest.core.ui.theme.VelvetCardStrong
+import dev.lovetest.core.ui.theme.VelvetGold
 import java.util.Locale
 
 @Composable
@@ -129,8 +131,8 @@ fun SettingsScreen(
             SettingsItemsCard(modifier = Modifier.padding(top = 8.dp)) {
                 if (BuildConfig.ADS_ENABLED) {
                     SettingsRow(
-                        iconBackground = Color(0xFFE3F2FD),
-                        iconTint = Color(0xFF1565C0),
+                        iconBackground = VelvetCardStrong,
+                        iconTint = Color(0xFF8AB4F8),
                         icon = Icons.Filled.Campaign,
                         title = stringResource(R.string.settings_ads_preferences),
                         subtitle = stringResource(R.string.settings_ads_preferences_sub),
@@ -140,8 +142,8 @@ fun SettingsScreen(
                     SettingsDivider()
                 }
                 SettingsRow(
-                    iconBackground = Color(0xFFFFF8E1),
-                    iconTint = Color(0xFFFF8F00),
+                    iconBackground = Color(0x29FFC94D),
+                    iconTint = VelvetGold,
                     icon = Icons.Filled.Star,
                     title = stringResource(R.string.settings_premium_title),
                     subtitle = stringResource(

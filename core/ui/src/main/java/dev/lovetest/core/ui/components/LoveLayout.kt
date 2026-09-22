@@ -29,7 +29,7 @@ object LoveLayout {
     val OnboardingHeroWelcomeHeight: Dp = 268.dp
     val OnboardingHeroTestsHeight: Dp = 174.dp
     /** Protocol onboarding hero — badge + title + 2-line body + page pill. */
-    val OnboardingHeroProtocolHeight: Dp = 216.dp
+    val OnboardingHeroProtocolHeight: Dp = 172.dp
     val OnboardingHeroDisclaimerHeight: Dp = 134.dp
 
     /** Onboarding tests grid row (screen3: 200px ÷ 3, horizontal icon+text). */

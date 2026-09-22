@@ -82,7 +82,18 @@ import dev.lovetest.core.ui.components.LoveLayout
 import dev.lovetest.core.ui.components.loveCardShadow
 import dev.lovetest.core.ui.components.loveScreenHorizontalPadding
 import dev.lovetest.core.ui.theme.LoveOnPrimaryContainer
+import androidx.compose.foundation.BorderStroke
 import dev.lovetest.core.ui.theme.LoveOnSurfaceVariant
+import dev.lovetest.core.ui.theme.VelvetAccentRose
+import dev.lovetest.core.ui.theme.VelvetBgBottom
+import dev.lovetest.core.ui.theme.VelvetCard
+import dev.lovetest.core.ui.theme.VelvetCardBorder
+import dev.lovetest.core.ui.theme.VelvetCardStrong
+import dev.lovetest.core.ui.theme.VelvetGold
+import dev.lovetest.core.ui.theme.VelvetPinkSoft
+import dev.lovetest.core.ui.theme.VelvetText
+import dev.lovetest.core.ui.theme.VelvetTextMuted
+import dev.lovetest.core.ui.theme.VelvetTextSecondary
 import dev.lovetest.core.ui.theme.LoveOutlineVariant
 import dev.lovetest.core.ui.theme.LovePrimary
 import dev.lovetest.core.ui.theme.LovePrimaryContainer
@@ -203,7 +214,7 @@ fun HubScreen(
                 Text(
                     text = stringResource(R.string.hub_section_subtitle),
                     style = LoveTypographyTokens.HubSectionSubtitle,
-                    color = LoveOnSurfaceVariant,
+                    color = VelvetTextSecondary,
                     modifier = Modifier.padding(top = 4.dp, bottom = 12.dp),
                 )
 
@@ -417,13 +428,13 @@ private fun HubFeaturedProtocolCard(
                 .align(Alignment.TopStart)
                 .padding(start = 12.dp, top = 8.dp)
                 .clip(RoundedCornerShape(20.dp))
-                .background(Color.White)
+                .background(LoveProtocolPrimary)
                 .padding(horizontal = 12.dp, vertical = 4.dp),
         ) {
             Text(
                 text = stringResource(R.string.hub_protocol_badge_novo),
                 style = LoveTypographyTokens.HubGoLabel.copy(fontSize = 10.sp),
-                color = LoveProtocolPrimary,
+                color = Color.White,
             )
         }
         Row(
@@ -549,8 +560,9 @@ private fun PremiumStrip(
             }
             .clickable(onClick = onClick),
         shape = shape,
-        colors = CardDefaults.cardColors(containerColor = LovePrimaryContainer),
+        colors = CardDefaults.cardColors(containerColor = VelvetCard),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+        border = BorderStroke(1.dp, VelvetCardBorder),
     ) {
         Row(
             modifier = Modifier
@@ -558,23 +570,23 @@ private fun PremiumStrip(
                 .padding(horizontal = 16.dp, vertical = 14.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            LoveHeartIcon(modifier = Modifier.size(32.dp), color = LovePrimary)
+            LoveHeartIcon(modifier = Modifier.size(32.dp), color = VelvetGold)
             Column(modifier = Modifier.padding(start = 12.dp).weight(1f)) {
                 Text(
                     text = title,
                     style = LoveTypographyTokens.HubPremiumTitle,
-                    color = LoveOnPrimaryContainer,
+                    color = VelvetText,
                 )
                 Text(
                     text = subtitle,
                     style = LoveTypographyTokens.HubPremiumSubtitle,
-                    color = LoveOnPrimaryContainer,
+                    color = VelvetTextSecondary,
                 )
             }
             Icon(
                 Icons.AutoMirrored.Filled.KeyboardArrowRight,
                 contentDescription = null,
-                tint = LovePrimary,
+                tint = VelvetTextMuted,
                 modifier = Modifier.decorativeForAccessibility(),
             )
         }
@@ -669,8 +681,12 @@ private fun HubGridCard(item: HubTestItem, modifier: Modifier = Modifier) {
             }
             .clickable(onClick = item.onClick),
         shape = shape,
-        colors = CardDefaults.cardColors(containerColor = LoveSurface),
+        colors = CardDefaults.cardColors(
+            containerColor = VelvetCard,
+            contentColor = VelvetText,
+        ),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+        border = BorderStroke(1.dp, VelvetCardBorder),
     ) {
         Row(
             modifier = Modifier
@@ -682,7 +698,7 @@ private fun HubGridCard(item: HubTestItem, modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .size(LoveLayout.HubGridIconSize)
                     .clip(RoundedCornerShape(LoveLayout.HubGridIconCorner))
-                    .background(LovePrimaryContainer),
+                    .background(VelvetAccentRose.copy(alpha = 0.16f)),
                 contentAlignment = Alignment.Center,
             ) {
                 item.badge()
@@ -695,13 +711,14 @@ private fun HubGridCard(item: HubTestItem, modifier: Modifier = Modifier) {
                 Text(
                     text = item.title,
                     style = LoveTypographyTokens.CardTitle,
+                    color = VelvetText,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                 )
                 Text(
                     text = item.subtitle,
                     style = LoveTypographyTokens.CardCaption,
-                    color = LoveOnSurfaceVariant,
+                    color = VelvetTextSecondary,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                 )
@@ -712,7 +729,7 @@ private fun HubGridCard(item: HubTestItem, modifier: Modifier = Modifier) {
 
 @Composable
 private fun PercentBadge() {
-    Text("%", style = LoveTypographyTokens.CardTitle, color = LovePrimary)
+    Text("%", style = LoveTypographyTokens.CardTitle, color = VelvetPinkSoft)
 }
 
 @Composable
@@ -720,7 +737,7 @@ private fun RingBadge() {
     Box(
         modifier = Modifier
             .size(14.dp)
-            .border(2.dp, LovePrimary, CircleShape),
+            .border(2.dp, VelvetPinkSoft, CircleShape),
     )
 }
 
@@ -734,23 +751,23 @@ private fun DiamondBadge() {
             lineTo(0f, size.height / 2f)
             close()
         }
-        drawPath(path, LovePrimary)
+        drawPath(path, VelvetPinkSoft)
     }
 }
 
 @Composable
 private fun LettersBadge() {
-    Text("Aa", style = LoveTypographyTokens.CardTitle, color = LovePrimary)
+    Text("Aa", style = LoveTypographyTokens.CardTitle, color = VelvetPinkSoft)
 }
 
 @Composable
 private fun WheelBadge() {
     androidx.compose.foundation.Canvas(modifier = Modifier.size(14.dp)) {
         val stroke = 2.dp.toPx()
-        drawCircle(color = LovePrimary, radius = 5.dp.toPx(), style = Stroke(stroke))
-        drawLine(LovePrimary, center, Offset(center.x, center.y - 6.dp.toPx()), stroke)
+        drawCircle(color = VelvetPinkSoft, radius = 5.dp.toPx(), style = Stroke(stroke))
+        drawLine(VelvetPinkSoft, center, Offset(center.x, center.y - 6.dp.toPx()), stroke)
         drawLine(
-            LovePrimary,
+            VelvetPinkSoft,
             Offset(center.x - 5.dp.toPx(), center.y),
             Offset(center.x + 5.dp.toPx(), center.y),
             stroke,
@@ -766,7 +783,7 @@ private fun ShareHintCard(modifier: Modifier = Modifier) {
             .fillMaxWidth()
             .loveCardShadow(shape, elevation = LoveCardShadowElevation.Subtle),
         shape = shape,
-        colors = CardDefaults.cardColors(containerColor = LoveSurface),
+        colors = CardDefaults.cardColors(containerColor = VelvetCard, contentColor = VelvetText),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
     ) {
         Row(
@@ -777,13 +794,13 @@ private fun ShareHintCard(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .size(40.dp)
                     .clip(RoundedCornerShape(12.dp))
-                    .background(LovePrimaryContainer),
+                    .background(VelvetAccentRose.copy(alpha = 0.16f)),
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(
                     Icons.Default.Share,
                     contentDescription = null,
-                    tint = LovePrimary,
+                    tint = VelvetPinkSoft,
                     modifier = Modifier.decorativeForAccessibility(),
                 )
             }
@@ -791,11 +808,12 @@ private fun ShareHintCard(modifier: Modifier = Modifier) {
                 Text(
                     text = stringResource(R.string.hub_share_card_title),
                     style = LoveTypographyTokens.CardTitle,
+                    color = VelvetText,
                 )
                 Text(
                     text = stringResource(R.string.hub_share_card_subtitle),
                     style = LoveTypographyTokens.CardCaption,
-                    color = LoveOnSurfaceVariant,
+                    color = VelvetTextSecondary,
                 )
             }
         }
@@ -810,12 +828,12 @@ private fun HubBottomNav(
     isPremium: Boolean,
 ) {
     Surface(
-        color = LoveSurface.copy(alpha = 0.95f),
+        color = VelvetBgBottom.copy(alpha = 0.92f),
         shadowElevation = 8.dp,
         modifier = Modifier.navigationBarsPadding(),
     ) {
         Column {
-            HorizontalDivider(color = LoveOutlineVariant)
+            HorizontalDivider(color = VelvetCardBorder)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -830,7 +848,7 @@ private fun HubBottomNav(
                     Icon(
                         Icons.Default.Favorite,
                         contentDescription = null,
-                        tint = LovePrimary,
+                        tint = VelvetPinkSoft,
                         modifier = Modifier.decorativeForAccessibility(),
                     )
                 }
@@ -842,7 +860,7 @@ private fun HubBottomNav(
                     Icon(
                         Icons.Default.Star,
                         contentDescription = null,
-                        tint = if (isPremium) LovePrimary else LoveOnSurfaceVariant,
+                        tint = if (isPremium) VelvetGold else VelvetTextMuted,
                         modifier = Modifier
                             .size(22.dp)
                             .decorativeForAccessibility(),
@@ -856,7 +874,7 @@ private fun HubBottomNav(
                     Icon(
                         Icons.Default.Settings,
                         contentDescription = null,
-                        tint = LoveOnSurfaceVariant,
+                        tint = VelvetTextMuted,
                         modifier = Modifier.decorativeForAccessibility(),
                     )
                 }
@@ -892,7 +910,7 @@ private fun HubNavItem(
             modifier = Modifier
                 .size(36.dp)
                 .clip(CircleShape)
-                .background(if (selected) LovePrimaryContainer else LoveOutlineVariant),
+                .background(if (selected) VelvetAccentRose.copy(alpha = 0.18f) else VelvetCardStrong),
             contentAlignment = Alignment.Center,
         ) {
             icon()
@@ -900,7 +918,7 @@ private fun HubNavItem(
         Text(
             text = label,
             style = LoveTypographyTokens.SectionKicker,
-            color = if (selected) LovePrimary else LoveOnSurfaceVariant,
+            color = if (selected) VelvetPinkSoft else VelvetTextMuted,
             textDecoration = TextDecoration.None,
             modifier = Modifier
                 .padding(top = 4.dp)
