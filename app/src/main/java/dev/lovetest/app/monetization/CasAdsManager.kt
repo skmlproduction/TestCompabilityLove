@@ -30,6 +30,9 @@ object CasAdsManager {
 
     /** Вызывается один раз из `LoveTestApplication.onCreate`. Повторный вызов безопасно игнорируется CAS. */
     fun initialize(application: Application) {
+        // Под instrumented-тестами (connectedAndroidTest / скриншот-капча) CAS не
+        // инициализируем: consent-диалог перекрывает UI и валит тесты и кадры.
+        if (isRunningInTestHarness()) return
         if (!BuildConfig.ADS_ENABLED) return
         runCatching {
             CAS.buildManager()
@@ -48,4 +51,8 @@ object CasAdsManager {
             _canRequestAds.value = false
         }
     }
+
+    /** true, когда приложение запущено под instrumentation (статический публичный API 23+). */
+    private fun isRunningInTestHarness(): Boolean =
+        android.app.ActivityManager.isRunningInUserTestHarness()
 }
