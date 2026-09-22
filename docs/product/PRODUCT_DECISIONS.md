@@ -21,8 +21,8 @@
 
 | Вариант | Решение v1 | Следствия для Store |
 |---------|------------|---------------------|
-| **Реклама (AdMob + UMP)** | **Нет в MVP** — `lovetest.ads.enabled=false` → `BuildConfig.ADS_ENABLED=false` в release/internal AAB | Play → **Ads: No**; Data safety → **без** Device/Advertising ID; IARC → без рекламы |
-| **Код AdMob/UMP** | В репозитории, **выключен флагом**; включение — **v1.2 / closed testing** (`lovetest.ads.enabled=true`, `verifyAdsBuildLoveTest`) | После включения: обновить Data safety + IARC + UMP message в AdMob |
+| **Реклама (CAS.AI)** | **Да** — `lovetest.ads.enabled=true`, CAS.AI mediation interstitial (коммит `a9c27d0`, 2026-09-22) | Play → **Ads: Yes**; Data safety → Device IDs shared (consent-gated); IARC → Ads: Yes |
+| **Код CAS/UMP** | CAS.AI SDK активен; UMP оставлен для privacy options | Data safety + IARC обновлены под CAS (заход 8 аудита) |
 | **IAP «убрать рекламу»** | **Да** — paywall №24–25 в MVP; SKU `remove_ads` в `gradle.properties`; реальная покупка — **closed testing** | Data safety: Purchases → Google Play |
 | **Подписка** | Нет в v1 | — |
 | **Агрессивные interstitial / uninstall survey** | Нет | — |
@@ -76,6 +76,6 @@
 
 | Дата | Кто | Что решили |
 |------|-----|------------|
-| 2026-06-03 | Аудит готовности | **v1: реклама выкл** (`ads.enabled=false`); IAP remove_ads + paywall в MVP; AdMob/UMP → v1.2 после closed testing |
+| 2026-06-03 | Аудит готовности | ~~v1: реклама выкл~~ → **2026-09-22: CAS.AI включена** (решение владельца, коммит `a9c27d0`); IAP remove_ads + paywall в MVP |
 
 После утверждения: обновить PRD §7 MVP и `GOOGLE_PLAY_RELEASE_CHECKLIST.md` §5 Data safety.

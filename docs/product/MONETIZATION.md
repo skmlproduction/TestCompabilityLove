@@ -3,7 +3,7 @@
 ## Premium
 
 - Покупка на `premium_paywall` сохраняет флаг `premium_active` в DataStore.
-- Premium отключает межстраничную рекламу (AdMob и UI placeholder).
+- Premium отключает межстраничную рекламу (CAS.AI interstitial и UI placeholder).
 - Billing SDK (`billing-ktx` 8.x): `PremiumBillingManager` — purchase, restore, acknowledge.
 - Пустой `lovetest.billing.product.ids` → mock purchase **только в DEBUG**; в release — toast, Premium не выдаётся.
 - Задан SKU → реальный flow; покупки подтверждаются через `acknowledgePurchase`.
@@ -11,7 +11,7 @@
 ## Реклама
 
 - `BuildConfig.ADS_ENABLED` ← `lovetest.ads.enabled=true` в `gradle.properties`.
-- После завершения теста и перехода на hub: сначала **AdMob interstitial**, при ошибке — `AdInterstitialPlaceholder` (screen29).
+- После завершения теста и перехода на hub: сначала **CAS.AI interstitial**, при ошибке — `AdInterstitialPlaceholder` (screen29).
 - Не показывается: без consent, без UMP `canRequestAds()`, с Premium, при `ADS_ENABLED=false`.
 - Preload/init: `bootstrapAdsIfAllowed()` — только после consent и UMP.
 - Smoke-сборка с ads: `./gradlew verifyAdsBuildLoveTest`.
@@ -26,4 +26,4 @@
 
 ## Конфигурация
 
-См. `gradle.properties.example` (AdMob IDs, UMP message в AdMob Console).
+См. `CAS_MEDIATION_PLAYBOOK.md` флотилии (CAS ID = `dev.lovetest.app`, регистрация в дашборде cas.ai).

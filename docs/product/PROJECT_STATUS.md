@@ -85,5 +85,5 @@ Store: `docs/store/README.md` · `docs/store/STORE_UPLOAD.md`
 
 ## v2 (не в MVP)
 
-- AdMob + UMP SDK (production)
+- CAS.AI mediation SDK (production, interstitial; consent flow встроен)
 - Deep links / App Links
