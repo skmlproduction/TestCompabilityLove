@@ -52,7 +52,8 @@ object CasAdsManager {
         }
     }
 
-    /** true, когда приложение запущено под instrumentation (статический публичный API 23+). */
+    /** true, когда приложение запущено под instrumentation (публичный API с 29). */
     private fun isRunningInTestHarness(): Boolean =
-        android.app.ActivityManager.isRunningInUserTestHarness()
+        android.os.Build.VERSION.SDK_INT >= 29 &&
+            android.app.ActivityManager.isRunningInUserTestHarness()
 }
