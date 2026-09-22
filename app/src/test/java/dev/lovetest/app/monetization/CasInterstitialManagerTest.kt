@@ -7,7 +7,7 @@ import io.mockk.verify
 import org.junit.Assume.assumeTrue
 import org.junit.Test
 
-class AdMobInterstitialManagerTest {
+class CasInterstitialManagerTest {
 
     @Test
     fun discard_clearsPreloadedAdWithoutPreload() {
@@ -15,7 +15,7 @@ class AdMobInterstitialManagerTest {
 
         val consent = mockk<AdsConsentManager>()
         every { consent.canRequestAds() } returns true
-        val manager = AdMobInterstitialManager(mockk(relaxed = true), consent)
+        val manager = CasInterstitialManager(mockk(relaxed = true), consent)
 
         manager.discard()
         manager.discard()
@@ -24,11 +24,12 @@ class AdMobInterstitialManagerTest {
     }
 
     @Test
-    fun show_returnsFalseWhenAdsDisabled() {
-        assumeTrue(!BuildConfig.ADS_ENABLED)
+    fun show_returnsFalseWhenNoAdPreloaded() {
+        assumeTrue(BuildConfig.ADS_ENABLED)
 
         val consent = mockk<AdsConsentManager>()
-        val manager = AdMobInterstitialManager(mockk(relaxed = true), consent)
+        every { consent.canRequestAds() } returns true
+        val manager = CasInterstitialManager(mockk(relaxed = true), consent)
 
         val shown = manager.show(mockk(relaxed = true)) {}
 

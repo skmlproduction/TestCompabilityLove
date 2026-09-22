@@ -48,7 +48,7 @@ import dev.lovetest.app.ui.settings.SettingsScreen
 import dev.lovetest.app.debug.DebugUiPreview
 import dev.lovetest.app.legal.LegalDocuments.openDataCollectionSummary
 import dev.lovetest.app.legal.LegalDocuments.openPrivacyPolicy
-import dev.lovetest.app.monetization.AdMobInterstitialManager
+import dev.lovetest.app.monetization.CasInterstitialManager
 import dev.lovetest.app.monetization.AdsConsentManager
 import dev.lovetest.app.monetization.AdsInterstitialController
 import dev.lovetest.app.monetization.bootstrapAdsIfAllowed
@@ -82,7 +82,7 @@ fun LoveTestNavHost(
     val preferences: AppPreferences = koinInject()
     val billingManager: PremiumBillingManager = koinInject()
     val adsConsentManager: AdsConsentManager = koinInject()
-    val adMobManager: AdMobInterstitialManager = koinInject()
+    val interstitialManager: CasInterstitialManager = koinInject()
     val flowViewModel: LoveTestFlowViewModel = koinViewModel()
 
     fun navigateHomeAfterTest() {
@@ -162,10 +162,9 @@ fun LoveTestNavHost(
                             preferences.markConsentCompleted()
                             if (canRequestAds) {
                                 bootstrapAdsIfAllowed(
-                                    context,
                                     preferences,
                                     adsConsentManager,
-                                    adMobManager,
+                                    interstitialManager,
                                 )
                             }
                             navController.navigate(Routes.Hub) {
@@ -596,10 +595,9 @@ fun LoveTestNavHost(
                             adsConsentManager.showPrivacyOptions(activity) {
                                 appScope.launch {
                                     bootstrapAdsIfAllowed(
-                                        context,
                                         prefs,
                                         adsConsentManager,
-                                        adMobManager,
+                                        interstitialManager,
                                     )
                                 }
                             }
@@ -607,10 +605,9 @@ fun LoveTestNavHost(
                             adsConsentManager.gatherConsent(activity) { _ ->
                                 appScope.launch {
                                     bootstrapAdsIfAllowed(
-                                        context,
                                         prefs,
                                         adsConsentManager,
-                                        adMobManager,
+                                        interstitialManager,
                                     )
                                 }
                             }

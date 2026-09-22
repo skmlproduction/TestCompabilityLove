@@ -1,7 +1,7 @@
 package dev.lovetest.app.di
 
-import dev.lovetest.app.monetization.AdMobInterstitialManager
 import dev.lovetest.app.monetization.AdsConsentManager
+import dev.lovetest.app.monetization.CasInterstitialManager
 import dev.lovetest.app.monetization.PremiumBillingManager
 import dev.lovetest.app.prefs.AppPreferences
 import dev.lovetest.app.ui.hub.HubViewModel
@@ -18,7 +18,7 @@ val appModule = module {
     single { AppPreferences(androidContext()) }
     single { PremiumBillingManager(androidContext()) }
     single { AdsConsentManager(androidContext()) }
-    single { AdMobInterstitialManager(androidContext(), get()) }
+    single { CasInterstitialManager(androidContext(), get()) }
     viewModel { SplashViewModel(get()) }
     viewModel { HubViewModel() }
     viewModel { LoveTestFlowViewModel(get(), get()) }

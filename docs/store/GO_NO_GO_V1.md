@@ -1,5 +1,8 @@
 # Go / No-Go — Love Tester v1.0.0
 
+> **Обновление 2026-09-22:** монетизация изменена — реклама **включена** через CAS.AI mediation (`lovetest.ads.enabled=true`), Premium `remove_ads` отключает рекламу. Актуальные формы: [PLAY_FORMS_FILLED.md](./PLAY_FORMS_FILLED.md) (Ads: **Yes**), [DATA_SAFETY_FORM.md](./DATA_SAFETY_FORM.md), [IARC_QUESTIONNAIRE.md](./IARC_QUESTIONNAIRE.md). Упоминания «Ads: No» ниже устарели.
+
+
 Package: `dev.lovetest.app` · `versionCode` 1 · IAP `remove_ads` · **Ads: No** (v1)
 
 Сводка форм: [PLAY_FORMS_FILLED.md](./PLAY_FORMS_FILLED.md) · Заливка Internal: [INTERNAL_TESTING_RUNBOOK.md](./INTERNAL_TESTING_RUNBOOK.md)

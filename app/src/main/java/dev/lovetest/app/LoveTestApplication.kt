@@ -5,8 +5,9 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
 import dev.lovetest.app.di.appModule
-import dev.lovetest.app.monetization.AdMobInterstitialManager
 import dev.lovetest.app.monetization.AdsConsentManager
+import dev.lovetest.app.monetization.CasAdsManager
+import dev.lovetest.app.monetization.CasInterstitialManager
 import dev.lovetest.app.monetization.bootstrapAdsIfAllowed
 import dev.lovetest.app.monetization.PremiumBillingManager
 import dev.lovetest.app.monetization.syncPremiumOnStartup
@@ -23,7 +24,7 @@ import org.koin.core.context.startKoin
 class LoveTestApplication : Application(), KoinComponent {
 
     private val billingManager: PremiumBillingManager by inject()
-    private val adMobManager: AdMobInterstitialManager by inject()
+    private val interstitialManager: CasInterstitialManager by inject()
     private val adsConsentManager: AdsConsentManager by inject()
     private val preferences: AppPreferences by inject()
     private val appScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
@@ -42,15 +43,16 @@ class LoveTestApplication : Application(), KoinComponent {
             modules(appModule)
         }
         ProcessLifecycleOwner.get().lifecycle.addObserver(billingLifecycleObserver)
+        CasAdsManager.initialize(this)
         // Resolve while Koin is alive — androidTest cleanup calls stopKoin() between cases.
         val prefs = preferences
         val billing = billingManager
         val consent = adsConsentManager
-        val ads = adMobManager
+        val ads = interstitialManager
         appScope.launch {
             runCatching {
                 syncPremiumOnStartup(prefs, billing)
-                bootstrapAdsIfAllowed(this@LoveTestApplication, prefs, consent, ads)
+                bootstrapAdsIfAllowed(prefs, consent, ads)
             }
         }
     }

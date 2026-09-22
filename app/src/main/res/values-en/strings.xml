@@ -525,7 +525,7 @@
     <string name="ad_close_countdown">Close %1$d</string>
     <string name="ad_close_now">Close</string>
     <string name="ad_placeholder_title">Interstitial ad</string>
-    <string name="ad_placeholder_sub1">984 x 1680 · AdMob mediation</string>
+    <string name="ad_placeholder_sub1">984 x 1680 · CAS.AI mediation</string>
     <string name="ad_placeholder_sub2">Store / QA mockup</string>
     <string name="ad_cta_mock">Learn more</string>
     <string name="ad_premium_escape">Premium — remove ads</string>

@@ -1,7 +1,7 @@
 # Play Console — заполненные формы (сводка v1.0)
 
-Дата сверки: **2026-06-03**  
-Пакет: `dev.lovetest.app` · Решение монетизации: **premium-only**, реклама **выкл** ([PRODUCT_DECISIONS.md](../product/PRODUCT_DECISIONS.md) §2).
+Дата сверки: **2026-09-22**  
+Пакет: `dev.lovetest.app` · Решение монетизации: **CAS.AI mediation interstitial + Premium `remove_ads`** ([MONETIZATION_DECISION.md](./MONETIZATION_DECISION.md)).
 
 Используйте этот файл как **единый чеклист** перед Internal testing. Детали: [DATA_SAFETY_FORM.md](./DATA_SAFETY_FORM.md), [IARC_QUESTIONNAIRE.md](./IARC_QUESTIONNAIRE.md), тексты листинга: [PLAY_CONSOLE_COPY.md](./PLAY_CONSOLE_COPY.md).
 
@@ -12,7 +12,7 @@
 | Поле Console | Значение v1 |
 |--------------|-------------|
 | Privacy policy URL | `https://skmlproduction.github.io/TestCompabilityLove/` (после деплоя Pages) |
-| Ads | **No** |
+| Ads | **Yes** (CAS.AI mediation interstitial; consent flow при первом запуске) |
 | In-app purchases | **Yes** (`remove_ads`, one-time) |
 | Target audience | **13+**, not designed for children under 13 |
 | App access | All functionality available (no login wall) |
@@ -31,7 +31,7 @@
 | Violence / sexual / drugs | **No** |
 | UGC / social | **No** |
 | Purchases | **Yes** (Premium) |
-| Ads | **No** |
+| Ads | **Yes** (third-party ad SDK: CAS.AI mediation) |
 | Wheel / zodiac | Random **for fun only**, no payouts |
 
 ---
@@ -40,12 +40,11 @@
 
 | Декларировать | Не декларировать (v1) |
 |---------------|------------------------|
-| **Name** — optional, on-device, not shared with developer | Advertising ID |
-| **Purchase history** — via Google Play, for Premium | Analytics |
-| | Crash logs |
-| | Location, contacts, photos, email, health, messages |
+| **Name** — optional, on-device, not shared with developer | Analytics |
+| **Purchase history** — via Google Play, for Premium | Crash logs |
+| **Device or other IDs (Advertising ID)** — shared with third parties (CAS.AI + ad partners), purpose: advertising/marketing, optional (consent via UMP), not collected from EU users w/o consent | Location, contacts, photos, email, health, messages |
 
-**Сбор данных:** Yes (limited). **Шифрование в транзите:** Yes (для сетевых вызовов). **Удаление:** Yes (имена в приложении).
+**Сбор данных:** Yes. **Шифрование в транзите:** Yes (для сетевых вызовов). **Удаление:** Yes (имена в приложении; рекламные данные — через инструменты партнёров/настройки устройства).
 
 ---
 
@@ -57,7 +56,9 @@
 
 ```
 Names entered in tests (including love protocol) stay on the device; we do not receive them on our servers.
-Purchases are processed by Google Play. Version 1.0 has no ads and no advertising ID collection.
+Purchases are processed by Google Play. Ads are served via CAS.AI (CleverAdsSolutions) mediation and ad partners
+(including Google AdMob); the advertising ID is used only with your consent, which you can change in the app settings.
+Premium removes ads.
 ```
 
 ---
@@ -68,8 +69,8 @@ Purchases are processed by Google Play. Version 1.0 has no ads and no advertisin
 |---|---------------------|--------------|--------|
 | 1 | Нет Firebase Analytics | Нет зависимости в `app/build.gradle.kts` | ✅ |
 | 2 | Нет Crashlytics / Sentry | Нет SDK | ✅ |
-| 3 | Нет Advertising ID в v1 | `lovetest.ads.enabled=false`; `src/ads/AndroidManifest.xml` не мержится; `AdMobInitializer` no-op | ✅ |
-| 4 | Нет показа рекламы в v1 | `AdsInterstitialController.shouldShow()` → false; consent route skipped | ✅ |
+| 3 | Advertising ID = только с consent | `lovetest.ads.enabled=true`; CAS ConsentFlow (UMP); `CasAdsManager` | ✅ |
+| 4 | Реклама = CAS interstitial | `CasInterstitialManager` между тестом → hub; Premium скрывает | ✅ |
 | 5 | Имена только локально | `AppPreferences` DataStore; нет HTTP API | ✅ |
 | 6 | Имена можно удалить | `clearLastNames()` → Settings | ✅ |
 | 7 | Имена не в backup | `backup_rules.xml` exclude `love_test_prefs` | ✅ |
@@ -79,16 +80,16 @@ Purchases are processed by Google Play. Version 1.0 has no ads and no advertisin
 | 11 | Zodiac — entertainment | Локальный контент, без ставок | ✅ |
 | 12 | Нет UGC/чата | Нет сетевого social layer | ✅ |
 | 13 | Disclaimer в приложении | Onboarding + result screens | ✅ |
-| 14 | Legal HTML согласован | `privacy_policy.html`, `data_collection.html` (v1 no ads) | ✅ |
-| 15 | **Ads = No** в Console | Согласовано с PRODUCT_DECISIONS §2 | ✅ |
-| 16 | При v1.2 + ads | Пересдать Data safety + IARC + Ads Yes | ⏳ будущее |
+| 14 | Legal HTML согласован | `privacy_policy.html`, `data_collection.html` (CAS.AI + partners) | ✅ |
+| 15 | **Ads = Yes** в Console | CAS.AI mediation, см. MONETIZATION_DECISION | ✅ |
+| 16 | app-ads.txt | `app/src/main/assets/legal/app-ads.txt` → Pages; финальные строки после регистрации в cas.ai | ⏳ owner-шаг |
 
 ---
 
 ## F. Порядок в Console
 
 1. Create app → Store listing (RU/EN)  
-2. **App content** → Privacy URL, Ads **No**, IAP **Yes**, Target audience **13+**  
+2. **App content** → Privacy URL, Ads **Yes**, IAP **Yes**, Target audience **13+**  
 3. **Data safety** — по разделу C  
 4. **Content rating** — IARC по [IARC_QUESTIONNAIRE.md](./IARC_QUESTIONNAIRE.md)  
 5. **Monetize** → Product `remove_ads` Active + License testers  

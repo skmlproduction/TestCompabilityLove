@@ -1,5 +1,8 @@
 # Go-live plan — Love Tester (остаток до Play)
 
+> **Обновление 2026-09-22:** монетизация изменена — реклама **включена** через CAS.AI mediation (`lovetest.ads.enabled=true`), Premium `remove_ads` отключает рекламу. Актуальные формы: [PLAY_FORMS_FILLED.md](./PLAY_FORMS_FILLED.md) (Ads: **Yes**), [DATA_SAFETY_FORM.md](./DATA_SAFETY_FORM.md), [IARC_QUESTIONNAIRE.md](./IARC_QUESTIONNAIRE.md). Упоминания «Ads: No» ниже устарели.
+
+
 > **2026-07-22:** Privacy **200** · AAB/pack **готовы** · P1 shipped · `print_store_checklist` без блокеров.  
 > **Сейчас:** [INTERNAL_UPLOAD_NOW.md](./INTERNAL_UPLOAD_NOW.md) → Play Internal → [CLOSED_IAP_SMOKE.md](./CLOSED_IAP_SMOKE.md).
 

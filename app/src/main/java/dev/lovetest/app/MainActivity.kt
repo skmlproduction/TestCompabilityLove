@@ -18,8 +18,8 @@ import dev.lovetest.app.debug.DebugUiPreview
 import dev.lovetest.app.navigation.LoveTestNavHost
 import dev.lovetest.app.navigation.NavIntents
 import dev.lovetest.app.navigation.Routes
-import dev.lovetest.app.monetization.AdMobInterstitialManager
 import dev.lovetest.app.monetization.AdsConsentManager
+import dev.lovetest.app.monetization.CasInterstitialManager
 import dev.lovetest.app.monetization.bootstrapAdsIfAllowed
 import dev.lovetest.app.prefs.AppPreferences
 import dev.lovetest.core.ui.theme.LoveTestTheme
@@ -31,7 +31,7 @@ import org.koin.core.component.KoinComponent
 class MainActivity : ComponentActivity(), KoinComponent {
 
     private val adsConsentManager: AdsConsentManager by inject()
-    private val adMobManager: AdMobInterstitialManager by inject()
+    private val interstitialManager: CasInterstitialManager by inject()
     private val preferences: AppPreferences by inject()
 
     private companion object {
@@ -47,10 +47,9 @@ class MainActivity : ComponentActivity(), KoinComponent {
             adsConsentManager.requestConsentInfoUpdate(this) {
                 lifecycleScope.launch {
                     bootstrapAdsIfAllowed(
-                        applicationContext,
                         preferences,
                         adsConsentManager,
-                        adMobManager,
+                        interstitialManager,
                     )
                 }
             }

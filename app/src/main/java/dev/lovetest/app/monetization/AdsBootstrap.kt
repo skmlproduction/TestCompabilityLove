@@ -1,22 +1,20 @@
 package dev.lovetest.app.monetization
 
-import android.content.Context
 import dev.lovetest.app.BuildConfig
 import dev.lovetest.app.prefs.AppPreferences
 
 /**
- * Initializes Mobile Ads and preloads interstitial only when ads are allowed.
+ * Preloads CAS interstitial only when ads are allowed.
+ * CAS SDK инициализируется в `LoveTestApplication.onCreate` ([CasAdsManager]).
  */
 suspend fun bootstrapAdsIfAllowed(
-    context: Context,
     preferences: AppPreferences,
     consentManager: AdsConsentManager,
-    adMobManager: AdMobInterstitialManager,
+    interstitialManager: CasInterstitialManager,
 ) {
     if (!BuildConfig.ADS_ENABLED) return
     if (preferences.isPremium()) return
     if (!preferences.isConsentCompleted()) return
     if (!consentManager.canRequestAds()) return
-    AdMobInitializer.initializeIfNeeded(context)
-    adMobManager.preload()
+    interstitialManager.preload()
 }

@@ -1,7 +1,7 @@
 package dev.lovetest.app.navigation
 
-import dev.lovetest.app.monetization.AdMobInterstitialManager
 import dev.lovetest.app.monetization.AdsConsentManager
+import dev.lovetest.app.monetization.CasInterstitialManager
 import dev.lovetest.app.monetization.InterstitialLoadState
 import dev.lovetest.app.monetization.PremiumBillingManager
 import dev.lovetest.app.prefs.AppPreferences
@@ -31,7 +31,7 @@ fun navHostTestModule(
     val consent = mockk<AdsConsentManager>(relaxed = true) {
         every { canRequestAds() } returns false
     }
-    val ads = mockk<AdMobInterstitialManager>(relaxed = true) {
+    val ads = mockk<CasInterstitialManager>(relaxed = true) {
         every { loadState } returns MutableStateFlow(InterstitialLoadState.Idle).asStateFlow()
     }
     return module {

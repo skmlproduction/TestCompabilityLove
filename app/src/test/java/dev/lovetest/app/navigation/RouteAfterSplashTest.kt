@@ -18,10 +18,20 @@ class RouteAfterSplashTest {
     }
 
     @Test
-    fun routeAfterSplash_onboardingDone_goesToHubWhenAdsOff() = runTest {
+    fun routeAfterSplash_onboardingDoneWithoutConsent_goesToConsentWhenAdsOn() = runTest {
         val prefs = mockk<AppPreferences>()
         coEvery { prefs.isOnboardingCompleted() } returns true
         coEvery { prefs.isConsentCompleted() } returns false
+
+        // ADS_ENABLED=true (CAS): после онбординга требуется экран согласия.
+        assertEquals(Routes.Consent, routeAfterSplash(prefs))
+    }
+
+    @Test
+    fun routeAfterSplash_onboardingAndConsentDone_goesToHub() = runTest {
+        val prefs = mockk<AppPreferences>()
+        coEvery { prefs.isOnboardingCompleted() } returns true
+        coEvery { prefs.isConsentCompleted() } returns true
 
         assertEquals(Routes.Hub, routeAfterSplash(prefs))
     }

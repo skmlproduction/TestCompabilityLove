@@ -9,8 +9,9 @@ import com.google.android.ump.UserMessagingPlatform
 import dev.lovetest.app.BuildConfig
 
 /**
- * Google UMP wrapper for GDPR/consent before AdMob.
- * No-op when [BuildConfig.ADS_ENABLED] is false.
+ * Google UMP wrapper: форма «Privacy options» в настройках и статус согласия.
+ * Основной consent flow обрабатывает CAS ([CasAdsManager]) — оба построены на UMP
+ * и делят общий статус (IAB TCF). No-op when [BuildConfig.ADS_ENABLED] is false.
  */
 class AdsConsentManager(
     context: Context,

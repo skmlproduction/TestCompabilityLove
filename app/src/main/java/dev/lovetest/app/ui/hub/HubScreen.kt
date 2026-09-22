@@ -67,7 +67,7 @@ import dev.lovetest.app.R
 import dev.lovetest.app.util.decorativeForAccessibility
 import dev.lovetest.app.util.findActivity
 import dev.lovetest.app.debug.DebugUiPreview
-import dev.lovetest.app.monetization.AdMobInterstitialManager
+import dev.lovetest.app.monetization.CasInterstitialManager
 import dev.lovetest.app.monetization.AdsConsentManager
 import dev.lovetest.app.monetization.AdsInterstitialController
 import dev.lovetest.app.monetization.InterstitialLoadState
@@ -109,7 +109,7 @@ fun HubScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val preferences: AppPreferences = koinInject()
-    val adMobManager: AdMobInterstitialManager = koinInject()
+    val interstitialManager: CasInterstitialManager = koinInject()
     val adsConsentManager: AdsConsentManager = koinInject()
     val context = LocalContext.current
     val isPremium by preferences.isPremiumFlow.collectAsStateWithLifecycle(initialValue = false)
@@ -123,11 +123,11 @@ fun HubScreen(
     LaunchedEffect(isPremium) {
         if (isPremium) {
             AdsInterstitialController.consume()
-            adMobManager.discard()
+            interstitialManager.discard()
         }
     }
 
-    val adLoadState by adMobManager.loadState.collectAsStateWithLifecycle()
+    val adLoadState by interstitialManager.loadState.collectAsStateWithLifecycle()
 
     LaunchedEffect(adPending, isPremium, adLoadState) {
         if (!adPending || isPremium || !BuildConfig.ADS_ENABLED || !adsConsentManager.canRequestAds()) {
@@ -136,16 +136,16 @@ fun HubScreen(
         val activity = context.findActivity() ?: return@LaunchedEffect
         when (adLoadState) {
             InterstitialLoadState.Ready -> {
-                if (adMobManager.show(activity) { AdsInterstitialController.consume() }) {
+                if (interstitialManager.show(activity) { AdsInterstitialController.consume() }) {
                     AdsInterstitialController.consume()
                 }
             }
             InterstitialLoadState.Failed -> {
                 // No production placeholder — drop pending and continue hub.
                 AdsInterstitialController.consume()
-                adMobManager.preload()
+                interstitialManager.preload()
             }
-            InterstitialLoadState.Idle -> adMobManager.preload()
+            InterstitialLoadState.Idle -> interstitialManager.preload()
             InterstitialLoadState.Loading -> Unit
         }
     }
@@ -299,12 +299,12 @@ fun HubScreen(
                     onClose = {
                         debugAdDismissed = true
                         AdsInterstitialController.consume()
-                        adMobManager.preload()
+                        interstitialManager.preload()
                     },
                     onPremium = {
                         debugAdDismissed = true
                         AdsInterstitialController.consume()
-                        adMobManager.discard()
+                        interstitialManager.discard()
                         onOpenPremium()
                     },
                 )

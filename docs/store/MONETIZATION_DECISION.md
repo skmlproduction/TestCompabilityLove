@@ -1,5 +1,9 @@
 # Решение по монетизации v1 — бриф для владельца
 
+> **РЕШЕНО 2026-09-22:** владелец выбрал медиацию **CleverAdsSolutions (CAS.AI) на всех приложениях** — это **вариант B через CAS**. Реализовано: `lovetest.ads.enabled=true`, CAS Gradle plugin 4.8.0 (`includeOptimalAds`), `CasAdsManager` (CAS ID = `dev.lovetest.app`) + `CasInterstitialManager` вместо AdMob-кода, consent — CAS ConsentFlow (UMP), Premium `remove_ads` отключает рекламу. Формы обновлены: [PLAY_FORMS_FILLED.md](./PLAY_FORMS_FILLED.md) (Ads: Yes), [DATA_SAFETY_FORM.md](./DATA_SAFETY_FORM.md) (Advertising ID, shared, advertising). Осталось owner-шаги: регистрация приложения на cas.ai и замена placeholder `app-ads.txt` на финальные строки.
+>
+> Ниже — исходный бриф (историческая справка).
+
 Дата: 2026-09-21 (Kimi). Нужно **одно решение** перед выходом за пределы Internal testing. Для Internal ничего менять не требуется.
 
 > **Обновление 2026-09-22:** владелец заявил медиацию **CleverAdsSolutions (CAS.AI) на всех приложениях**. Это уточняет «вариант B»: реклама внедряется через CAS SDK (CAS ID = `dev.lovetest.app`, регистрация на cas.ai), а не через прямой AdMob — отдельные AdMob unit ID не нужны, юниты управляются дашбордом CAS. Плейбук: `../CAS_MEDIATION_PLAYBOOK.md` (в корне флотилии `Android/`). Если владелец подтверждает B/C — интеграция CAS становится код-задачей агента; app-ads.txt-хостинг уже готов (`https://skmlproduction.github.io/TestCompabilityLove/app-ads.txt`, placeholder, HTTP 200).

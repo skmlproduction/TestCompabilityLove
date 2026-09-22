@@ -57,9 +57,9 @@ Love Test — развлекательный тест на совместимо�
 • Поделиться результатом карточкой
 • Интерфейс на русском и английском
 
-Premium (опционально): разовая покупка в приложении убирает рекламу в будущих версиях. Все тесты доступны бесплатно без покупки.
+Premium (опционально): разовая покупка в приложении убирает рекламу. Все тесты доступны бесплатно без покупки.
 
-Версия 1.0: без рекламы в приложении. Имена хранятся на устройстве.
+Имена хранятся на устройстве. Реклама показывается с учётом вашего выбора в настройках конфиденциальности.
 ```
 
 ---
@@ -98,9 +98,9 @@ Features:
 • Share your result card
 • Russian and English UI
 
-Optional Premium: one-time in-app purchase (remove_ads) — removes ads in future updates. All tests work free without buying.
+Optional Premium: one-time in-app purchase (remove_ads) — removes ads. All tests work free without buying.
 
-v1.0 ships with no ads. Names stay on your device.
+Names stay on your device. Ads follow your choice in the privacy settings.
 ```
 
 ---

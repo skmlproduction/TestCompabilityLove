@@ -4,8 +4,17 @@ import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
+    id("com.cleveradssolutions.gradle-plugin") version "4.8.0"
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+}
+
+// CAS.AI mediation (курс владельца 2026-09-22): Optimal Ads Solutions + Advertising ID.
+// CAS ID = applicationId (dev.lovetest.app), регистрация приложения — в дашборде cas.ai.
+// ProGuard-правила встроены в AAR адаптеров; consent manager встроен в SDK.
+cas {
+    includeOptimalAds = true
+    useAdvertisingId = true
 }
 
 private fun Project.lovetestPrivacyPolicyUrl(): String {
@@ -21,18 +30,6 @@ private fun Project.lovetestBillingProductIds(): String {
 private fun Project.lovetestAdsEnabled(): Boolean {
     val fromProp = findProperty("lovetest.ads.enabled") as String?
     return fromProp?.trim()?.equals("true", ignoreCase = true) == true
-}
-
-private fun Project.lovetestAdMobAppId(): String {
-    val fromProp = findProperty("lovetest.admob.app.id") as String?
-    return fromProp?.trim()?.takeIf { it.isNotEmpty() }
-        ?: "ca-app-pub-3940256099942544~3347511713"
-}
-
-private fun Project.lovetestAdMobInterstitialUnitId(): String {
-    val fromProp = findProperty("lovetest.admob.interstitial.unit.id") as String?
-    return fromProp?.trim()?.takeIf { it.isNotEmpty() }
-        ?: "ca-app-pub-3940256099942544/1033173712"
 }
 
 val keystorePropertiesFile = rootProject.file("keystore.properties")
@@ -68,12 +65,6 @@ android {
             "\"${project.lovetestBillingProductIds().replace("\\", "\\\\").replace("\"", "\\\"")}\"",
         )
         buildConfigField("boolean", "ADS_ENABLED", "${project.lovetestAdsEnabled()}")
-        buildConfigField(
-            "String",
-            "ADMOB_INTERSTITIAL_UNIT_ID",
-            "\"${project.lovetestAdMobInterstitialUnitId().replace("\\", "\\\\").replace("\"", "\\\"")}\"",
-        )
-        manifestPlaceholders["admobAppId"] = project.lovetestAdMobAppId()
     }
 
     signingConfigs {
@@ -88,12 +79,9 @@ android {
     }
     buildTypes {
         release {
-            isMinifyEnabled = true
-            isShrinkResources = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
-            )
+            // Решение владельца 2026-09-22: без R8/обфускации — быстрые и простые сборки.
+            isMinifyEnabled = false
+            isShrinkResources = false
             if (hasReleaseKeystore) {
                 signingConfig = signingConfigs.getByName("release")
             }
@@ -106,15 +94,6 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
-    }
-    sourceSets {
-        getByName("main") {
-            if (project.lovetestAdsEnabled()) {
-                manifest.srcFile("src/ads/AndroidManifest.xml")
-            }
-            // Реклама выкл: рекламные разрешения и автозапуск AdMob убираются
-            // в src/release/AndroidManifest.xml (tools:node="remove").
-        }
     }
     packaging {
         resources {
@@ -161,7 +140,7 @@ dependencies {
     implementation(libs.koin.androidx.compose)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.android.billing.ktx)
-    implementation(libs.play.services.ads)
+    // Google UMP: форма «Privacy options» в настройках. Consent manager CAS построен на UMP.
     implementation(libs.user.messaging.platform)
 
     testImplementation(libs.junit)

@@ -2,7 +2,7 @@
 
 Сверьте с [IARC questionnaire](https://support.google.com/googleplay/android-developer/answer/9853738) в Play Console перед публикацией.
 
-**Монетизация v1:** IAP `remove_ads` — **да**; реклама — **нет** (`lovetest.ads.enabled=false`).  
+**Монетизация v1:** IAP `remove_ads` — **да**; реклама — **да** (`lovetest.ads.enabled=true`, CAS.AI mediation interstitial, consent UMP).  
 **Характер приложения:** развлекательные тесты совместимости, не медицина и не финансовый совет.
 
 ---
@@ -35,7 +35,7 @@
 | Mature / suggestive humor | **Нет** (или Minimal) | В v1 нет «18+» сегментов на колесе; при добавлении — пересмотреть |
 | Unrestricted web access | **Нет** | Privacy открывается в браузере по ссылке из настроек |
 | Purchases digital goods | **Да** | One-time IAP Premium (`remove_ads`) |
-| Ads | **Нет** | v1: без AdMob в release |
+| Ads | **Да** | CAS.AI mediation interstitial между тестом и hub; consent flow при первом запуске |
 
 ---
 
