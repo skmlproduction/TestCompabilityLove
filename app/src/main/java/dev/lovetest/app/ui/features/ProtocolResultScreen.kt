@@ -148,9 +148,9 @@ fun ProtocolResultScreen(
                     onTryAgain = onTryAnother,
                     onHome = onHome,
                     primaryContainerColor = if (high) LovePrimary else LoveProtocolPrimary,
-                    outlinedContentColor = LoveProtocolPrimary,
+                    outlinedContentColor = LoveProtocolLight,
                     homeBackgroundColor = LoveProtocolContainer,
-                    homeContentColor = LoveProtocolPrimaryDark,
+                    homeContentColor = LoveProtocolLight,
                 )
 
                 ProtocolSummaryCard(
